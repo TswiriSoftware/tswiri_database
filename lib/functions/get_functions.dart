@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tswiri_database/mobile_database.dart';
+import 'package:tswiri_database/export.dart';
 
 //TODO: finish comments.
 

@@ -1,4 +1,4 @@
-import 'package:tswiri_database/mobile_database.dart';
+import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/create_functions.dart';
 import 'package:tswiri_database/test_functions/create_containers.dart';
 import 'package:tswiri_database/test_functions/create_grid.dart';

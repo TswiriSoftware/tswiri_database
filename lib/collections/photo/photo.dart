@@ -1,7 +1,5 @@
 import 'dart:ui';
-
-import 'package:isar/isar.dart';
-import 'package:tswiri_database/mobile_database.dart';
+import 'package:tswiri_database/export.dart';
 
 part 'photo.g.dart';
 

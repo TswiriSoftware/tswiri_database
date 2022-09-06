@@ -1,4 +1,4 @@
-import 'package:tswiri_database/mobile_database.dart';
+import 'package:tswiri_database/export.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
 void createGrid(List<CatalogedContainer> containers) {

@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:tswiri_database/mobile_database.dart';
+import 'package:tswiri_database/export.dart';
 
 ///Deletes Multiple Containers and all referneces
 void deleteMultipleContainers(List<CatalogedContainer> containerEntries) {
