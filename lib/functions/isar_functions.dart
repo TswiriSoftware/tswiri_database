@@ -7,55 +7,38 @@ import 'package:tswiri_database/mobile_database.dart';
 ///Sets the appIsarDirectory.
 ///This is the directory where the isar database file's can be found.
 Future<void> initiateIsarDirectory() async {
-  if (Platform.isAndroid) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    ///Get the last storage path used.
-    String? storagePath = prefs.getString(isarDirectoryPref);
+  ///Get the last storage path used.
+  String? storagePath = prefs.getString(isarDirectoryPref);
 
-    ///If it is a fresh install set the storage path to /main_space.
-    if (storagePath == null) {
-      storagePath =
-          '${(await getApplicationSupportDirectory()).path}/main_space';
-      prefs.setString(isarDirectoryPref, storagePath);
-    }
+  ///If it is a fresh install set the storage path to /main_space.
+  if (storagePath == null) {
+    storagePath = '${(await getApplicationSupportDirectory()).path}/main_space';
+    prefs.setString(isarDirectoryPref, storagePath);
+  }
 
-    ///Check if the storage path exisits, if not create it.
-    if (!await Directory(storagePath).exists()) {
-      isarDirectory = await Directory(storagePath).create();
-    } else {
-      isarDirectory = Directory(storagePath);
-    }
-  } else if (Platform.isLinux) {
-    //TODO: Linux implementation.
-  } else if (Platform.isWindows) {
-    //TODO: Windows implementation.
-  } else if (Platform.isMacOS) {
-    //TODO: MacOS implementation.
+  ///Check if the storage path exisits, if not create it.
+  if (!await Directory(storagePath).exists()) {
+    isarDirectory = await Directory(storagePath).create();
+  } else {
+    isarDirectory = Directory(storagePath);
   }
 }
 
 ///Sets the appPhotoDirectory.
 ///This is the directory where photo's from the isarDatabase is stored.
 Future<void> initiatePhotoStorage() async {
-  if (Platform.isAndroid) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    //Get the latest storage path used.
-    String storagePath = '${prefs.getString(isarDirectoryPref)!}/photos';
+  //Get the latest storage path used.
+  String storagePath = '${prefs.getString(isarDirectoryPref)!}/photos';
 
-    //Create directory if it doesnt exist.
-    if (!await Directory(storagePath).exists()) {
-      photoDirectory = await Directory(storagePath).create();
-    } else {
-      photoDirectory = Directory(storagePath);
-    }
-  } else if (Platform.isLinux) {
-    //TODO: Linux implementation.
-  } else if (Platform.isWindows) {
-    //TODO: Windows implementation.
-  } else if (Platform.isMacOS) {
-    //TODO: MacOS implementation.
+  //Create directory if it doesnt exist.
+  if (!await Directory(storagePath).exists()) {
+    photoDirectory = await Directory(storagePath).create();
+  } else {
+    photoDirectory = Directory(storagePath);
   }
 }
 
