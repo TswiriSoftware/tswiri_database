@@ -1,7 +1,15 @@
 library tswiri_database;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+import 'dart:io';
+
+import 'package:isar/isar.dart';
+
+///Isar directory.
+Directory? isarDirectory;
+String isarDirectoryPref = 'isarDirectory';
+
+///Photo Directory
+Directory? photoDirectory;
+
+///Isar reference.
+Isar? isar;
