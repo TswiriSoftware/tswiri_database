@@ -21,7 +21,7 @@ List<CatalogedContainer> createContainersWithRelationships(
       isar.catalogedContainers.putSync(
         CatalogedContainer()
           ..barcodeUID = catalogedBarcodes[i].barcodeUID
-          ..containerTypeID = 2
+          ..containerTypeID = 3
           ..containerUID = 'box_$timestamp'
           ..description = 'a box'
           ..name = 'Box $i',
