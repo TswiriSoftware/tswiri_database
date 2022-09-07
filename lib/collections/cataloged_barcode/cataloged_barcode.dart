@@ -17,11 +17,11 @@ class CatalogedBarcode {
   @Name("barcodeUID")
   late String barcodeUID;
 
-  ///Side length (mm)
+  ///Width (mm)
   @Name("width")
   late double width;
 
-  ///Side length (mm)
+  ///Height (mm)
   @Name("height")
   late double height;
 
