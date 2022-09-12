@@ -44,10 +44,50 @@ class ImageData {
     required this.mlTextBlocks,
     required this.mlTextLines,
     required this.mlTextElements,
-    required this.tagTexts,
-    required this.mlDetectedLabelTexts,
-    required this.mLDetectedElementTexts,
-  });
+  }) {
+//9. Find all the mlDetectedLabelTexts.
+    Set<int> mlDetectedLabelTextIDs = {};
+    mlDetectedLabelTextIDs
+        .addAll(mlObjectLabels.map((e) => e.detectedLabelTextID));
+    mlDetectedLabelTextIDs
+        .addAll(mlPhotoLabels.map((e) => e.detectedLabelTextID));
+
+    mlDetectedLabelTexts = [];
+    if (mlDetectedLabelTextIDs.isNotEmpty) {
+      mlDetectedLabelTexts = isar!.mLDetectedLabelTexts
+          .filter()
+          .repeat(
+              mlDetectedLabelTextIDs, (q, int element) => q.idEqualTo(element))
+          .findAllSync();
+    }
+
+    //10. Find all the mLDetectedElementTexts.
+    Set<int> mLDetectedElementTextIDs =
+        mlTextElements.map((e) => e.detectedElementTextID).toSet();
+    // log(mLDetectedElementTextIDs.toString());
+
+    mLDetectedElementTexts = [];
+    if (mLDetectedElementTexts.isNotEmpty) {
+      mLDetectedElementTexts = isar!.mLDetectedElementTexts
+          .filter()
+          .repeat(mLDetectedElementTextIDs,
+              (q, int element) => q.idEqualTo(element))
+          .findAllSync();
+    }
+
+    //11. find all the textTags.
+    Set<int> tagTextIDs = {};
+    tagTextIDs.addAll(objectLabels.map((e) => e.tagTextID));
+    tagTextIDs.addAll(photoLabels.map((e) => e.tagTextID));
+
+    tagTexts = [];
+    if (mLDetectedElementTexts.isNotEmpty) {
+      tagTexts = isar!.tagTexts
+          .filter()
+          .repeat(tagTextIDs, (q, int element) => q.idEqualTo(element))
+          .findAllSync();
+    }
+  }
 
   ///Photo File.
   File photoFile;
@@ -276,49 +316,6 @@ class ImageData {
     List<PhotoLabel> photoLabels =
         isar!.photoLabels.filter().photoIDEqualTo(photo.id).findAllSync();
 
-    //9. Find all the mlDetectedLabelTexts.
-    Set<int> mlDetectedLabelTextIDs = {};
-    mlDetectedLabelTextIDs
-        .addAll(mlObjectLabels.map((e) => e.detectedLabelTextID));
-    mlDetectedLabelTextIDs
-        .addAll(mlPhotoLabels.map((e) => e.detectedLabelTextID));
-
-    List<MLDetectedLabelText> mlDetectedLabelTexts = [];
-    if (mlDetectedLabelTextIDs.isNotEmpty) {
-      mlDetectedLabelTexts = isar!.mLDetectedLabelTexts
-          .filter()
-          .repeat(
-              mlDetectedLabelTextIDs, (q, int element) => q.idEqualTo(element))
-          .findAllSync();
-    }
-
-    //10. Find all the mLDetectedElementTexts.
-    Set<int> mLDetectedElementTextIDs =
-        mlTextElements.map((e) => e.detectedElementTextID).toSet();
-    // log(mLDetectedElementTextIDs.toString());
-
-    List<MLDetectedElementText> mLDetectedElementTexts = [];
-    if (mLDetectedElementTexts.isNotEmpty) {
-      mLDetectedElementTexts = isar!.mLDetectedElementTexts
-          .filter()
-          .repeat(mLDetectedElementTextIDs,
-              (q, int element) => q.idEqualTo(element))
-          .findAllSync();
-    }
-
-    //11. find all the textTags.
-    Set<int> tagTextIDs = {};
-    tagTextIDs.addAll(objectLabels.map((e) => e.tagTextID));
-    tagTextIDs.addAll(photoLabels.map((e) => e.tagTextID));
-
-    List<TagText> textTags = [];
-    if (mLDetectedElementTexts.isNotEmpty) {
-      textTags = isar!.tagTexts
-          .filter()
-          .repeat(tagTextIDs, (q, int element) => q.idEqualTo(element))
-          .findAllSync();
-    }
-
     // log(tagTextIDs.toString());
 
     // log('mlPhotoLabels: ${mlPhotoLabels.length}');
@@ -342,9 +339,6 @@ class ImageData {
       mlTextBlocks: mlTextBlocks,
       mlTextLines: mlTextLines,
       mlTextElements: mlTextElements,
-      mlDetectedLabelTexts: mlDetectedLabelTexts,
-      mLDetectedElementTexts: mLDetectedElementTexts,
-      tagTexts: textTags,
     );
   }
 
