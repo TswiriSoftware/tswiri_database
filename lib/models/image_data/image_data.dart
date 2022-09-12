@@ -1,7 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-//TODO: move to tswiri_database
-
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
@@ -11,7 +9,7 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:image/image.dart' as img;
 import 'package:tswiri_database/export.dart';
 
-///ImageData this is used to display an image with all its labels.
+///ImageData this is used to display an image with all its labels aswell as editing it.
 ///
 /// - Photo             [File]
 ///
@@ -34,6 +32,7 @@ import 'package:tswiri_database/export.dart';
 ///
 class ImageData {
   ImageData({
+    this.photo,
     required this.photoFile,
     required this.size,
     required this.rotation,
@@ -45,9 +44,9 @@ class ImageData {
     required this.mlTextBlocks,
     required this.mlTextLines,
     required this.mlTextElements,
-    this.tagTexts,
-    this.mlDetectedLabelTexts,
-    this.mLDetectedElementTexts,
+    required this.tagTexts,
+    required this.mlDetectedLabelTexts,
+    required this.mLDetectedElementTexts,
   });
 
   ///Photo File.
@@ -55,6 +54,8 @@ class ImageData {
 
   ///Photo size.
   Size size;
+
+  Photo? photo;
 
   //Photo Rotation
   InputImageRotation rotation;
@@ -83,9 +84,9 @@ class ImageData {
   ///List of MLTextElements.
   List<MLTextElement> mlTextElements;
 
-  List<MLDetectedLabelText>? mlDetectedLabelTexts;
-  List<MLDetectedElementText>? mLDetectedElementTexts;
-  List<TagText>? tagTexts;
+  List<MLDetectedLabelText> mlDetectedLabelTexts = [];
+  List<MLDetectedElementText> mLDetectedElementTexts = [];
+  List<TagText> tagTexts = [];
 
   ///This creates relevant isarEntries for the specified container.
   ///
@@ -345,5 +346,52 @@ class ImageData {
       mLDetectedElementTexts: mLDetectedElementTexts,
       tagTexts: textTags,
     );
+  }
+
+  ///Add a photoLabel for an existing photo.
+  void addPhotoLabel(TagText tagText) {
+    PhotoLabel newPhotoLabel = PhotoLabel()
+      ..photoID = photo!.id
+      ..tagTextID = tagText.id;
+
+    photoLabels.add(newPhotoLabel);
+    if (!tagTextsContain(tagText)) {
+      tagTexts.add(tagText);
+    }
+
+    isar!.photoLabels.putSync(newPhotoLabel);
+  }
+
+  ///Remove a photoLabel for an existing photo.
+  void removePhotoLabel(PhotoLabel photoLabel) {}
+
+  ///Add a objectLabel for an existing photo.
+  void addObjectLabel(TagText tagText, int objectID) {
+    ObjectLabel newObjectLabel = ObjectLabel()
+      ..objectID = objectID
+      ..tagTextID = tagText.id;
+  }
+
+  ///Remove a objectLabel for an existing photo.
+  void removeObjectLabel(ObjectLabel objectLabel) {}
+
+  ///Add a MLPhotoLabel for an existing photo.
+  void addMLPhotoLabel(TagText tagText) {}
+
+  ///Remove a MLPhotoLabel for an existing photo.
+  void removeMLPhotoLabel(MLPhotoLabel tagText) {}
+
+  ///Add a MLObjectLabel for an existing photo.
+  void addMLObjectLabel(TagText tagText) {}
+
+  ///Remove a MLObjectLabel for an existing photo.
+  void removeMLObjectLabel(MLObjectLabel mlObjectLabel) {}
+
+  bool tagTextsContain(TagText tagText) {
+    if (tagTexts.any((element) => element.id == tagText.id) == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
