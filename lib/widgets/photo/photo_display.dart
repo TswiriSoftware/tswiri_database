@@ -2,13 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tswiri_database/widgets/ml_label_paint/ml_label_paint.dart';
 
-class PhotoDisplayWidget extends StatelessWidget {
-  const PhotoDisplayWidget({
+class PhotoDisplay extends StatelessWidget {
+  const PhotoDisplay({
     Key? key,
     required this.photoPath,
     this.height,
     this.width,
     this.mlLabelPaint,
+    this.photoNavigation,
   }) : super(key: key);
 
   ///File path of the photo.
@@ -23,6 +24,9 @@ class PhotoDisplayWidget extends StatelessWidget {
   ///MLLabelPaint. required height and width.
   final MLLabelPaint? mlLabelPaint;
 
+  ///Photo Navigation Widget
+  final Widget? photoNavigation;
+
   @override
   Widget build(BuildContext context) {
     if (mlLabelPaint == null) {
@@ -33,17 +37,21 @@ class PhotoDisplayWidget extends StatelessWidget {
         width: width,
       );
     } else {
-      return Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.file(
-            File(photoPath),
-            fit: BoxFit.scaleDown,
-            height: height,
-            width: width,
-          ),
-          mlLabelPaint!,
-        ],
+      return SizedBox(
+        height: height ??
+            0 / (width ?? 1 / (MediaQuery.of(context).size.width - 16)),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          fit: StackFit.expand,
+          children: [
+            Image.file(
+              File(photoPath),
+              fit: BoxFit.scaleDown,
+            ),
+            mlLabelPaint!,
+            photoNavigation ?? const SizedBox.shrink(),
+          ],
+        ),
       );
     }
   }
