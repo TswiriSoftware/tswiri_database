@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tswiri_database/models/image_data/image_data.dart';
 import 'package:tswiri_database/widgets/ml_label_paint/ml_label_photo_painter.dart';
 
+///Draw a custom paint with all the object and/or text labels.
 class MLLabelPaint extends StatelessWidget {
   const MLLabelPaint({
     Key? key,
     required this.imageData,
-    required this.size,
     required this.showObjects,
     required this.showText,
     this.objectLabelConfidence,
@@ -21,9 +21,6 @@ class MLLabelPaint extends StatelessWidget {
   ///Show text and bounding Boxes.
   final bool showText;
 
-  ///The size of the canvas. (Same as the photo display size)
-  final Size size;
-
   ///The confidence required to display the objectLabel.
   final double? objectLabelConfidence;
 
@@ -36,7 +33,6 @@ class MLLabelPaint extends StatelessWidget {
         showText: showText,
         objectLabelConfidence: objectLabelConfidence,
       ),
-      size: size,
     );
   }
 }
