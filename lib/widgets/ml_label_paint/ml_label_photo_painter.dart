@@ -9,6 +9,7 @@ import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/coordinate_translator.dart';
 import 'package:tswiri_database/models/image_data/image_data.dart';
 
+///The painter used by ml_label_paint.
 class MLLabePainter extends CustomPainter {
   MLLabePainter({
     required this.imageData,

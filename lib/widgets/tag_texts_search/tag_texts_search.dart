@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/get_functions.dart';
 
+///The widget to explore the TagText database.
 class TagTextSearch extends StatefulWidget {
   /// Remember to update tags with this function:
   /// ```_tagTextSearchTextFieldkey.currentState?.updateAssignedTags(containerTag.tagTextID)```
