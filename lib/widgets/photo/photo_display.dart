@@ -20,20 +20,31 @@ class PhotoDisplayWidget extends StatelessWidget {
   ///The height of the displayed photo.
   final double? height;
 
+  ///MLLabelPaint. required height and width.
   final MLLabelPaint? mlLabelPaint;
 
   @override
   Widget build(BuildContext context) {
     if (mlLabelPaint == null) {
-    } else {}
-    return ClipRRect(
-      // borderRadius: BorderRadius.circular(8),
-      child: Image.file(
+      return Image.file(
         File(photoPath),
         fit: BoxFit.scaleDown,
         height: height,
         width: width,
-      ),
-    );
+      );
+    } else {
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.file(
+            File(photoPath),
+            fit: BoxFit.scaleDown,
+            height: height,
+            width: width,
+          ),
+          mlLabelPaint!,
+        ],
+      );
+    }
   }
 }
