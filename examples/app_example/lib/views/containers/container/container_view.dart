@@ -255,7 +255,7 @@ class _ContainerViewState extends State<ContainerView> {
           },
         );
       },
-      backgroundColor: background[300]!,
+      backgroundColor: background,
       borderColor: tswiriOrange,
     );
   }
@@ -273,7 +273,7 @@ class _ContainerViewState extends State<ContainerView> {
           },
         );
       },
-      backgroundColor: background[300]!,
+      backgroundColor: background,
       borderColor: tswiriOrange,
     );
   }

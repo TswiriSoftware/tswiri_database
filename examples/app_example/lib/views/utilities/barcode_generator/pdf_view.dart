@@ -73,8 +73,6 @@ class _PdfViewState extends State<PdfView> {
     final filePath = await barcodePdfGenerator(
       barcodeUIDs: widget.barcodeUIDs,
       size: widget.size,
-      start: widget.start,
-      end: widget.end,
     );
 
     setState(() {

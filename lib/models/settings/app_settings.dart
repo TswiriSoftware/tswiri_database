@@ -7,7 +7,7 @@ import 'package:tswiri_database/models/settings/global_settings.dart';
 
 //Camera Settings
 List<CameraDescription> cameras = [];
-ResolutionPreset cameraResolution = ResolutionPreset.max;
+ResolutionPreset cameraResolution = ResolutionPreset.high;
 
 ///Vibration.
 bool vibrate = true;

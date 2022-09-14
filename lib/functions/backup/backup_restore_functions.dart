@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,8 +21,8 @@ import 'package:tswiri_database/models/settings/global_settings.dart';
 /// - On fails it returns null.
 ///
 Future<File?> createBackupFile({
-  required ValueNotifier<double> progressNotifier,
   required String fileName,
+  required Function(String) progressCallback,
 }) async {
   FlutterIsolate? _isolate;
   ReceivePort _uiPort = ReceivePort();
@@ -54,7 +53,7 @@ Future<File?> createBackupFile({
         completer.complete(File(message[1].toString()));
         break;
       case 'progress':
-        progressNotifier.value = message[1] as double;
+        progressCallback(message[1]);
         break;
       default:
     }
@@ -65,8 +64,8 @@ Future<File?> createBackupFile({
 
 ///Restores a backup file to the current Space.
 Future<bool?> restoreBackupFile({
-  required ValueNotifier<double> progressNotifier,
   required File backupFile,
+  required Function(String) progressCallback,
 }) async {
   FlutterIsolate? _isolate;
   ReceivePort _uiPort = ReceivePort();
@@ -110,7 +109,7 @@ Future<bool?> restoreBackupFile({
         default:
       }
     } else if (message[0] == 'progress') {
-      progressNotifier.value = message[1] as double;
+      progressCallback(message[1]);
     }
   });
 

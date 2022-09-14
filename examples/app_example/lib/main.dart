@@ -1,16 +1,17 @@
+import 'dart:io';
+
 import 'package:app_example/views/containers/containers_view.dart';
 import 'package:app_example/views/search/search_view.dart';
 import 'package:app_example/views/settings/settings_view.dart';
 import 'package:app_example/views/utilities/utilities_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/functions/isar/create_functions.dart';
 import 'package:tswiri_database/mobile_database.dart';
 import 'package:tswiri_database/models/search/shopping_cart.dart';
 import 'package:tswiri_database/models/settings/app_settings.dart';
-import 'package:tswiri_database/test_functions/populate_database.dart';
 import 'package:tswiri_widgets/theme/theme.dart';
 
 Future<void> main() async {
@@ -31,11 +32,14 @@ Future<void> main() async {
   //Initiate Isar.
   isar = initiateMobileIsar();
 
-  //Populate the database for testing.
-  createBasicContainerTypes();
-  populateDatabase();
+  //Clear temp directory whenever the app is opened.
+  Directory tempDir = await getTemporaryDirectory();
+  tempDir.deleteSync(recursive: true);
+  tempDir.create();
 
-  // log(isar!.containerRelationships.where().findAllSync().toString());
+  //Populate the database for testing.
+  // createBasicContainerTypes();
+  // populateDatabase();
 
   //Run app with shoppingcart provider.
   runApp(

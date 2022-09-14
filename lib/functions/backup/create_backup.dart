@@ -19,6 +19,11 @@ Future<void> createBackup(List init) async {
   log(isarDirectory, name: 'Isar Directory');
   log(photoDirectory, name: 'Photo Directory');
 
+  sendPort.send([
+    'progress',
+    'Starting',
+  ]);
+
   //2. Initiate isar.
   Isar isar = initiateMobileIsar(directory: isarDirectory, inspector: false);
 
@@ -39,6 +44,7 @@ Future<void> createBackup(List init) async {
       Directory('${backupDirectory.path}backup_$formattedDate');
 
   log(newBackupDirectory.path, name: 'Backup Directory');
+
   if (!newBackupDirectory.existsSync()) {
     newBackupDirectory.createSync(recursive: true);
   } else {
@@ -66,7 +72,7 @@ Future<void> createBackup(List init) async {
 
   sendPort.send([
     'progress',
-    0.0,
+    'Creating: 0.0%',
   ]);
 
   int files = photos.length + 2;
@@ -75,7 +81,7 @@ Future<void> createBackup(List init) async {
   for (var photo in photos) {
     sendPort.send([
       'progress',
-      ((x / files) * 100),
+      'Creating: ${((x / files) * 100).toStringAsFixed(2)}%',
     ]);
 
     File photoFile = File(photo.getPhotoPath(directory: photoDirectory));
@@ -101,17 +107,29 @@ Future<void> createBackup(List init) async {
     x++;
     sendPort.send([
       'progress',
-      ((x / files) * 100),
+      'Creating: ${((x / files) * 100).toStringAsFixed(2)}%',
     ]);
   }
 
   try {
+    sendPort.send([
+      'progress',
+      'Compressing',
+    ]);
+
     final zipFile = File('$temporaryDirectory/${fileName}_$isarVersion.zip');
     await ZipFile.createFromDirectory(
       sourceDir: newBackupDirectory,
       zipFile: zipFile,
       recurseSubDirs: true,
       includeBaseDirectory: false,
+      onZipping: (filePath, isDirectory, progress) {
+        sendPort.send([
+          'progress',
+          'Compressing: ${progress.toStringAsFixed(2)}%',
+        ]);
+        return ZipFileOperation.includeItem;
+      },
     );
 
     sendPort.send([

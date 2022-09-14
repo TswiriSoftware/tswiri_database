@@ -188,7 +188,9 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
           setProcess('Creating new backup');
           log('Creating new backup');
           File? file = await createBackupFile(
-            progressNotifier: progressNotifier,
+            progressCallback: (event) {
+              //TODO: implement this.
+            },
             fileName: generateBackupFileName(),
           );
 
@@ -223,7 +225,9 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
         setProcess('Creating new backup');
 
         File? file = await createBackupFile(
-          progressNotifier: progressNotifier,
+          progressCallback: (event) {
+            ///TODO: implement this.
+          },
           fileName: generateBackupFileName(),
         );
 
@@ -292,7 +296,9 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
             if (downloadedFile != null) {
               setProcess('Restoring');
               await restoreBackupFile(
-                  progressNotifier: progressNotifier,
+                  progressCallback: (event) {
+                    //TODO: implement this.
+                  },
                   backupFile: File(downloadedFile.path));
             }
 

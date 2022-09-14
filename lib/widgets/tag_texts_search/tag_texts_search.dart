@@ -32,15 +32,7 @@ class TagTextSearchState extends State<TagTextSearch> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  late List<int> tagTextIDs = isar!.tagTexts
-      .filter()
-      .not()
-      .group((q) =>
-          q.repeat(excludedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
-      .findAllSync()
-      .map((e) => e.id)
-      .take(15)
-      .toList();
+  late List<int> tagTextIDs = [];
 
   late List<int> excludedTags = widget.excludedTags;
 

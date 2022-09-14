@@ -88,7 +88,6 @@ class _SearchViewState extends State<SearchView> {
             setState(() {
               isSearching = false;
               widget.isSearching(isSearching);
-              // _searchController.search();
             });
           },
           onChanged: (value) {
@@ -145,7 +144,11 @@ class _SearchViewState extends State<SearchView> {
             return NameResultCard(
               nameResult: result as NameResult,
               backgroundColor: background[300]!,
-              chipColor: tswiriOrange,
+              chipColor: colorModeEnabled
+                  ? isar!.containerTypes
+                      .getSync(result.containerTypeID)!
+                      .containerColor
+                  : tswiriOrange,
             );
 
           case DescriptionResult: //Description Result.

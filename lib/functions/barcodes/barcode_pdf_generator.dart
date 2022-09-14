@@ -2,11 +2,13 @@ import 'dart:typed_data';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+///Generates a pdf document containing barcodes.
+///
+/// - List<String> barcodeUIDs
+/// - double Size of the barcodes in mm
 Future<Uint8List> barcodePdfGenerator({
   required List<String> barcodeUIDs,
   required double size,
-  required int start,
-  required int end,
 }) async {
   final pdf = pw.Document();
 
@@ -88,6 +90,8 @@ List<pw.Widget> generatePageBarcodes(
   for (String barcodeUID in barcodeUIDs) {
     barcodes.add(
       pw.Container(
+        width: size,
+        height: size,
         padding: pw.EdgeInsets.only(
           left: (5 * conversionWidth),
           right: (5 * conversionWidth),

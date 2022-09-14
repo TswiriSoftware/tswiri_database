@@ -20,15 +20,11 @@ Future<void> restoreBackup(List init) async {
   //2. Check if database versions match.
   File restoreFile = File(selectedFilePath);
 
-  log(restoreFile.path);
   if (restoreFile.path.split('/').last.split('.').last == 'zip') {
-    log('is.zip');
-
-    log('restoring');
-
     //Unzip selectedfile.
     Directory temporaryDirectory = Directory(temporaryDirectoryPath);
 
+    //UnzippedDirectory.
     Directory unzippedDirectory = Directory(
         '${temporaryDirectory.path}/${restoreFile.path.split('/').last.split('.').first}');
 
@@ -42,8 +38,27 @@ Future<void> restoreBackup(List init) async {
     final zipFile = restoreFile;
     final destinationDir = unzippedDirectory;
     try {
+      sendPort.send([
+        'progress',
+        'Unzipping',
+      ]);
+
       await ZipFile.extractToDirectory(
-          zipFile: zipFile, destinationDir: destinationDir);
+        zipFile: zipFile,
+        destinationDir: destinationDir,
+        onExtracting: (zipEntry, progress) {
+          sendPort.send([
+            'progress',
+            'Unzipping: ${progress.toStringAsFixed(2)}%',
+          ]);
+          return ZipFileOperation.includeItem;
+        },
+      );
+
+      sendPort.send([
+        'progress',
+        'Done',
+      ]);
     } catch (e) {
       log(e.toString());
     }
@@ -54,7 +69,7 @@ Future<void> restoreBackup(List init) async {
     if (restoreDAT.existsSync() && restorelLCK.existsSync()) {
       sendPort.send([
         'progress',
-        0.0,
+        'Restoring: 0.0%',
       ]);
 
       Directory isarDataFolder = Directory(isarDirectory);
@@ -82,7 +97,7 @@ Future<void> restoreBackup(List init) async {
       int x = 2;
       sendPort.send([
         'progress',
-        ((x / numberOfFiles) * 100),
+        'Restoring: ${((x / numberOfFiles) * 100).toStringAsFixed(2)}%',
       ]);
 
       //Restore Photos and thumbnails.
@@ -104,9 +119,15 @@ Future<void> restoreBackup(List init) async {
         x++;
         sendPort.send([
           'progress',
-          ((x / numberOfFiles) * 100),
+          'Restoring: ${((x / numberOfFiles) * 100).toStringAsFixed(2)}%',
         ]);
       }
+
+      sendPort.send([
+        'Deleting old files.',
+      ]);
+
+      unzippedDirectory.deleteSync(recursive: true);
 
       sendPort.send([
         'done',
