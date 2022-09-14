@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+//TODO: move to widgets package.
+
 ///The default way to display a photo.
 class PhotoDisplay extends StatelessWidget {
   const PhotoDisplay({

@@ -1,5 +1,5 @@
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/functions/distinct_by.dart';
+import 'package:tswiri_database/functions/other/distinct_by.dart';
 import 'package:tswiri_database/models/inter_barcode/inter_barcode_vector.dart';
 import 'package:tswiri_database/models/inter_barcode/on_image_barcode_data.dart';
 import 'package:tswiri_database/models/inter_barcode/on_image_inter_barcode_data.dart';

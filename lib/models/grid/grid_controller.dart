@@ -3,7 +3,7 @@ import 'dart:ui';
 
 // ignore: depend_on_referenced_packages
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/functions/data_processing.dart';
+import 'package:tswiri_database/functions/data/data_processing.dart';
 import 'package:tswiri_database/models/display/display_point.dart';
 import 'package:tswiri_database/models/inter_barcode/inter_barcode_vector.dart';
 import 'package:tswiri_database/models/inter_barcode/on_image_inter_barcode_data.dart';

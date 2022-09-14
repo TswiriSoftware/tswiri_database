@@ -1,5 +1,5 @@
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/functions/find_functions.dart';
+import 'package:tswiri_database/functions/isar/find_functions.dart';
 
 ///Used to search containerEntries.
 class ContainerSearchController {
