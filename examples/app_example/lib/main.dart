@@ -1,13 +1,16 @@
+import 'package:app_example/views/containers/containers_view.dart';
+import 'package:app_example/views/search/search_view.dart';
+import 'package:app_example/views/settings/settings_view.dart';
+import 'package:app_example/views/utilities/utilities_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/isar/create_functions.dart';
-import 'package:tswiri_database/functions/isar/isar_functions.dart';
 import 'package:tswiri_database/mobile_database.dart';
 import 'package:tswiri_database/models/search/shopping_cart.dart';
 import 'package:tswiri_database/models/settings/app_settings.dart';
 import 'package:tswiri_database/test_functions/populate_database.dart';
-import 'package:tswiri_database/tswiri_database.dart';
 import 'package:tswiri_widgets/theme/theme.dart';
 
 Future<void> main() async {
@@ -32,6 +35,9 @@ Future<void> main() async {
   createBasicContainerTypes();
   populateDatabase();
 
+  // log(isar!.containerRelationships.where().findAllSync().toString());
+
+  //Run app with shoppingcart provider.
   runApp(
     ChangeNotifierProvider(
       create: (context) => ShoppingCart(),
@@ -41,11 +47,12 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Tswiri Example',
       theme: tswiriTheme,
       home: const MyHomePage(),
     );
@@ -53,12 +60,22 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  //Tab controller.
+  late final TabController _tabController = TabController(
+    vsync: this,
+    length: 4,
+    initialIndex: 1,
+  );
+  bool isSearching = false;
+
   @override
   void initState() {
     super.initState();
@@ -67,26 +84,69 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
-      body: _body(),
+      body: _tabBarView(),
+      bottomSheet: _bottomSheet(),
     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      title: Text(
-        'title',
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
-      centerTitle: true,
+  Widget _tabBarView() {
+    return TabBarView(
+      physics: isSearching ? const NeverScrollableScrollPhysics() : null,
+      controller: _tabController,
+      children: [
+        ContainersView(
+          isSearching: (value) => setState(() {
+            isSearching = value;
+          }),
+        ),
+        SearchView(
+          isSearching: (value) => setState(() {
+            isSearching = value;
+          }),
+        ),
+        const UtilitiesView(),
+        const SettingsView(),
+      ],
     );
   }
 
-  Widget _body() {
-    return Center(
-      child: Column(
-        children: [],
-      ),
+  Widget _bottomSheet() {
+    return TabBar(
+      // isScrollable: !isSearching,
+      controller: _tabController,
+      labelPadding: const EdgeInsets.all(2.5),
+      tabs: const [
+        Tooltip(
+          message: "Containers",
+          child: Tab(
+            icon: Icon(
+              Icons.account_tree_sharp,
+            ),
+          ),
+        ),
+        Tooltip(
+          message: "Search",
+          child: Tab(
+            icon: Icon(
+              Icons.search_sharp,
+            ),
+          ),
+        ),
+        Tooltip(
+          message: "Utilities",
+          child: Tab(
+            icon: Icon(Icons.build_sharp),
+          ),
+        ),
+        Tooltip(
+          message: "Settings",
+          child: Tab(
+            icon: Icon(
+              Icons.settings_sharp,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

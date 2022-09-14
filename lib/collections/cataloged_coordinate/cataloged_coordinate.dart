@@ -3,6 +3,16 @@ import 'package:isar/isar.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 part 'cataloged_coordinate.g.dart';
 
+///TODO: finish commenting.
+
+///Stores details about a container (Created by user).
+///
+///  - ```containerUID``` Unique identifier.
+///  - ```containerTypeID``` Type of container [ContainerType].
+///  - ```name``` Name of the container.
+///  - ```description``` Description of the container.
+///  - ```barcodeUID``` Barcode linked to this container.
+///
 @Collection()
 @Name("CatalogedCoordinate")
 class CatalogedCoordinate {

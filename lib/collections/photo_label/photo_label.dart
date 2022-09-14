@@ -1,10 +1,16 @@
 import 'package:isar/isar.dart';
 part 'photo_label.g.dart';
-//TODO: finish comments.
 
-///Photo Label.
+///TODO: finish commenting.
+
+///Stores details about a container (Created by user).
 ///
-/// - User generated.
+///  - ```containerUID``` Unique identifier.
+///  - ```containerTypeID``` Type of container [ContainerType].
+///  - ```name``` Name of the container.
+///  - ```description``` Description of the container.
+///  - ```barcodeUID``` Barcode linked to this container.
+///
 @Collection()
 @Name("PhotoLabel")
 class PhotoLabel {

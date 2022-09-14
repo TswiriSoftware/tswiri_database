@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 part 'container_type.g.dart';
 
-//TODO: finish comments.
-
 ///Specifies details for a specific container type.
 ///
 /// - ```containerTypeName```

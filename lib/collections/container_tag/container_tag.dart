@@ -1,10 +1,16 @@
 import 'package:isar/isar.dart';
 part 'container_tag.g.dart';
-//TODO: finish comments.
 
-///Container Tag
+///TODO: finish commenting.
+
+///Stores details about a container (Created by user).
 ///
-/// - User Generated.
+///  - ```containerUID``` Unique identifier.
+///  - ```containerTypeID``` Type of container [ContainerType].
+///  - ```name``` Name of the container.
+///  - ```description``` Description of the container.
+///  - ```barcodeUID``` Barcode linked to this container.
+///
 @Collection()
 @Name("ContainerTag")
 class ContainerTag {

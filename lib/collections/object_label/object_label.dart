@@ -2,9 +2,14 @@ import 'package:isar/isar.dart';
 part 'object_label.g.dart';
 //TODO: finish comments.
 
-///Object Label.
+///Stores details about a container (Created by user).
 ///
-/// - User generated.
+///  - ```containerUID``` Unique identifier.
+///  - ```containerTypeID``` Type of container [ContainerType].
+///  - ```name``` Name of the container.
+///  - ```description``` Description of the container.
+///  - ```barcodeUID``` Barcode linked to this container.
+///
 @Collection()
 @Name("ObjectLabel")
 class ObjectLabel {

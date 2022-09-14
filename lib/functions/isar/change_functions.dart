@@ -1,5 +1,3 @@
-//TODO: finish comments.
-
 import 'package:tswiri_database/export.dart';
 
 bool changeParent({
