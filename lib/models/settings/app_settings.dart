@@ -55,6 +55,10 @@ String flashOnGridsPref = 'flashOnGrids';
 bool flashOnNavigation = false;
 String flashOnNavigationPref = 'flashOnNavigation';
 
+///Has shown Beta Warning.
+bool hasShownBetaWarning = false;
+String hasShownBetaWarningPref = 'hasShownBetaWarning';
+
 Future<void> loadAppSettings() async {
   //Get Camera descriptions.
   cameras = await availableCameras();
@@ -95,4 +99,7 @@ Future<void> loadAppSettings() async {
   flashOnBarcodes = prefs.getBool(flashOnBarcodesPref) ?? false;
   flashOnGrids = prefs.getBool(flashOnGridsPref) ?? false;
   flashOnNavigation = prefs.getBool(flashOnNavigationPref) ?? false;
+
+  //Beta Warning.
+  hasShownBetaWarning = prefs.getBool(hasShownBetaWarningPref) ?? false;
 }
