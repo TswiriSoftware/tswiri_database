@@ -1,6 +1,16 @@
 import 'package:isar/isar.dart';
 part 'cataloged_grid.g.dart';
-//TODO: finish comments.
+
+///TODO: finish commenting.
+
+///Stores details about a container (Created by user).
+///
+///  - ```containerUID``` Unique identifier.
+///  - ```containerTypeID``` Type of container [ContainerType].
+///  - ```name``` Name of the container.
+///  - ```description``` Description of the container.
+///  - ```barcodeUID``` Barcode linked to this container.
+///
 
 @Collection()
 @Name("CatalogedGrid")
@@ -11,7 +21,7 @@ class CatalogedGrid {
   @Name("barcodeUID")
   late String barcodeUID;
 
-  ///Barcode UID.
+  ///Parent Container Barcode UID.
   @Name("parentBarcodeUID")
   late String? parentBarcodeUID;
 
