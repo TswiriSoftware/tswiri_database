@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tswiri_database/export.dart';
@@ -82,7 +84,7 @@ class PhotoEditViewState extends State<PhotoEditView> {
                   (MediaQuery.of(context).size.width - 16)),
           width: MediaQuery.of(context).size.width,
           child: Stack(
-            alignment: AlignmentDirectional.topCenter,
+            alignment: AlignmentDirectional.center,
             fit: StackFit.expand,
             children: [
               PhotoDisplay(

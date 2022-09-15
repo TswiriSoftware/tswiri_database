@@ -45,6 +45,14 @@ class _BackupViewState extends State<BackupView> {
         style: Theme.of(context).textTheme.titleMedium,
       ),
       centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: () {
+            //TODO: Inform user that restoring large files can take a long time.
+          },
+          icon: const Icon(Icons.info),
+        )
+      ],
     );
   }
 

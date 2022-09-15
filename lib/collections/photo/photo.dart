@@ -1,6 +1,7 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:tswiri_database/export.dart';
-
+import 'package:image/image.dart' as img;
 part 'photo.g.dart';
 
 ///TODO: finish commenting.
@@ -44,15 +45,6 @@ class Photo {
   @SizeConverter()
   late Size photoSize;
 
-  // @override
-  // bool operator ==(Object other) {
-  //   return other is Photo &&
-  //       id == other.id &&
-  //       containerUID == other.containerUID &&
-  //       photoPath.split('/').last == other.photoPath.split('/').last &&
-  //       thumbnailPath.split('/').last == other.thumbnailPath.split('/').last;
-  // }
-
   @override
   String toString() {
     return '\nID: $id, containerID: $containerUID ';
@@ -72,6 +64,12 @@ class Photo {
     } else {
       return '${photoDirectory!.path}/${photoName}_thumbnail.$extention';
     }
+  }
+
+  Size getPhotoSize() {
+    File imageFile = File(getPhotoPath());
+    img.Image image = img.decodeImage(imageFile.readAsBytesSync())!;
+    return Size(image.width.toDouble(), image.height.toDouble());
   }
 
   // Map toJson() => {

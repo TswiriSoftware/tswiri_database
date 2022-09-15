@@ -25,7 +25,6 @@ class MLLabePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Size absoluteSize = imageData.size;
-
     InputImageRotation rotation = imageData.rotation;
 
     final Paint objectPaint = Paint()

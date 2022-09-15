@@ -103,18 +103,26 @@ Future<void> restoreBackup(List init) async {
       //Restore Photos and thumbnails.
       for (var file in files) {
         File photoFile = File(file.path);
-        log(photoDirectory.path);
+
+        // img.Image image = img.decodeImage(photoFile.readAsBytesSync())!;
+        // img.Image hdImage = img.copyResize(image, width: 720);
+
+        String photoName = photoFile.path.split('/').last.split('.').first;
+
         photoFile.copySync(
             '${photoDirectory.path}/${photoFile.path.split('/').last}');
 
-        String photoName = photoFile.path.split('/').last.split('.').first;
-        String extention = photoFile.path.split('/').last.split('.').last;
+        ///Copy the fullsize image.
+        // File('${photoDirectory.path}/$photoName.jpg')
+        //     .writeAsBytesSync(img.encodeJpg(hdImage));
+
         String photoThumbnailPath =
-            '${photoDirectory.path}/${photoName}_thumbnail.$extention';
-        img.Image referenceImage = img.decodeJpg(photoFile.readAsBytesSync())!;
-        img.Image thumbnailImage = img.copyResize(referenceImage, width: 120);
+            '${photoDirectory.path}/${photoName}_thumbnail.jpg';
+        img.Image referenceImage =
+            img.decodeImage(photoFile.readAsBytesSync())!;
+        img.Image thumbnailImage = img.copyResize(referenceImage, width: 240);
         File(photoThumbnailPath)
-            .writeAsBytesSync(img.encodePng(thumbnailImage));
+            .writeAsBytesSync(img.encodeJpg(thumbnailImage));
 
         x++;
         sendPort.send([

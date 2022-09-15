@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:app_example/views/containers/containers_view.dart';
 import 'package:app_example/views/search/search_view.dart';
 import 'package:app_example/views/settings/settings_view.dart';
