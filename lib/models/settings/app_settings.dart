@@ -9,29 +9,51 @@ import 'package:tswiri_database/models/settings/global_settings.dart';
 List<CameraDescription> cameras = [];
 ResolutionPreset cameraResolution = ResolutionPreset.high;
 
-///Vibration.
+///Vibration on/off.
 bool vibrate = true;
 String vibratePref = 'vibrate';
 
-//Image Labeling
+///Is image labeling on.
 bool imageLabeling = true;
 String imageLabelingPref = 'imageLabeling';
+
+///Image labeling confidence level.
 double imageLabelingConfidence = 0.5;
 String imageLabelingConfidencePref = 'imageLabelingConfidence';
 
-//Object Detection.
+///Is object detection on.
 bool objectDetection = true;
 String objectDetectionPref = 'objectDetection';
+
+///Object detection confidence level.
 double objectDetectionConfidence = 0.5;
 String objectDetectionConfidencePref = 'objectDetectionConfidence';
 
-//Text Detection.
+///Is text detection on.
 bool textDetection = true;
 String textDetectionPref = 'textDetection';
 
-//Camera focal length
+///Camera focal length
 double focalLength = 1;
 String focalLengthPref = 'focalLength';
+
+//Flash Settings
+
+///Flash on/off during image capture.
+bool flashOnPhotos = false;
+String flashOnPhotosPref = 'flashOnPhotos';
+
+///Flash on/off during barcode scanning.
+bool flashOnBarcodes = false;
+String flashOnBarcodesPref = 'flashOnBarcodes';
+
+///Flash on/off during grid scanning.
+bool flashOnGrids = false;
+String flashOnGridsPref = 'flashOnGrids';
+
+///Flash on/off during navigation.
+bool flashOnNavigation = false;
+String flashOnNavigationPref = 'flashOnNavigation';
 
 Future<void> loadAppSettings() async {
   //Get Camera descriptions.
@@ -67,4 +89,10 @@ Future<void> loadAppSettings() async {
   //Spaces
   currentSpacePath = prefs.getString(currentSpacePathPref) ??
       '${(await getApplicationSupportDirectory()).path}/main_space';
+
+  //Flash
+  flashOnPhotos = prefs.getBool(flashOnPhotosPref) ?? false;
+  flashOnBarcodes = prefs.getBool(flashOnBarcodesPref) ?? false;
+  flashOnGrids = prefs.getBool(flashOnGridsPref) ?? false;
+  flashOnNavigation = prefs.getBool(flashOnNavigationPref) ?? false;
 }
