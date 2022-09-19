@@ -44,42 +44,25 @@ Future<void> initiatePhotoStorage() async {
 
 ///Swap the isar database to the specified directory.
 Future<void> swapSpace(Directory directory) async {
-  if (Platform.isAndroid) {
-    //Set prefs.
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(isarDirectoryPref, directory.path);
+  //Set prefs.
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(isarDirectoryPref, directory.path);
 
-    //Close isar connection.
-    await isar!.close();
+  //Close isar connection.
+  await isar!.close();
 
-    //Update the isarDirectory.
-    isarDirectory = directory;
+  //Update the isarDirectory.
+  isarDirectory = directory;
 
-    //Wait a couple millis.
-    await Future.delayed(const Duration(milliseconds: 200));
+  //Wait a couple millis.
+  await Future.delayed(const Duration(milliseconds: 200));
 
-    //Initiate the isar connection again
-    isar = initiateMobileIsar(directory: isarDirectory!.path, inspector: false);
-  } else if (Platform.isLinux) {
-    //TODO: Linux implementation.
-  } else if (Platform.isWindows) {
-    //TODO: Windows implementation.
-  } else if (Platform.isMacOS) {
-    //TODO: MacOS implementation.
-  }
+  //Initiate the isar connection again
+  isar = initiateMobileIsar(directory: isarDirectory!.path, inspector: false);
 }
 
 ///Create a new swap space.
 Future<bool> createNewSpace(String spaceName) async {
-  if (Platform.isAndroid) {
-  } else if (Platform.isLinux) {
-    //TODO: Linux implementation.
-  } else if (Platform.isWindows) {
-    //TODO: Windows implementation.
-  } else if (Platform.isMacOS) {
-    //TODO: MacOS implementation.
-  }
-
   String storagePath =
       '${(await getApplicationSupportDirectory()).path}/${spaceName}_space';
 
@@ -95,15 +78,6 @@ Future<bool> createNewSpace(String spaceName) async {
 
 ///Get the spaces on this device.
 Future<List<String>> getSpacesOnDevice() async {
-  if (Platform.isAndroid) {
-  } else if (Platform.isLinux) {
-    //TODO: Linux implementation.
-  } else if (Platform.isWindows) {
-    //TODO: Windows implementation.
-  } else if (Platform.isMacOS) {
-    //TODO: MacOS implementation.
-  }
-
   List<String> existingSpaces = [];
   Directory directory = (await getApplicationSupportDirectory());
   for (var element in directory.listSync()) {
