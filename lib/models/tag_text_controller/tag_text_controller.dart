@@ -1,8 +1,8 @@
-import 'package:flutter/widgets.dart';
-import '../../export.dart';
+import 'package:tswiri_database/export.dart';
 
-///The basic TagTextController.
-class TagTextController extends ChangeNotifier {
+///A wrapper around the tag text database.
+///
+class TagTextController {
   TagTextController({
     required this.assignedTags,
   });
@@ -17,7 +17,6 @@ class TagTextController extends ChangeNotifier {
   void addTag(TagText tagText) {
     //Add to assigned tags.
     assignedTags.add(tagText.id);
-    notifyListeners();
   }
 
   ///Remove an assigned tag.
@@ -49,6 +48,5 @@ class TagTextController extends ChangeNotifier {
           .take(15)
           .toList();
     }
-    notifyListeners();
   }
 }
