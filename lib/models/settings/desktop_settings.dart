@@ -14,7 +14,7 @@ Future<void> loadDesktopSettings() async {
   //Color Mode.
   colorModeEnabled = prefs.getBool(colorModeEnabledPref) ?? false;
 
-  //Spaces
-  currentSpacePath = prefs.getString(currentSpacePathPref) ??
-      '${(await getApplicationSupportDirectory()).path}/main_space';
+  // //Spaces
+  // currentSpacePath = prefs.getString(currentSpacePathPref) ??
+  //     '${(await getApplicationSupportDirectory()).path}/main_space';
 }

@@ -5,9 +5,9 @@ String colorModeEnabledPref = 'colorModeEnabled';
 //Isar version
 int isarVersion = 1;
 
-//Current Space.
-String? currentSpacePath;
-String currentSpacePathPref = 'currentSpacePath';
+// //Current Space.
+// String? currentSpacePath;
+// String currentSpacePathPref = 'currentSpacePath';
 
 ///Default Barcode Size.
 double defaultBarcodeSize = 80;

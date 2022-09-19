@@ -10,6 +10,7 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:tswiri_database/models/settings/global_settings.dart';
+import 'package:tswiri_database/tswiri_database.dart';
 
 class GoogleDriveManager {
   GoogleDriveManager({
@@ -60,7 +61,7 @@ class GoogleDriveManager {
     String sunbirdFolderID = (await getSunbirdFolderID())!;
 
     const mimeType = "application/vnd.google-apps.folder";
-    String folderName = currentSpacePath!.split('/').last;
+    String folderName = isarDirectory!.path.split('/').last;
 
     try {
       final found = await driveApi.files.list(
