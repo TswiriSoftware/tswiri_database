@@ -334,7 +334,7 @@ class ImageData {
 
     return ImageData(
       photoFile: photoFile,
-      size: photo.getPhotoSize(),
+      size: photo.photoSize,
       rotation: InputImageRotation.rotation0deg,
       photoLabels: photoLabels,
       mlPhotoLabels: mlPhotoLabels,
