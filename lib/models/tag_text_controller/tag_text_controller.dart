@@ -1,24 +1,54 @@
-import 'package:tswiri_database/collections/tag_text/tag_text.dart';
+import 'package:flutter/widgets.dart';
+import '../../export.dart';
 
 ///The basic TagTextController.
-class TagTextController {
+class TagTextController extends ChangeNotifier {
   TagTextController({
     required this.assignedTags,
   });
 
-  ///The list of assigned tags.
-  List<TagText> assignedTags;
+  ///The list of currently assigned tags.
+  Set<int> assignedTags;
 
   ///The list of tags to display.
   List<TagText> displayTags = [];
 
   ///Add a new tag to assigned tags.
   void addTag(TagText tagText) {
-    //TODO:
+    //Add to assigned tags.
+    assignedTags.add(tagText.id);
+    notifyListeners();
   }
 
   ///Remove an assigned tag.
-  void removeTag(TagText tagText) {
-    //TODO:
+  void removeTag(int tagTextID) {
+    //Remove from assigned tags.
+    assignedTags.removeWhere((element) => element == tagTextID);
+  }
+
+  ///Search the tag text table for matching tagtexts.
+  void searchTags(String? enteredKeyword) {
+    if (enteredKeyword != null && enteredKeyword.isNotEmpty) {
+      displayTags = isar!.tagTexts
+          .filter()
+          .textContains(enteredKeyword, caseSensitive: false)
+          .and()
+          .not()
+          .group((q) => q.repeat(
+              assignedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
+          .findAllSync()
+          .take(15)
+          .toList();
+    } else {
+      displayTags = isar!.tagTexts
+          .filter()
+          .not()
+          .group((q) => q.repeat(
+              assignedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
+          .findAllSync()
+          .take(15)
+          .toList();
+    }
+    notifyListeners();
   }
 }
