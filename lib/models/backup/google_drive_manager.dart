@@ -143,7 +143,7 @@ class GoogleDriveManager {
 
   Future<bool> uploadFile(
     File file,
-    Function(String) progressCallback,
+    Function(String) eventCallback,
   ) async {
     String? folderId = await getSpaceFolderID();
 
@@ -156,7 +156,7 @@ class GoogleDriveManager {
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
 
-      progressCallback('Uploading 0%');
+      eventCallback('Uploading 0%');
       int totalSize = file.lengthSync();
       int byteCount = 0;
 
@@ -169,7 +169,7 @@ class GoogleDriveManager {
                   StreamTransformer.fromHandlers(handleData: (data, sink) {
                     byteCount += data.length;
                     double uploadProgress = (byteCount / totalSize) * 100;
-                    progressCallback(
+                    eventCallback(
                         'Uploading: ${uploadProgress.toStringAsFixed(2)}%');
                     sink.add(data);
                   }, handleError: (error, stackTrace, sink) {
@@ -187,7 +187,7 @@ class GoogleDriveManager {
 
   Future<File?> downloadFile(
     drive.File file,
-    Function(String) progressCallback,
+    Function(String) eventCallback,
   ) async {
     drive.Media selectedFile = await driveApi.files.get(file.id!,
         downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
@@ -202,9 +202,9 @@ class GoogleDriveManager {
       downloadedFile.createSync(recursive: true);
     }
 
-    progressCallback('downloading: 0%');
+    eventCallback('Downloading: 0%');
     int totalSize = selectedFile.length ?? 0;
-    int downloadedSize = 0;
+    int byteCount = 0;
 
     List<int> dataStore = [];
 
@@ -215,16 +215,16 @@ class GoogleDriveManager {
     selectedFile.stream.listen((data) {
       log("DataReceived: ${data.length}");
       dataStore.insertAll(dataStore.length, data);
-      downloadedSize += data.length;
-      double progress = (downloadedSize / totalSize) * 100;
-      progressCallback('downloading: ${progress.toStringAsFixed(2)}%');
+      byteCount += data.length;
+      double progress = (byteCount / totalSize) * 100;
+      eventCallback('Downloading: ${progress.toStringAsFixed(2)}%');
     }, onDone: () {
-      log("Task Done");
+      // log("Task Done");
       downloadedFile.writeAsBytes(dataStore);
-      log("File saved at ${downloadedFile.path}");
+      // log("File saved at ${downloadedFile.path}");
       completer.complete(downloadedFile);
     }, onError: (error) {
-      log("Some Error");
+      // log("Some Error");
       completer.complete(null);
     });
 
