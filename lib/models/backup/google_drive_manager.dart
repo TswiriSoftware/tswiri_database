@@ -164,10 +164,11 @@ class GoogleDriveManager {
           .create(
             fileToUpload,
             uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
+            uploadOptions: drive.ResumableUploadOptions(chunkSize: 256),
           )
           .asStream()
           .listen((event) {
-        log(event.size.toString(), name: 'Upload progress');
+        log(event.toString());
       });
       return true;
     }
