@@ -168,8 +168,7 @@ class GoogleDriveManager {
 
   Future<File?> downloadFile(drive.File file) async {
     drive.Media selectedFile = await driveApi.files.get(file.id!,
-        downloadOptions: drive.DownloadOptions.fullMedia,
-        $fields: "files(size)") as drive.Media;
+        downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
     log('file size: ${selectedFile.length ?? 0 * 0.000001} mb',
         name: 'Download');
