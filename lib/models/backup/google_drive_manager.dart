@@ -160,6 +160,8 @@ class GoogleDriveManager {
       int totalSize = file.lengthSync();
       int byteCount = 0;
 
+      var completer = Completer<bool>();
+
       await driveApi.files.create(
         fileToUpload,
         uploadMedia: drive.Media(
@@ -174,11 +176,12 @@ class GoogleDriveManager {
                     //  print(error.toString());
                   }, handleDone: (sink) {
                     sink.close();
+                    completer.complete(true);
                   }),
                 ),
             file.lengthSync()),
       );
-      return true;
+      return completer.future;
     }
   }
 
