@@ -158,20 +158,34 @@ class GoogleDriveManager {
 
       progressCallback('uploading 0%');
       int totalSize = file.lengthSync();
-      int uploadedSize = 0;
+      int byteCount = 0;
 
-      driveApi.files
-          .create(
-            fileToUpload,
-            uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
-            uploadOptions: drive.ResumableUploadOptions(),
-          )
-          .asStream()
-          .listen((event) {
-        log(event.toString());
-      });
+      Stream<List<int>> streamUpload = file.openRead().transform(
+            StreamTransformer.fromHandlers(handleData: (data, sink) {
+              byteCount += data.length;
+              double uploadProgress = (byteCount / totalSize) * 100;
+              progressCallback(
+                  'downloading: ${uploadProgress.toStringAsFixed(2)}%');
+              sink.add(data);
+            }, handleError: (error, stackTrace, sink) {
+              //  print(error.toString());
+            }, handleDone: (sink) {
+              sink.close();
+            }),
+          );
+
+      await driveApi.files.create(
+        fileToUpload,
+        uploadMedia: drive.Media(streamUpload, file.lengthSync()),
+      );
       return true;
     }
+  }
+
+  Stream<List<int>> fileSteam(File file, Function(String) callback) {
+    file.openRead().asBroadcastStream().listen((event) {});
+
+    return file.openRead();
   }
 
   Future<File?> downloadFile(
