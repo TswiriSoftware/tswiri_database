@@ -141,32 +141,39 @@ class GoogleDriveManager {
     }
   }
 
-  Future<bool> uploadFile(File file) async {
+  Future<bool> uploadFile(
+    File file,
+    // Function(String) progressCallback,
+  ) async {
     String? folderId = await getSpaceFolderID();
 
     if (folderId == null) {
       return false;
     } else {
-      log('file size: ${file.lengthSync() * 0.000001} mb', name: 'Upload');
+      log('file size: ${file.lengthSync()}', name: 'Upload');
+
       drive.File fileToUpload = drive.File();
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
 
-      // await
+      // progressCallback('uploading 0%');
+      // int totalSize = file.lengthSync();
+      // int dowloadedSize = 0;
       driveApi.files
           .create(
             fileToUpload,
             uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
           )
           .asStream()
-          .listen((event) {
-        log(event.toString());
-      });
+          .listen((event) {});
       return true;
     }
   }
 
-  Future<File?> downloadFile(drive.File file) async {
+  Future<File?> downloadFile(
+    drive.File file,
+    Function(String) progressCallback,
+  ) async {
     drive.Media selectedFile = await driveApi.files.get(file.id!,
         downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
@@ -180,6 +187,10 @@ class GoogleDriveManager {
       downloadedFile.createSync(recursive: true);
     }
 
+    progressCallback('downloading: 0%');
+    int totalSize = selectedFile.length ?? 0;
+    int downloadedSize = 0;
+
     List<int> dataStore = [];
 
     var completer = Completer<File?>();
@@ -189,6 +200,9 @@ class GoogleDriveManager {
     selectedFile.stream.listen((data) {
       log("DataReceived: ${data.length}");
       dataStore.insertAll(dataStore.length, data);
+      downloadedSize += data.length;
+      double progress = (downloadedSize / totalSize) * 100;
+      progressCallback('downloading: ${progress.toStringAsFixed(2)}%');
     }, onDone: () {
       log("Task Done");
       downloadedFile.writeAsBytes(dataStore);
