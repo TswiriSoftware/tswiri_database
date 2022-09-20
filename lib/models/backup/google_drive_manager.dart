@@ -156,7 +156,7 @@ class GoogleDriveManager {
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
 
-      progressCallback('uploading 0%');
+      progressCallback('Uploading 0%');
       int totalSize = file.lengthSync();
       int byteCount = 0;
 
@@ -170,7 +170,7 @@ class GoogleDriveManager {
                     byteCount += data.length;
                     double uploadProgress = (byteCount / totalSize) * 100;
                     progressCallback(
-                        'uploading: ${uploadProgress.toStringAsFixed(2)}%');
+                        'Uploading: ${uploadProgress.toStringAsFixed(2)}%');
                     sink.add(data);
                   }, handleError: (error, stackTrace, sink) {
                     //  print(error.toString());
