@@ -171,10 +171,8 @@ class GoogleDriveManager {
         downloadOptions: drive.DownloadOptions.fullMedia,
         $fields: "files(size)") as drive.Media;
 
-    drive.File fileSize = await driveApi.files
-        .get(file.id!, $fields: "files(size)") as drive.File;
-
-    log('file size: ${fileSize.size ?? 0 * 0.000001} mb', name: 'Download');
+    log('file size: ${selectedFile.length ?? 0 * 0.000001} mb',
+        name: 'Download');
 
     File downloadedFile =
         File('${(await getTemporaryDirectory()).path}/download/${file.name}');
