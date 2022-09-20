@@ -143,7 +143,7 @@ class GoogleDriveManager {
 
   Future<bool> uploadFile(
     File file,
-    // Function(String) progressCallback,
+    Function(String) progressCallback,
   ) async {
     String? folderId = await getSpaceFolderID();
 
@@ -156,16 +156,19 @@ class GoogleDriveManager {
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
 
-      // progressCallback('uploading 0%');
-      // int totalSize = file.lengthSync();
-      // int dowloadedSize = 0;
+      progressCallback('uploading 0%');
+      int totalSize = file.lengthSync();
+      int uploadedSize = 0;
+
       driveApi.files
           .create(
             fileToUpload,
             uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
           )
           .asStream()
-          .listen((event) {});
+          .listen((event) {
+        log(event.size.toString(), name: 'Upload progress');
+      });
       return true;
     }
   }
