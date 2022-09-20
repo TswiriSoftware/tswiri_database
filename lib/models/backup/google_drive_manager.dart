@@ -132,7 +132,7 @@ class GoogleDriveManager {
         spaces: 'drive',
         q: "'$sunbirdFolderId' in parents and trashed = false",
         orderBy: "createdTime",
-        $fields: "files(id, name, createdTime)");
+        $fields: "files(id, name, createdTime, size)");
 
     if (fileList.files != null && fileList.files!.isNotEmpty) {
       return fileList.files!.last;
@@ -147,9 +147,11 @@ class GoogleDriveManager {
     if (folderId == null) {
       return false;
     } else {
+      log('file size: ${file.lengthSync() * 0.000001} mb', name: 'Upload');
       drive.File fileToUpload = drive.File();
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
+
       // await
       driveApi.files
           .create(
@@ -166,7 +168,13 @@ class GoogleDriveManager {
 
   Future<File?> downloadFile(drive.File file) async {
     drive.Media selectedFile = await driveApi.files.get(file.id!,
-        downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+        downloadOptions: drive.DownloadOptions.fullMedia,
+        $fields: "files(size)") as drive.Media;
+
+    drive.File fileSize = await driveApi.files
+        .get(file.id!, $fields: "files(size)") as drive.File;
+
+    log('file size: ${fileSize.size ?? 0 * 0.000001} mb', name: 'Download');
 
     File downloadedFile =
         File('${(await getTemporaryDirectory()).path}/download/${file.name}');
