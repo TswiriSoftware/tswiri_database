@@ -114,8 +114,6 @@ Future<bool?> restoreBackupFile({
     }
   });
 
-  await clearTemporaryDirectory();
-
   return completer.future;
 }
 
