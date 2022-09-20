@@ -150,10 +150,16 @@ class GoogleDriveManager {
       drive.File fileToUpload = drive.File();
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
-      await driveApi.files.create(
-        fileToUpload,
-        uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
-      );
+      // await
+      driveApi.files
+          .create(
+            fileToUpload,
+            uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
+          )
+          .asStream()
+          .listen((event) {
+        log(event.toString());
+      });
       return true;
     }
   }
