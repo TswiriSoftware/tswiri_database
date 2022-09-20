@@ -165,7 +165,7 @@ class GoogleDriveManager {
               byteCount += data.length;
               double uploadProgress = (byteCount / totalSize) * 100;
               progressCallback(
-                  'downloading: ${uploadProgress.toStringAsFixed(2)}%');
+                  'uploading: ${uploadProgress.toStringAsFixed(2)}%');
               sink.add(data);
             }, handleError: (error, stackTrace, sink) {
               //  print(error.toString());
