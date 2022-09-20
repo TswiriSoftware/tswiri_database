@@ -164,7 +164,7 @@ class GoogleDriveManager {
           .create(
             fileToUpload,
             uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
-            uploadOptions: drive.ResumableUploadOptions(chunkSize: 256),
+            uploadOptions: drive.ResumableUploadOptions(),
           )
           .asStream()
           .listen((event) {
