@@ -179,6 +179,8 @@ class GoogleDriveManager {
 
     var completer = Completer<File?>();
 
+    log(selectedFile.length.toString());
+
     selectedFile.stream.listen((data) {
       log("DataReceived: ${data.length}");
       dataStore.insertAll(dataStore.length, data);
