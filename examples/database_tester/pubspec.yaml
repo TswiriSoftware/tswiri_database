@@ -31,7 +31,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
+  tswiri_database:
+    path: ../../
+  
+  tswiri_widgets:
+    git:
+      url: https://github.com/TswiriSoftware/tswiri_widgets.git
+      ref: master
 
+  provider: ^6.0.3
+  path_provider: ^2.0.11
+  flutter_isolate: ^2.0.2
+  image: ^3.2.0
+  flutter_archive: ^5.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -61,7 +74,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   # assets:
-    - backups/main_space_2022_09_20_1.zip
+  #   - main_space_2022_09_20_1.zip
+
+  assets:
+    - test_backup.zip
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

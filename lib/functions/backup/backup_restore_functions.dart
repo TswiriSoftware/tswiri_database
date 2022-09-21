@@ -90,7 +90,6 @@ Future<bool?> restoreBackupFile({
       isarVersion.toString(),
       photoDirectory!.path,
       backupFile.path,
-      (await getExternalStorageDirectory())!.path,
     ],
   );
 
