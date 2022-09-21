@@ -21,11 +21,6 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin camera_android, io.flutter.plugins.camera.CameraPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.kineapps.flutterarchive.FlutterArchivePlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin flutter_archive, com.kineapps.flutterarchive.FlutterArchivePlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new com.rmawatson.flutterisolate.FlutterIsolatePlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin flutter_isolate, com.rmawatson.flutterisolate.FlutterIsolatePlugin", e);

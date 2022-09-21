@@ -1,19 +1,18 @@
-import 'dart:developer';
+import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
-
-import 'package:flutter_archive/flutter_archive.dart';
 import 'package:intl/intl.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/mobile_database.dart';
+import 'package:archive/archive_io.dart';
 
 Future<void> createBackup(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.
-  String isarDirectory = init[1]; //[1] Isar Directory.
-  String temporaryDirectory = init[2]; //[2] Backup folder.
+  String isarDirectoryPath = init[1]; //[1] Isar Directory.
+  String outputDirectoryPath = init[2]; //[2] Backup folder.
   String isarVersion = init[3]; //[3] isarVersion.
-  String photoDirectory = init[4]; //[4] photoDirectory.
+  String photoDirectoryPath = init[4]; //[4] photoDirectory.
   String fileName = init[5]; //[5] fileName.
 
   // log(isarDirectory, name: 'Isar Directory');
@@ -25,13 +24,43 @@ Future<void> createBackup(List init) async {
   ]);
 
   //2. Initiate isar.
-  Isar isar = initiateMobileIsar(directory: isarDirectory, inspector: false);
+  Isar isar =
+      initiateMobileIsar(directory: isarDirectoryPath, inspector: false);
+
+  await createBackupFunction(
+    isarDirectoryPath: isarDirectoryPath,
+    temporaryDirectoryPath: outputDirectoryPath,
+    photoDirectoryPath: photoDirectoryPath,
+    isarVersion: isarVersion,
+    fileName: fileName,
+    eventCallback: (event) {
+      sendPort.send(event);
+    },
+    isar: isar,
+  );
+}
+
+Future<File?> createBackupFunction({
+  required String isarDirectoryPath,
+  required String temporaryDirectoryPath,
+  required String photoDirectoryPath,
+  required String isarVersion,
+  required String fileName,
+  required Function(List<String> event) eventCallback,
+  required Isar isar,
+}) async {
+  var completer = Completer<File?>();
+
+  eventCallback([
+    'progress',
+    'Starting',
+  ]);
 
   //3. Isar Data Folder.
-  Directory isarDataFolder = Directory('$isarDirectory/isar');
+  Directory isarDataFolder = Directory('$isarDirectoryPath/isar');
 
   //4. Backup Directory.
-  Directory backupDirectory = Directory('$temporaryDirectory/backups/');
+  Directory backupDirectory = Directory('$temporaryDirectoryPath/backups/');
   if (!backupDirectory.existsSync()) {
     backupDirectory.create(recursive: true);
   }
@@ -70,7 +99,7 @@ Future<void> createBackup(List init) async {
   //8. Copy over all photos to new directory.
   List<Photo> photos = isar.photos.where().findAllSync();
 
-  sendPort.send([
+  eventCallback([
     'progress',
     'Creating: 0.0%',
   ]);
@@ -79,12 +108,12 @@ Future<void> createBackup(List init) async {
   int x = 0;
 
   for (var photo in photos) {
-    sendPort.send([
+    eventCallback([
       'progress',
       'Creating: ${((x / files) * 100).toStringAsFixed(2)}%',
     ]);
 
-    File photoFile = File(photo.getPhotoPath(directory: photoDirectory));
+    File photoFile = File(photo.getPhotoPath(directory: photoDirectoryPath));
 
     photoFile
         .copySync('$newBackupPhotosPath${photo.photoName}.${photo.extention}');
@@ -105,42 +134,39 @@ Future<void> createBackup(List init) async {
     File isarFile = File(file.path);
     isarFile.copySync(isarBackupDirectory.path + isarFile.path.split('/').last);
     x++;
-    sendPort.send([
+
+    eventCallback([
       'progress',
       'Creating: ${((x / files) * 100).toStringAsFixed(2)}%',
     ]);
   }
 
   try {
-    sendPort.send([
+    eventCallback([
       'progress',
       'Compressing',
     ]);
 
-    final zipFile = File('$temporaryDirectory/${fileName}_$isarVersion.zip');
-    await ZipFile.createFromDirectory(
-      sourceDir: newBackupDirectory,
-      zipFile: zipFile,
-      recurseSubDirs: true,
-      includeBaseDirectory: false,
-      onZipping: (filePath, isDirectory, progress) {
-        sendPort.send([
-          'progress',
-          'Compressing: ${progress.toStringAsFixed(2)}%',
-        ]);
-        return ZipFileOperation.includeItem;
-      },
-    );
+    var encoder = ZipFileEncoder();
+    encoder.create('$temporaryDirectoryPath/${fileName}_$isarVersion.zip');
+    encoder.addDirectory(Directory('$isarDirectoryPath/isar'));
+    encoder.addDirectory(Directory('$isarDirectoryPath/photos'));
+    encoder.close();
 
-    sendPort.send([
+    eventCallback([
       'path',
-      zipFile.path,
+      '$temporaryDirectoryPath/${fileName}_$isarVersion.zip',
     ]);
+
+    completer
+        .complete(File('$temporaryDirectoryPath/${fileName}_$isarVersion.zip'));
   } catch (e) {
     // log(e.toString());
   }
 
-  sendPort.send([
+  eventCallback([
     'done',
   ]);
+
+  return completer.future;
 }

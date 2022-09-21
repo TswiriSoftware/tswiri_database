@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/backup/backup_restore_functions.dart';
+import 'package:tswiri_database/functions/backup/create_backup.dart';
 import 'package:tswiri_database/functions/backup/restore_backup.dart';
 import 'package:tswiri_database/mobile_database.dart';
 import 'package:tswiri_database/models/settings/app_settings.dart';
@@ -78,6 +79,23 @@ class _MyHomePageState extends State<MyHomePage> {
           Card(
             child: ElevatedButton(
               onPressed: () async {
+                File restoreFile = await getFileFromAssets('test_backup.zip');
+
+                await restoreBackupFunction(
+                  eventCallback: (event) => log(event.toString()),
+                  selectedFilePath: restoreFile.path,
+                  isarDirectoryPath: isarDirectory!.path,
+                  temporaryDirectoryPath: (await getTemporaryDirectory()).path,
+                  photoDirectoryPath: photoDirectory!.path,
+                  isarVersion: '1',
+                );
+              },
+              child: const Text('Import Database'),
+            ),
+          ),
+          Card(
+            child: ElevatedButton(
+              onPressed: () async {
                 // File restoreFile = await getFileFromAssets('test_backup.zip');
 
                 // await restoreBackupFunction(
@@ -88,8 +106,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 //   photoDirectoryPath: photoDirectory!.path,
                 //   isarVersion: '1',
                 // );
+
+                File? file = await createBackupFunction(
+                    isarDirectoryPath: isarDirectory!.path,
+                    temporaryDirectoryPath:
+                        (await getApplicationSupportDirectory()).path,
+                    photoDirectoryPath: photoDirectory!.path,
+                    isarVersion: '1',
+                    fileName: 'backup',
+                    eventCallback: (event) => log(
+                          event.toString(),
+                        ),
+                    isar: isar!);
+
+                if (file != null) {
+                  await file.create();
+                }
+
+                log(file?.path ?? 'error dunno', name: 'Zip File Path');
               },
-              child: const Text('Import Database'),
+              child: const Text('Export Database'),
             ),
           ),
         ],

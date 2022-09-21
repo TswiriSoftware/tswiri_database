@@ -1,22 +1,43 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable
 
 import 'dart:developer';
+import 'package:archive/archive_io.dart';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:flutter_archive/flutter_archive.dart';
+// import 'package:flutter_archive/flutter_archive.dart';
 import 'package:image/image.dart' as img;
 
 ///Restores a backup zip file.
 Future<void> restoreBackup(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.
-  String isarDirectory = init[1]; //[1] Isar Directory.
+  String isarDirectoryPath = init[1]; //[1] Isar Directory.
   String temporaryDirectoryPath = init[2]; //[2] Backup folder.
   String isarVersion = init[3]; //[3] isarVersion.
   String photoDirectoryPath = init[4]; //[4] photoDirectory.
   String selectedFilePath = init[5]; //[5] selectedFilePath.
 
+  await restoreBackupFunction(
+    isarDirectoryPath: isarDirectoryPath,
+    temporaryDirectoryPath: temporaryDirectoryPath,
+    photoDirectoryPath: photoDirectoryPath,
+    selectedFilePath: selectedFilePath,
+    isarVersion: isarVersion,
+    eventCallback: (event) {
+      sendPort.send(event);
+    },
+  );
+}
+
+Future<void> restoreBackupFunction({
+  required String isarDirectoryPath,
+  required String temporaryDirectoryPath,
+  required String photoDirectoryPath,
+  required String selectedFilePath,
+  required String isarVersion,
+  required Function(List<String> event) eventCallback,
+}) async {
   //2. Check if database versions match.
   File restoreFile = File(selectedFilePath);
 
@@ -38,24 +59,16 @@ Future<void> restoreBackup(List init) async {
     final zipFile = restoreFile;
     final destinationDir = unzippedDirectory;
     try {
-      sendPort.send([
+      eventCallback([
         'progress',
         'Unzipping',
       ]);
 
-      await ZipFile.extractToDirectory(
-        zipFile: zipFile,
-        destinationDir: destinationDir,
-        onExtracting: (zipEntry, progress) {
-          sendPort.send([
-            'progress',
-            'Unzipping: ${progress.toStringAsFixed(2)}%',
-          ]);
-          return ZipFileOperation.includeItem;
-        },
-      );
+      final inputStream = InputFileStream(zipFile.path);
+      final archive = ZipDecoder().decodeBuffer(inputStream);
+      extractArchiveToDisk(archive, destinationDir.path);
 
-      sendPort.send([
+      eventCallback([
         'progress',
         'Done',
       ]);
@@ -67,12 +80,12 @@ Future<void> restoreBackup(List init) async {
     File restorelLCK = File('${unzippedDirectory.path}/isar/mdbx.lck');
 
     if (restoreDAT.existsSync() && restorelLCK.existsSync()) {
-      sendPort.send([
+      eventCallback([
         'progress',
         'Restoring: 0.0%',
       ]);
 
-      Directory isarDataFolder = Directory(isarDirectory);
+      Directory isarDataFolder = Directory(isarDirectoryPath);
 
       Directory photoDirectory = Directory(photoDirectoryPath);
 
@@ -95,7 +108,8 @@ Future<void> restoreBackup(List init) async {
 
       int numberOfFiles = files.length + 2;
       int x = 2;
-      sendPort.send([
+
+      eventCallback([
         'progress',
         'Restoring: ${((x / numberOfFiles) * 100).toStringAsFixed(2)}%',
       ]);
@@ -104,18 +118,10 @@ Future<void> restoreBackup(List init) async {
       for (var file in files) {
         File photoFile = File(file.path);
 
-        // img.Image image = img.decodeImage(photoFile.readAsBytesSync())!;
-        // img.Image hdImage = img.copyResize(image, width: 720);
-
         String photoName = photoFile.path.split('/').last.split('.').first;
 
         photoFile.copySync(
             '${photoDirectory.path}/${photoFile.path.split('/').last}');
-
-        ///Copy the fullsize image.
-        // File('${photoDirectory.path}/$photoName.jpg')
-        //     .writeAsBytesSync(img.encodeJpg(hdImage));
-
         String photoThumbnailPath =
             '${photoDirectory.path}/${photoName}_thumbnail.jpg';
         img.Image referenceImage =
@@ -125,29 +131,31 @@ Future<void> restoreBackup(List init) async {
             .writeAsBytesSync(img.encodeJpg(thumbnailImage));
 
         x++;
-        sendPort.send([
+
+        eventCallback([
           'progress',
           'Restoring: ${((x / numberOfFiles) * 100).toStringAsFixed(2)}%',
         ]);
       }
 
-      sendPort.send([
+      eventCallback([
+        'progress',
         'Deleting old files.',
       ]);
 
       unzippedDirectory.deleteSync(recursive: true);
 
-      sendPort.send([
+      eventCallback([
         'done',
       ]);
     } else {
-      sendPort.send([
+      eventCallback([
         'error',
         'file_error',
       ]);
     }
   } else {
-    sendPort.send([
+    eventCallback([
       'error',
       'file_error',
     ]);

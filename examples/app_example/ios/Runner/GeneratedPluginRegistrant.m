@@ -18,22 +18,10 @@
 @import file_picker;
 #endif
 
-#if __has_include(<flutter_archive/FlutterArchivePlugin.h>)
-#import <flutter_archive/FlutterArchivePlugin.h>
-#else
-@import flutter_archive;
-#endif
-
 #if __has_include(<flutter_isolate/FlutterIsolatePlugin.h>)
 #import <flutter_isolate/FlutterIsolatePlugin.h>
 #else
 @import flutter_isolate;
-#endif
-
-#if __has_include(<flutter_pdfview/FLTPDFViewFlutterPlugin.h>)
-#import <flutter_pdfview/FLTPDFViewFlutterPlugin.h>
-#else
-@import flutter_pdfview;
 #endif
 
 #if __has_include(<google_mlkit_barcode_scanning/GoogleMlKitBarcodeScanningPlugin.h>)
@@ -119,9 +107,7 @@
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [CameraPlugin registerWithRegistrar:[registry registrarForPlugin:@"CameraPlugin"]];
   [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
-  [FlutterArchivePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterArchivePlugin"]];
   [FlutterIsolatePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterIsolatePlugin"]];
-  [FLTPDFViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPDFViewFlutterPlugin"]];
   [GoogleMlKitBarcodeScanningPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoogleMlKitBarcodeScanningPlugin"]];
   [GoogleMlKitCommonsPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoogleMlKitCommonsPlugin"]];
   [GoogleMlKitImageLabelingPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoogleMlKitImageLabelingPlugin"]];

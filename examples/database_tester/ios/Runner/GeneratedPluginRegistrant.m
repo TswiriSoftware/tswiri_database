@@ -12,12 +12,6 @@
 @import camera_avfoundation;
 #endif
 
-#if __has_include(<flutter_archive/FlutterArchivePlugin.h>)
-#import <flutter_archive/FlutterArchivePlugin.h>
-#else
-@import flutter_archive;
-#endif
-
 #if __has_include(<flutter_isolate/FlutterIsolatePlugin.h>)
 #import <flutter_isolate/FlutterIsolatePlugin.h>
 #else
@@ -82,7 +76,6 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [CameraPlugin registerWithRegistrar:[registry registrarForPlugin:@"CameraPlugin"]];
-  [FlutterArchivePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterArchivePlugin"]];
   [FlutterIsolatePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterIsolatePlugin"]];
   [GoogleMlKitBarcodeScanningPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoogleMlKitBarcodeScanningPlugin"]];
   [GoogleMlKitCommonsPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoogleMlKitCommonsPlugin"]];
