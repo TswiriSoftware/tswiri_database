@@ -43,7 +43,7 @@ dependencies:
   tswiri_widgets:
     git:
       url: https://github.com/TswiriSoftware/tswiri_widgets.git
-      ref: stable
+      ref: master
   
   provider: ^6.0.3
   camera: ^0.10.0+1
