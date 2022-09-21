@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tswiri_database/functions/backup/backup_restore_functions.dart';
 import 'package:tswiri_widgets/colors/colors.dart';
@@ -46,12 +47,12 @@ class _BackupViewState extends State<BackupView> {
       ),
       centerTitle: true,
       actions: [
-        IconButton(
-          onPressed: () {
-            //TODO: Inform user that restoring large files can take a long time.
-          },
-          icon: const Icon(Icons.info),
-        )
+        // IconButton(
+        //   onPressed: () {
+        //     //TODO: Inform user that restoring large files can take a long time.
+        //   },
+        //   icon: const Icon(Icons.info),
+        // )
       ],
     );
   }
@@ -148,6 +149,7 @@ class _BackupViewState extends State<BackupView> {
                   )
                 : Text(selectedFile!.path.split('/').last),
             trailing: ElevatedButton(
+              key: const Key('restore_backup'),
               onPressed: () async {
                 await selectBackupFile();
               },

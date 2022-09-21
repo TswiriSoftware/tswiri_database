@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -26,7 +28,7 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
   Future<drive.File?>? latestFile;
 
   bool _isBusy = false;
-  String process = '';
+  String currentEvent = '';
 
   @override
   void initState() {
@@ -60,12 +62,12 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.info,
-          ),
-        ),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     Icons.info,
+        //   ),
+        // ),
       ],
       centerTitle: true,
     );
@@ -85,7 +87,7 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(process),
+                          Text(currentEvent),
                           const SizedBox(
                             height: 25,
                           ),
@@ -167,6 +169,11 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
   }
 
   Widget _lastBackup(drive.File snapshot) {
+    var dateFormat = DateFormat('yyyy-MM-dd kk:mm');
+    var utcDate = dateFormat.format(snapshot.createdTime!);
+    var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+    String createdDate = dateFormat.format(DateTime.parse(localDate));
+    // DateFormat('yyyy-MM-dd – kk:mm').format(snapshot.createdTime!)
     return ListTile(
       leading: const CircleAvatar(
         child: Icon(Icons.backup_sharp),
@@ -175,32 +182,35 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
         'Last Backup',
         style: Theme.of(context).textTheme.bodyMedium,
       ),
-      subtitle:
-          Text(DateFormat('yyyy-MM-dd – kk:mm').format(snapshot.createdTime!)),
+      subtitle: Text(
+          '$createdDate (${(int.parse(snapshot.size!) * 0.000001).toStringAsFixed(2)} MB)'),
       trailing: IconButton(
         onPressed: () async {
           setState(() {
             _isBusy = true;
           });
 
-          setProcess('Creating new backup');
-          log('Creating new backup');
+          setEvent('Creating new backup');
+          // log('Creating new backup');
           File? file = await createBackupFile(
             progressCallback: (event) {
-              //TODO: implement this.
+              setEvent(event);
             },
             fileName: generateBackupFileName(),
           );
 
-          log(file?.path.toString() ?? 'aa');
-
           if (file != null) {
-            setProcess('Uploading');
-            _backup!.uploadFile(file, (event) {
-              setProcess(event);
-            });
+            setEvent('Uploading');
+            await _backup!.uploadFile(
+              file,
+              (event) {
+                log(event.toString());
+                setEvent(event);
+              },
+            );
+            setEvent('Confirming Upload');
             await Future.delayed(const Duration(milliseconds: 2500));
-            setProcess('done');
+            setEvent('done');
             latestFile = _backup!.getLatestBackup();
           } else {
             //TODO: error
@@ -222,23 +232,27 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
           _isBusy = true;
         });
 
-        setProcess('Creating new backup');
+        setEvent('Creating new backup');
 
         File? file = await createBackupFile(
           progressCallback: (event) {
-            ///TODO: implement this.
+            setEvent(event);
           },
           fileName: generateBackupFileName(),
         );
 
         if (file != null) {
-          setProcess('Uploading');
-          log('Uploading');
-          bool uploaded = await _backup!.uploadFile(file, (event) {
-            setProcess(event);
-          });
-          setProcess('done');
-          log('done');
+          setEvent('Uploading');
+          // log('Uploading');
+          bool uploaded = await _backup!.uploadFile(
+            file,
+            (event) {
+              // setEvent(event);
+              log('message');
+            },
+          );
+          setEvent('done');
+          // log('done');
           await Future.delayed(const Duration(milliseconds: 200));
           latestFile = _backup!.getLatestBackup();
         } else {
@@ -292,17 +306,17 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
               _isBusy = true;
             });
 
-            setProcess('Downloading');
+            setEvent('Downloading');
             File? downloadedFile =
                 await _backup!.downloadFile(snapshot, (event) {
-              setProcess(event);
+              setEvent(event);
             });
 
             if (downloadedFile != null) {
-              setProcess('Restoring');
+              setEvent('Restoring');
               await restoreBackupFile(
                   progressCallback: (event) {
-                    setProcess(event);
+                    setEvent(event);
                   },
                   backupFile: File(downloadedFile.path));
             }
@@ -335,8 +349,8 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
               //check what spaces exist.
               List<String> existingSpaces = await getSpacesOnDevice();
 
-              log(existingSpaces.toString(), name: 'Existing Spaces');
-              log(spaces.toString(), name: 'Google Spaces');
+              // log(existingSpaces.toString(), name: 'Existing Spaces');
+              // log(spaces.toString(), name: 'Google Spaces');
 
               int numberOfRestoredSpaces = 0;
               for (String space in spaces) {
@@ -401,7 +415,7 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
       try {
         await googleSignIn.signIn();
       } catch (e) {
-        log(e.toString());
+        // log(e.toString());
       }
 
       if (await googleSignIn.isSignedIn() && googleSignIn.currentUser != null) {
@@ -441,9 +455,9 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
     }
   }
 
-  void setProcess(String value) {
+  void setEvent(String value) {
     setState(() {
-      process = value;
+      currentEvent = value;
     });
   }
 }

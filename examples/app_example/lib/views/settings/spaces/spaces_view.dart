@@ -1,10 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/models/settings/global_settings.dart';
 import 'package:tswiri_widgets/colors/colors.dart';
 
 class SpacesView extends StatefulWidget {
@@ -20,6 +20,8 @@ class _SpacesViewState extends State<SpacesView> {
   @override
   void initState() {
     _listofFiles();
+    log(isarDirectory!.path.toString());
+    log(photoDirectory!.path.toString());
     super.initState();
   }
 
@@ -170,7 +172,9 @@ class _SpacesViewState extends State<SpacesView> {
     setState(() {
       spaceDirectories.clear();
       for (var element in directory.listSync()) {
-        if (element is Directory) spaceDirectories.add(element);
+        if (element is Directory && element.path.split('_').last == 'space') {
+          spaceDirectories.add(element);
+        }
       }
     });
   }
