@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:developer';
 import 'dart:io';
 
@@ -198,7 +196,9 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
 
           if (file != null) {
             setProcess('Uploading');
-            _backup!.uploadFile(file);
+            _backup!.uploadFile(file, (event) {
+              setProcess(event);
+            });
             await Future.delayed(const Duration(milliseconds: 2500));
             setProcess('done');
             latestFile = _backup!.getLatestBackup();
@@ -234,7 +234,9 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
         if (file != null) {
           setProcess('Uploading');
           log('Uploading');
-          bool uploaded = await _backup!.uploadFile(file);
+          bool uploaded = await _backup!.uploadFile(file, (event) {
+            setProcess(event);
+          });
           setProcess('done');
           log('done');
           await Future.delayed(const Duration(milliseconds: 200));
@@ -291,13 +293,16 @@ class _GoogleDriveViewState extends State<GoogleDriveView> {
             });
 
             setProcess('Downloading');
-            File? downloadedFile = await _backup!.downloadFile(snapshot);
+            File? downloadedFile =
+                await _backup!.downloadFile(snapshot, (event) {
+              setProcess(event);
+            });
 
             if (downloadedFile != null) {
               setProcess('Restoring');
               await restoreBackupFile(
                   progressCallback: (event) {
-                    //TODO: implement this.
+                    setProcess(event);
                   },
                   backupFile: File(downloadedFile.path));
             }

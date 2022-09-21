@@ -55,14 +55,14 @@ class _SpacesViewState extends State<SpacesView> {
   Widget _space(Directory directory) {
     return Card(
       child: ListTile(
-        leading: directory.path == currentSpacePath
+        leading: directory.path == isarDirectory!.path
             ? const Icon(
                 Icons.square,
                 color: tswiriOrange,
               )
             : const Icon(Icons.square),
         title: Text(directory.path.split('/').last),
-        trailing: directory.path == currentSpacePath
+        trailing: directory.path == isarDirectory!.path
             ? const Text('Current Space')
             : ElevatedButton(
                 onPressed: () async {

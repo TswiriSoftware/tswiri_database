@@ -150,7 +150,7 @@ class ImageData {
     img.Image referenceImage = img.decodeJpg(photoFile.readAsBytesSync())!;
 
     //TODO: resize image to 720p
-    log(referenceImage.width.toString(), name: 'Image Width');
+    // log(referenceImage.width.toString(), name: 'Image Width');
 
     //6. Create Thumbnail.
     img.Image thumbnailImage = img.copyResize(referenceImage, width: 120);
@@ -159,7 +159,7 @@ class ImageData {
     //8. Save the Image.
     photoFile.copySync(photoFilePath);
 
-    log('PhotoFilePath: $photoFilePath');
+    // log('PhotoFilePath: $photoFilePath');
 
     //9. Create Photo Entry
     Photo newPhoto = Photo()
@@ -330,11 +330,11 @@ class ImageData {
     // log('mlTextElements: ${mlTextElements.length}');
     // log('photoLabels: ${photoLabels.length}');
 
-    log(photo.getPhotoSize().toString());
+    // log(photo.getPhotoSize().toString());
 
     return ImageData(
       photoFile: photoFile,
-      size: photo.getPhotoSize(),
+      size: photo.photoSize,
       rotation: InputImageRotation.rotation0deg,
       photoLabels: photoLabels,
       mlPhotoLabels: mlPhotoLabels,

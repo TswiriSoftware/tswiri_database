@@ -16,8 +16,8 @@ Future<void> createBackup(List init) async {
   String photoDirectory = init[4]; //[4] photoDirectory.
   String fileName = init[5]; //[5] fileName.
 
-  log(isarDirectory, name: 'Isar Directory');
-  log(photoDirectory, name: 'Photo Directory');
+  // log(isarDirectory, name: 'Isar Directory');
+  // log(photoDirectory, name: 'Photo Directory');
 
   sendPort.send([
     'progress',
@@ -43,7 +43,7 @@ Future<void> createBackup(List init) async {
   Directory newBackupDirectory =
       Directory('${backupDirectory.path}backup_$formattedDate');
 
-  log(newBackupDirectory.path, name: 'Backup Directory');
+  // log(newBackupDirectory.path, name: 'Backup Directory');
 
   if (!newBackupDirectory.existsSync()) {
     newBackupDirectory.createSync(recursive: true);
@@ -63,7 +63,7 @@ Future<void> createBackup(List init) async {
     newBackupPhotos.createSync(recursive: true);
   }
 
-  log(newBackupPhotos.path, name: 'Photo Backup Directory');
+  // log(newBackupPhotos.path, name: 'Photo Backup Directory');
 
   String newBackupPhotosPath = '${newBackupPhotos.path}/';
 
@@ -137,7 +137,7 @@ Future<void> createBackup(List init) async {
       zipFile.path,
     ]);
   } catch (e) {
-    log(e.toString());
+    // log(e.toString());
   }
 
   sendPort.send([

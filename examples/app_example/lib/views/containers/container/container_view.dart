@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:app_example/views/containers/new_container/new_container_view%20copy.dart';
+import 'package:app_example/views/containers/new_container/new_container_view.dart';
 import 'package:app_example/views/containers/parent_card.dart';
 import 'package:app_example/views/ml_kit/barcode_scanner/single_scanner_view.dart';
 import 'package:app_example/views/ml_kit/navigator/navigator_view.dart';

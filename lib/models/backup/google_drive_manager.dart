@@ -10,6 +10,7 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:tswiri_database/models/settings/global_settings.dart';
+import 'package:tswiri_database/tswiri_database.dart';
 
 class GoogleDriveManager {
   GoogleDriveManager({
@@ -60,7 +61,7 @@ class GoogleDriveManager {
     String sunbirdFolderID = (await getSunbirdFolderID())!;
 
     const mimeType = "application/vnd.google-apps.folder";
-    String folderName = currentSpacePath!.split('/').last;
+    String folderName = isarDirectory!.path.split('/').last;
 
     try {
       final found = await driveApi.files.list(
@@ -131,7 +132,7 @@ class GoogleDriveManager {
         spaces: 'drive',
         q: "'$sunbirdFolderId' in parents and trashed = false",
         orderBy: "createdTime",
-        $fields: "files(id, name, createdTime)");
+        $fields: "files(id, name, createdTime, size)");
 
     if (fileList.files != null && fileList.files!.isNotEmpty) {
       return fileList.files!.last;
@@ -140,26 +141,59 @@ class GoogleDriveManager {
     }
   }
 
-  Future<bool> uploadFile(File file) async {
+  Future<bool> uploadFile(
+    File file,
+    Function(String) eventCallback,
+  ) async {
     String? folderId = await getSpaceFolderID();
 
     if (folderId == null) {
       return false;
     } else {
+      log('file size: ${file.lengthSync()}', name: 'Upload');
+
       drive.File fileToUpload = drive.File();
       fileToUpload.parents = [folderId];
       fileToUpload.name = p.basename(file.absolute.path);
+
+      eventCallback('Uploading 0%');
+      int totalSize = file.lengthSync();
+      int byteCount = 0;
+
+      var completer = Completer<bool>();
+
       await driveApi.files.create(
         fileToUpload,
-        uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
+        uploadMedia: drive.Media(
+            file.openRead().transform(
+                  StreamTransformer.fromHandlers(handleData: (data, sink) {
+                    byteCount += data.length;
+                    double uploadProgress = (byteCount / totalSize) * 100;
+                    eventCallback(
+                        'Uploading: ${uploadProgress.toStringAsFixed(2)}%');
+                    sink.add(data);
+                  }, handleError: (error, stackTrace, sink) {
+                    //  print(error.toString());
+                  }, handleDone: (sink) {
+                    sink.close();
+                    completer.complete(true);
+                  }),
+                ),
+            file.lengthSync()),
       );
-      return true;
+      return completer.future;
     }
   }
 
-  Future<File?> downloadFile(drive.File file) async {
+  Future<File?> downloadFile(
+    drive.File file,
+    Function(String) eventCallback,
+  ) async {
     drive.Media selectedFile = await driveApi.files.get(file.id!,
         downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+
+    log('file size: ${selectedFile.length ?? 0 * 0.000001} mb',
+        name: 'Download');
 
     File downloadedFile =
         File('${(await getTemporaryDirectory()).path}/download/${file.name}');
@@ -168,20 +202,29 @@ class GoogleDriveManager {
       downloadedFile.createSync(recursive: true);
     }
 
+    eventCallback('Downloading: 0%');
+    int totalSize = selectedFile.length ?? 0;
+    int byteCount = 0;
+
     List<int> dataStore = [];
 
     var completer = Completer<File?>();
 
+    log(selectedFile.length.toString());
+
     selectedFile.stream.listen((data) {
       log("DataReceived: ${data.length}");
       dataStore.insertAll(dataStore.length, data);
+      byteCount += data.length;
+      double progress = (byteCount / totalSize) * 100;
+      eventCallback('Downloading: ${progress.toStringAsFixed(2)}%');
     }, onDone: () {
-      log("Task Done");
+      // log("Task Done");
       downloadedFile.writeAsBytes(dataStore);
-      log("File saved at ${downloadedFile.path}");
+      // log("File saved at ${downloadedFile.path}");
       completer.complete(downloadedFile);
     }, onError: (error) {
-      log("Some Error");
+      // log("Some Error");
       completer.complete(null);
     });
 
