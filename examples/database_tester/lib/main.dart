@@ -1,22 +1,19 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:database_tester/test_views/database_export_view.dart';
+import 'package:database_tester/test_views/database_import_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/functions/backup/backup_restore_functions.dart';
-import 'package:tswiri_database/functions/backup/create_backup.dart';
-import 'package:tswiri_database/functions/backup/restore_backup.dart';
 import 'package:tswiri_database/mobile_database.dart';
-import 'package:tswiri_database/models/settings/app_settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //Initiate Isar Storage Directories.
-  await initiateIsarDirectory();
+  await initiateSpaceDirectory();
   await initiatePhotoStorage();
+  await initiateThumnailStorage();
 
   //Initiate Isar.
   isar = initiateMobileIsar();
@@ -74,58 +71,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _body() {
     return Center(
-      child: Column(
+      child: GridView.count(
+        crossAxisCount: 10,
         children: [
           Card(
             child: ElevatedButton(
-              onPressed: () async {
-                File restoreFile = await getFileFromAssets('test_backup.zip');
-
-                await restoreBackupFunction(
-                  eventCallback: (event) => log(event.toString()),
-                  selectedFilePath: restoreFile.path,
-                  isarDirectoryPath: isarDirectory!.path,
-                  temporaryDirectoryPath: (await getTemporaryDirectory()).path,
-                  photoDirectoryPath: photoDirectory!.path,
-                  isarVersion: '1',
+              key: const Key('import_test'),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DatabaseImportView(),
+                  ),
                 );
               },
-              child: const Text('Import Database'),
+              child: const Text('import_test'),
             ),
           ),
           Card(
             child: ElevatedButton(
-              onPressed: () async {
-                // File restoreFile = await getFileFromAssets('test_backup.zip');
-
-                // await restoreBackupFunction(
-                //   eventCallback: (event) => log(event.toString()),
-                //   selectedFilePath: restoreFile.path,
-                //   isarDirectoryPath: isarDirectory!.path,
-                //   temporaryDirectoryPath: (await getTemporaryDirectory()).path,
-                //   photoDirectoryPath: photoDirectory!.path,
-                //   isarVersion: '1',
-                // );
-
-                File? file = await createBackupFunction(
-                    isarDirectoryPath: isarDirectory!.path,
-                    temporaryDirectoryPath:
-                        (await getApplicationSupportDirectory()).path,
-                    photoDirectoryPath: photoDirectory!.path,
-                    isarVersion: '1',
-                    fileName: 'backup',
-                    eventCallback: (event) => log(
-                          event.toString(),
-                        ),
-                    isar: isar!);
-
-                if (file != null) {
-                  await file.create();
-                }
-
-                log(file?.path ?? 'error dunno', name: 'Zip File Path');
+              key: const Key('export_test'),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DatabaseExportView(),
+                  ),
+                );
               },
-              child: const Text('Export Database'),
+              child: const Text('export_test'),
             ),
           ),
         ],
@@ -134,12 +106,43 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Future<File> getFileFromAssets(String path) async {
-  final byteData = await rootBundle.load('assets/$path');
+// Card(
+//   child: ElevatedButton(
+//     onPressed: () async {
+      // File restoreFile = await getFileFromAssets('test_backup.zip');
+      // await restoreBackupFunction(
+      //   eventCallback: (event) => log(event.toString()),
+      //   selectedFilePath: restoreFile.path,
+      //   isarDirectoryPath: isarDirectory!.path,
+      //   temporaryDirectoryPath: (await getTemporaryDirectory()).path,
+      //   photoDirectoryPath: photoDirectory!.path,
+      //   isarVersion: '1',
+      // );
+//     },
+//     child: const Text('Import Database'),
+//   ),
+// ),
+// Card(
+//   child: ElevatedButton(
+//     onPressed: () async {
+//       File? file = await createBackupFunction(
+//           isarDirectoryPath: isarDirectory!.path,
+//           temporaryDirectoryPath:
+//               (await getApplicationSupportDirectory()).path,
+//           photoDirectoryPath: photoDirectory!.path,
+//           isarVersion: '1',
+//           fileName: 'backup',
+//           eventCallback: (event) => log(
+//                 event.toString(),
+//               ),
+//           isar: isar!);
 
-  final file = File('${(await getTemporaryDirectory()).path}/$path');
-  await file.writeAsBytes(byteData.buffer
-      .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+//       if (file != null) {
+//         await file.create();
+//       }
 
-  return file;
-}
+//       log(file?.path ?? 'error dunno', name: 'Zip File Path');
+//     },
+//     child: const Text('Export Database'),
+//   ),
+// ),

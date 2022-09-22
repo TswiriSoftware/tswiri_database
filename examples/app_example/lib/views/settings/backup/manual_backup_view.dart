@@ -102,6 +102,8 @@ class _BackupViewState extends State<BackupView> {
 
             String? fileName = await _getBackupFileName();
 
+            log(fileName.toString());
+
             if (fileName != null) {
               File? file = await createBackupFile(
                 progressCallback: (event) {

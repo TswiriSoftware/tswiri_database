@@ -1,27 +1,22 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable
-
-import 'dart:developer';
 import 'package:archive/archive_io.dart';
 import 'dart:io';
 import 'dart:isolate';
-
-// import 'package:flutter_archive/flutter_archive.dart';
 import 'package:image/image.dart' as img;
+import 'package:tswiri_database/functions/general/recreate_directory.dart';
 
 ///Restores a backup zip file.
 Future<void> restoreBackup(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.
-  String isarDirectoryPath = init[1]; //[1] Isar Directory.
+  String spacePath = init[1]; //[1] Isar Directory.
   String temporaryDirectoryPath = init[2]; //[2] Backup folder.
   String isarVersion = init[3]; //[3] isarVersion.
-  String photoDirectoryPath = init[4]; //[4] photoDirectory.
-  String selectedFilePath = init[5]; //[5] selectedFilePath.
+  String selectedFilePath = init[4]; //[5] selectedFilePath.
 
-  await restoreBackupFunction(
-    isarDirectoryPath: isarDirectoryPath,
+  await restoreBackupZipFile(
+    spacePath: spacePath,
     temporaryDirectoryPath: temporaryDirectoryPath,
-    photoDirectoryPath: photoDirectoryPath,
     selectedFilePath: selectedFilePath,
     isarVersion: isarVersion,
     eventCallback: (event) {
@@ -30,103 +25,94 @@ Future<void> restoreBackup(List init) async {
   );
 }
 
-Future<void> restoreBackupFunction({
-  required String isarDirectoryPath,
+Future<void> restoreBackupZipFile({
+  required String spacePath,
   required String temporaryDirectoryPath,
-  required String photoDirectoryPath,
   required String selectedFilePath,
   required String isarVersion,
   required Function(List<String> event) eventCallback,
 }) async {
-  //2. Check if database versions match.
-  File restoreFile = File(selectedFilePath);
+  File zipFile = File(selectedFilePath);
+  Directory temporaryDirectory = Directory(temporaryDirectoryPath);
+  Directory destinationDir = getUnzippedDirectory(temporaryDirectory, zipFile);
 
-  if (restoreFile.path.split('/').last.split('.').last == 'zip') {
-    //Unzip selectedfile.
-    Directory temporaryDirectory = Directory(temporaryDirectoryPath);
+  ///Create if the unzippedDirectory or recreate it if it exists.
+  recreateDirectory(destinationDir);
 
-    //UnzippedDirectory.
-    Directory unzippedDirectory = Directory(
-        '${temporaryDirectory.path}/${restoreFile.path.split('/').last.split('.').first}');
+  if (checkIfFileIsZip(zipFile)) {
+    eventCallback([
+      'progress',
+      'Unzipping',
+    ]);
 
-    if (unzippedDirectory.existsSync()) {
-      unzippedDirectory.deleteSync(recursive: true);
-      unzippedDirectory.createSync();
-    } else {
-      unzippedDirectory.create();
-    }
+    final inputStream = InputFileStream(zipFile.path);
+    final archive = ZipDecoder().decodeBuffer(inputStream);
+    extractArchiveToDisk(archive, destinationDir.path);
 
-    final zipFile = restoreFile;
-    final destinationDir = unzippedDirectory;
-    try {
+    eventCallback([
+      'progress',
+      'Done',
+    ]);
+
+    File mdbxDAT = File('${destinationDir.path}/isar/mdbx.dat');
+    File mdbxLCK = File('${destinationDir.path}/isar/mdbx.lck');
+
+    //Check if mdbx.dat and mdbx.lck exists.
+    if (mdbxDAT.existsSync() && mdbxLCK.existsSync()) {
       eventCallback([
         'progress',
-        'Unzipping',
+        'Restoring database',
       ]);
 
-      final inputStream = InputFileStream(zipFile.path);
-      final archive = ZipDecoder().decodeBuffer(inputStream);
-      extractArchiveToDisk(archive, destinationDir.path);
+      Directory isarCoreDirectory = Directory('$spacePath/isar');
+      Directory photoDirectory = Directory('$spacePath/photos');
+      Directory thumbnailDirectory = Directory('$spacePath/thumbnails');
 
-      eventCallback([
-        'progress',
-        'Done',
-      ]);
-    } catch (e) {
-      log(e.toString());
-    }
+      //Delete mdbx.dat and mdbx.lck.
+      File('${isarCoreDirectory.path}/mdbx.dat').deleteSync();
+      File('${isarCoreDirectory.path}/mdbx.lck').deleteSync();
 
-    File restoreDAT = File('${unzippedDirectory.path}/isar/mdbx.dat');
-    File restorelLCK = File('${unzippedDirectory.path}/isar/mdbx.lck');
-
-    if (restoreDAT.existsSync() && restorelLCK.existsSync()) {
-      eventCallback([
-        'progress',
-        'Restoring: 0.0%',
-      ]);
-
-      Directory isarDataFolder = Directory(isarDirectoryPath);
-
-      Directory photoDirectory = Directory(photoDirectoryPath);
-
-      //Delete these files.
-      File('${isarDataFolder.path}/isar/mdbx.dat').deleteSync();
-      File('${isarDataFolder.path}/isar/mdbx.lck').deleteSync();
-
-      //Copy restored Files over
-      restoreDAT.copySync('${isarDataFolder.path}/isar/mdbx.dat');
-      restorelLCK.copySync('${isarDataFolder.path}/isar/mdbx.lck');
+      //Restore mdbx.dat and mdbx.lck.
+      mdbxDAT.copySync('${isarCoreDirectory.path}/mdbx.dat');
+      mdbxLCK.copySync('${isarCoreDirectory.path}/mdbx.lck');
 
       //Delete all photo files.
       photoDirectory.deleteSync(recursive: true);
-      photoDirectory = await photoDirectory.create();
+      photoDirectory = await photoDirectory.create(recursive: true);
+      thumbnailDirectory = await thumbnailDirectory.create(recursive: true);
 
       //Unzipped Photos.
-      Directory unzippedPhotos = Directory('${unzippedDirectory.path}/photos');
+      Directory unzippedPhotos = Directory('${destinationDir.path}/photos');
 
-      var files = unzippedPhotos.listSync(recursive: true, followLinks: false);
+      //List of all the photos.
+      List<FileSystemEntity> photoFiles =
+          unzippedPhotos.listSync(recursive: true, followLinks: false);
 
-      int numberOfFiles = files.length + 2;
+      int numberOfFiles = photoFiles.length + 2;
       int x = 2;
 
       eventCallback([
         'progress',
-        'Restoring: ${((x / numberOfFiles) * 100).toStringAsFixed(2)}%',
+        'Restoring Photos',
       ]);
 
       //Restore Photos and thumbnails.
-      for (var file in files) {
-        File photoFile = File(file.path);
+      for (var photo in photoFiles) {
+        File photoFile = File(photo.path);
 
-        String photoName = photoFile.path.split('/').last.split('.').first;
+        String photoName = extractPhotoName(photoFile);
 
         photoFile.copySync(
             '${photoDirectory.path}/${photoFile.path.split('/').last}');
+
         String photoThumbnailPath =
-            '${photoDirectory.path}/${photoName}_thumbnail.jpg';
+            constructPhotoThumnailPath(thumbnailDirectory, photoName);
+
         img.Image referenceImage =
             img.decodeImage(photoFile.readAsBytesSync())!;
+
         img.Image thumbnailImage = img.copyResize(referenceImage, width: 240);
+
         File(photoThumbnailPath)
             .writeAsBytesSync(img.encodeJpg(thumbnailImage));
 
@@ -137,27 +123,42 @@ Future<void> restoreBackupFunction({
           'Restoring: ${((x / numberOfFiles) * 100).toStringAsFixed(2)}%',
         ]);
       }
-
       eventCallback([
         'progress',
         'Deleting old files.',
       ]);
 
-      unzippedDirectory.deleteSync(recursive: true);
+      destinationDir.deleteSync(recursive: true);
 
       eventCallback([
         'done',
       ]);
-    } else {
-      eventCallback([
-        'error',
-        'file_error',
-      ]);
     }
   } else {
+    //Is not a Zip file.
     eventCallback([
       'error',
       'file_error',
     ]);
   }
 }
+
+///Get the unzipped directory.
+Directory getUnzippedDirectory(
+    Directory temporaryDirectory, File fileToRestore) {
+  return Directory(
+      '${temporaryDirectory.path}/${fileToRestore.path.split('/').last.split('.').first}');
+}
+
+///Checks if file is a zip file.
+bool checkIfFileIsZip(File restoreFile) =>
+    restoreFile.path.split('/').last.split('.').last == 'zip';
+
+///Extract photo name.
+String extractPhotoName(File photoFile) =>
+    photoFile.path.split('/').last.split('.').first;
+
+///Construct photo tumbnai path.
+String constructPhotoThumnailPath(
+        Directory thumbnailDirectory, String photoName) =>
+    '${thumbnailDirectory.path}/${photoName}_thumbnail.jpg';

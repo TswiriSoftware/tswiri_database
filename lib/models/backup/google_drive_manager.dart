@@ -61,7 +61,7 @@ class GoogleDriveManager {
     String sunbirdFolderID = (await getSunbirdFolderID())!;
 
     const mimeType = "application/vnd.google-apps.folder";
-    String folderName = isarDirectory!.path.split('/').last;
+    String folderName = spaceDirectory!.path.split('/').last;
 
     try {
       final found = await driveApi.files.list(

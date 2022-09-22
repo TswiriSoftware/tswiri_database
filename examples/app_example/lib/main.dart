@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/isar/create_functions.dart';
-import 'package:tswiri_database/functions/other/clear_temp_directory.dart';
+import 'package:tswiri_database/functions/general/clear_temp_directory.dart';
 import 'package:tswiri_database/mobile_database.dart';
 import 'package:tswiri_database/models/search/shopping_cart.dart';
 import 'package:tswiri_database/models/settings/app_settings.dart';
@@ -26,8 +26,9 @@ Future<void> main() async {
   await loadAppSettings();
 
   //Initiate Isar Storage Directories.
-  await initiateIsarDirectory();
+  await initiateSpaceDirectory();
   await initiatePhotoStorage();
+  await initiateThumnailStorage();
 
   //Initiate Isar.
   isar = initiateMobileIsar();

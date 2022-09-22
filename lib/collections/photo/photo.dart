@@ -50,19 +50,19 @@ class Photo {
     return '\nID: $id, containerID: $containerUID ';
   }
 
-  String getPhotoPath({String? directory}) {
-    if (directory != null) {
-      return '$directory/$photoName.$extention';
+  String getPhotoPath({String? directoryPath}) {
+    if (directoryPath != null) {
+      return '$directoryPath/$photoName.$extention';
     } else {
       return '${photoDirectory!.path}/$photoName.$extention';
     }
   }
 
-  String getPhotoThumbnailPath({String? directory}) {
-    if (directory != null) {
-      return '$directory/${photoName}__thumbnail.$extention';
+  String getPhotoThumbnailPath({String? directoryPath}) {
+    if (directoryPath != null) {
+      return '$directoryPath/thumbnails/${photoName}__thumbnail.$extention';
     } else {
-      return '${photoDirectory!.path}/${photoName}_thumbnail.$extention';
+      return '${thumbnailDirectory!.path}/thumbnails/${photoName}_thumbnail.$extention';
     }
   }
 

@@ -3,44 +3,64 @@ import 'package:tswiri_database/export.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tswiri_database/mobile_database.dart';
-import 'package:tswiri_database/models/settings/global_settings.dart';
 
 ///Sets the appIsarDirectory.
 ///This is the directory where the isar database file's can be found.
-Future<void> initiateIsarDirectory() async {
+Future<Directory> initiateSpaceDirectory() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  ///Get the last storage path used.
+  //Get the last storage path used.
   String? storagePath = prefs.getString(isarDirectoryPref);
 
-  ///If it is a fresh install set the storage path to /main_space.
+  //If it is a fresh install set the storage path to /main_space.
   if (storagePath == null) {
     storagePath = '${(await getApplicationSupportDirectory()).path}/main_space';
     prefs.setString(isarDirectoryPref, storagePath);
   }
 
-  ///Check if the storage path exisits, if not create it.
+  //Check if the storage path exisits, if not create it.
   if (!await Directory(storagePath).exists()) {
-    isarDirectory = await Directory(storagePath).create();
+    spaceDirectory = await Directory(storagePath).create();
   } else {
-    isarDirectory = Directory(storagePath);
+    spaceDirectory = Directory(storagePath);
   }
+
+  return spaceDirectory!;
 }
 
 ///Sets the appPhotoDirectory.
 ///This is the directory where photo's from the isarDatabase is stored.
-Future<void> initiatePhotoStorage() async {
+Future<Directory> initiatePhotoStorage() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   //Get the latest storage path used.
-  String storagePath = '${prefs.getString(isarDirectoryPref)!}/photos';
+  String photoStoragePath = '${prefs.getString(isarDirectoryPref)!}/photos';
 
-  //Create directory if it doesnt exist.
-  if (!await Directory(storagePath).exists()) {
-    photoDirectory = await Directory(storagePath).create();
+  //Create photo directory if it doesnt exist.
+  if (!await Directory(photoStoragePath).exists()) {
+    photoDirectory = await Directory(photoStoragePath).create();
   } else {
-    photoDirectory = Directory(storagePath);
+    photoDirectory = Directory(photoStoragePath);
   }
+
+  return photoDirectory!;
+}
+
+///Sets the appPhotoDirectory.
+///This is the directory where photo's from the isarDatabase is stored.
+Future<Directory> initiateThumnailStorage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  String thumbnailStoragePath =
+      '${prefs.getString(isarDirectoryPref)!}/thumbnails';
+
+  //Create photo directory if it doesnt exist.
+  if (!await Directory(thumbnailStoragePath).exists()) {
+    thumbnailDirectory = await Directory(thumbnailStoragePath).create();
+  } else {
+    thumbnailDirectory = Directory(thumbnailStoragePath);
+  }
+  return thumbnailDirectory!;
 }
 
 ///Swap the isar database to the specified directory.
@@ -53,14 +73,14 @@ Future<void> swapSpace(Directory directory) async {
   await isar!.close();
 
   //Update the isarDirectory.
-  isarDirectory = directory;
+  spaceDirectory = directory;
   photoDirectory = Directory('${directory.path}/photos');
-
+  thumbnailDirectory = Directory('${directory.path}/thumbnails');
   //Wait a couple millis.
   await Future.delayed(const Duration(milliseconds: 200));
 
   //Initiate the isar connection again
-  isar = initiateMobileIsar(directory: isarDirectory!.path, inspector: false);
+  isar = initiateMobileIsar(directory: spaceDirectory!.path, inspector: false);
 }
 
 ///Create a new swap space.
@@ -68,10 +88,10 @@ Future<bool> createNewSpace(String spaceName) async {
   String storagePath =
       '${(await getApplicationSupportDirectory()).path}/${spaceName}_space';
 
-  if (!await Directory(storagePath).exists()) {
-    await Directory(storagePath).create();
+  if (!Directory(storagePath).existsSync()) {
+    Directory(storagePath).createSync();
 
-    ///Return true on success.
+    //Return true on success.
     return true;
   } else {
     return false;

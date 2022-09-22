@@ -34,10 +34,9 @@ Future<File?> createBackupFile({
     createBackup,
     [
       _uiPort.sendPort,
-      isarDirectory!.path,
+      spaceDirectory!.path,
       temporaryDirectory.path,
       isarVersion.toString(),
-      photoDirectory!.path,
       fileName,
     ],
   );
@@ -48,6 +47,7 @@ Future<File?> createBackupFile({
     switch (message[0]) {
       case 'done':
         killIsolate(_isolate);
+        openIsarIfClosed();
         break;
       case 'path':
         completer.complete(File(message[1].toString()));
@@ -70,8 +70,8 @@ Future<bool?> restoreBackupFile({
   FlutterIsolate? _isolate;
   ReceivePort _uiPort = ReceivePort();
 
-  log(photoDirectory!.path, name: 'Photo Directory');
-  log(isarDirectory!.path, name: 'Isar Directory');
+  // log(photoDirectory!.path, name: 'Photo Directory');
+  // log(spaceDirectory!.path, name: 'Isar Directory');
 
   if (isar!.isOpen) {
     await isar!.close();
@@ -84,10 +84,9 @@ Future<bool?> restoreBackupFile({
     restoreBackup,
     [
       _uiPort.sendPort,
-      isarDirectory!.path,
+      spaceDirectory!.path,
       temporaryDirectory.path,
       isarVersion.toString(),
-      photoDirectory!.path,
       backupFile.path,
     ],
   );
@@ -98,11 +97,12 @@ Future<bool?> restoreBackupFile({
     if (message[0] == 'done') {
       completer.complete(true);
       killIsolate(_isolate);
+      openIsarIfClosed();
     } else if (message[0] == 'error') {
       switch (message[1]) {
         case 'file_error':
-          log('file_error');
           killIsolate(_isolate);
+          openIsarIfClosed();
           completer.complete(false);
           break;
         default:
@@ -120,15 +120,17 @@ void killIsolate(FlutterIsolate? isolate) {
   if (isolate != null) {
     isolate.kill();
   }
+}
+
+///Opens isar if it is closed.
+void openIsarIfClosed() {
   if (!isar!.isOpen) {
-    isar = initiateMobileIsar(inspector: true, directory: isarDirectory!.path);
-    log('opening isar');
+    isar = initiateMobileIsar(inspector: true, directory: spaceDirectory!.path);
   }
 }
 
 String generateBackupFileName() {
-  String spaceName = isarDirectory!.path.split('/').last;
+  String spaceName = spaceDirectory!.path.split('/').last;
   String formattedDate = DateFormat('_yyyy_MM_dd').format(DateTime.now());
-
   return spaceName + formattedDate;
 }

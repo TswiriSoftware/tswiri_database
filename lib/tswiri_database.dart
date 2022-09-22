@@ -1,15 +1,16 @@
 library tswiri_database;
 
 import 'dart:io';
-
 import 'package:isar/isar.dart';
 
-///Isar directory.
-Directory? isarDirectory;
+///The folder where isar and photo files are stored.
+Directory? spaceDirectory;
 String isarDirectoryPref = 'isarDirectory';
 
-///Photo Directory
+///Photo directory
 Directory? photoDirectory;
 
-///Isar reference.
+Directory? thumbnailDirectory;
+
+///Isar.
 Isar? isar;
