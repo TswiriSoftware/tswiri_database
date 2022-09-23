@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'package:archive/archive_io.dart';
 
-Future<void> createBackup(List init) async {
+Future<void> createBackupIsolate(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.
   String spacePath = init[1]; //[1] Isar Directory.

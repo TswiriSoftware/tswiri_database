@@ -20,7 +20,7 @@ void main() {
       expect(hasCreatedSpace, true);
     });
 
-    test('Functions: getApplicationSupportDirectory()', () async {
+    test('Functions: getSpacesOnDevice()', () async {
       Directory spaceDirectory = Directory(
           '${(await getApplicationSupportDirectory()).path}/${newSpaceName}_space');
 

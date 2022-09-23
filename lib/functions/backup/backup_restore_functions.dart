@@ -31,7 +31,7 @@ Future<File?> createBackupFile({
   Directory temporaryDirectory = await getTemporaryDirectory();
 
   _isolate = await FlutterIsolate.spawn(
-    createBackup,
+    createBackupIsolate,
     [
       _uiPort.sendPort,
       spaceDirectory!.path,
@@ -81,7 +81,7 @@ Future<bool?> restoreBackupFile({
   Directory temporaryDirectory = await getTemporaryDirectory();
 
   _isolate = await FlutterIsolate.spawn(
-    restoreBackup,
+    restoreBackupIsolate,
     [
       _uiPort.sendPort,
       spaceDirectory!.path,

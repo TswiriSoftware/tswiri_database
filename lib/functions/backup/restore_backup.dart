@@ -6,7 +6,7 @@ import 'package:image/image.dart' as img;
 import 'package:tswiri_database/functions/general/recreate_directory.dart';
 
 ///Restores a backup zip file.
-Future<void> restoreBackup(List init) async {
+Future<void> restoreBackupIsolate(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.
   String spacePath = init[1]; //[1] Isar Directory.
