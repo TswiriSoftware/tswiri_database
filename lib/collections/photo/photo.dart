@@ -62,7 +62,7 @@ class Photo {
     if (directoryPath != null) {
       return '$directoryPath/thumbnails/${photoName}__thumbnail.$extention';
     } else {
-      return '${thumbnailDirectory!.path}/thumbnails/${photoName}_thumbnail.$extention';
+      return '${thumbnailDirectory!.path}/${photoName}_thumbnail.$extention';
     }
   }
 
