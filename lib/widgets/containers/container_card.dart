@@ -23,6 +23,7 @@ class ContainerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: key,
       onTap: onTap,
       onLongPress: onLongPress,
       child: Card(
