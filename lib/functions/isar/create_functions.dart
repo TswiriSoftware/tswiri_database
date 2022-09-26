@@ -71,8 +71,8 @@ void createBasicContainerTypes() {
               ..enclosing = false
               ..containerColor = Colors.deepOrange
               ..iconData = const IconData(
-                0xe7a2,
-                fontFamily: 'MaterialIcons',
+                0xe803,
+                fontFamily: 'TswiriIcons',
               )
               ..preferredChildContainer = 1,
             replaceOnConflict: true);
@@ -88,8 +88,8 @@ void createBasicContainerTypes() {
               ..enclosing = false
               ..containerColor = Colors.green
               ..iconData = const IconData(
-                0xe9a7,
-                fontFamily: 'MaterialIcons',
+                0xe801,
+                fontFamily: 'TswiriIcons',
               )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
@@ -105,8 +105,8 @@ void createBasicContainerTypes() {
               ..enclosing = true
               ..containerColor = Colors.blue
               ..iconData = const IconData(
-                0xedac,
-                fontFamily: 'MaterialIcons',
+                0xe802,
+                fontFamily: 'TswiriIcons',
               )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
@@ -121,8 +121,8 @@ void createBasicContainerTypes() {
               ..enclosing = true
               ..containerColor = const Color(0xFFF98866)
               ..iconData = const IconData(
-                0xf134,
-                fontFamily: 'MaterialIcons',
+                0xe800,
+                fontFamily: 'TswiriIcons',
               )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
