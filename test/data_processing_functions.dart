@@ -4,6 +4,7 @@ import 'package:tswiri_database/functions/data/data_processing.dart';
 void main() {
   group('Data Processing Functions: ', () {
     test('Function: calculateDistanceFromCamera()', () async {
+      
       double distanceFromCamera = calculateDistanceFromCamera(
         barcodeOnImageDiagonalLength: 100,
         barcodeProperties: [],
