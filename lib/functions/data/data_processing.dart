@@ -21,7 +21,8 @@ import 'dart:math' as m;
 ///   iv. Create BarcodeDataPairs.
 ///
 List<OnImageInterBarcodeData> createOnImageBarcodeData(
-    List barcodeDataBatches) {
+  List barcodeDataBatches,
+) {
   List<OnImageInterBarcodeData> onImageInterBarcodeData = [];
 
   for (int i = 0; i < barcodeDataBatches.length; i++) {
@@ -146,7 +147,8 @@ double calculateDistanceFromCamera({
 ///   vi. Add to finalRealInterBarcodeData.
 ///
 List<InterBarcodeVector> averageInterbarcodeData(
-    List<InterBarcodeVector> interBarcodeVectors) {
+  List<InterBarcodeVector> interBarcodeVectors,
+) {
   List<InterBarcodeVector> uniqueRealInterBarcodeData =
       interBarcodeVectors.toSet().toList();
   List<InterBarcodeVector> finalRealInterBarcodeData = [];
