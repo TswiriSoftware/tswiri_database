@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tswiri_database/export.dart';
+import 'package:tswiri_database/tswiri_icons.dart';
 
 ///Creates a new CatalogedContainer.
 ///
@@ -70,10 +71,11 @@ void createBasicContainerTypes() {
               ..moveable = false
               ..enclosing = false
               ..containerColor = Colors.deepOrange
-              ..iconData = const IconData(
-                0xe7a2,
-                fontFamily: 'MaterialIcons',
-              )
+              ..iconData = TswiriIcons.area
+              // const IconData(
+              //   0xe7a2,
+              //   fontFamily: 'MaterialIcons',
+              // )
               ..preferredChildContainer = 1,
             replaceOnConflict: true);
 
@@ -87,10 +89,11 @@ void createBasicContainerTypes() {
               ..moveable = false
               ..enclosing = false
               ..containerColor = Colors.green
-              ..iconData = const IconData(
-                0xe9a7,
-                fontFamily: 'MaterialIcons',
-              )
+              ..iconData = TswiriIcons.shelf
+              // const IconData(
+              //   0xe9a7,
+              //   fontFamily: 'MaterialIcons',
+              // )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
 
@@ -104,10 +107,11 @@ void createBasicContainerTypes() {
               ..moveable = false
               ..enclosing = true
               ..containerColor = Colors.blue
-              ..iconData = const IconData(
-                0xedac,
-                fontFamily: 'MaterialIcons',
-              )
+              ..iconData = TswiriIcons.drawer
+              //  const IconData(
+              //   0xedac,
+              //   fontFamily: 'MaterialIcons',
+              // )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
 
@@ -120,10 +124,11 @@ void createBasicContainerTypes() {
               ..moveable = true
               ..enclosing = true
               ..containerColor = const Color(0xFFF98866)
-              ..iconData = const IconData(
-                0xf134,
-                fontFamily: 'MaterialIcons',
-              )
+              ..iconData = TswiriIcons.box
+              // const IconData(
+              //   0xf134,
+              //   fontFamily: 'MaterialIcons',
+              // )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
       },
