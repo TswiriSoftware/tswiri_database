@@ -1,9 +1,16 @@
 import 'package:desktop_example/views/barcodes/barcodes_view.dart';
+import 'package:desktop_example/views/containers/containers/containers_view.dart';
+import 'package:desktop_example/views/devices/devices_view.dart';
+import 'package:desktop_example/views/gallery/gallery_view.dart';
+import 'package:desktop_example/views/grids/grids_view.dart';
+import 'package:desktop_example/views/search/search_view.dart';
+import 'package:desktop_example/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tswiri_database/desktop_database.dart';
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/functions/general/clear_temp_directory.dart';
 import 'package:tswiri_database/functions/isar/create_functions.dart';
+import 'package:tswiri_database/models/search/shopping_cart.dart';
 import 'package:tswiri_database/models/settings/desktop_settings.dart';
 import 'package:tswiri_widgets/colors/colors.dart';
 import 'package:tswiri_widgets/theme/theme.dart';
@@ -25,7 +32,12 @@ Future<void> main() async {
   //Populate the database for testing.
   createBasicContainerTypes();
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ShoppingCart(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,6 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Desktop Example',
       theme: tswiriTheme,
       home: const MyHomePage(),
@@ -77,13 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> pages = [
-    // const SearchView(),
-    // const ContainersView(),
-    // const GalleryView(),
-    // const GridsView(),
-    // const DevicesView(),
+    const SearchView(),
+    const ContainersView(),
+    const GalleryView(),
+    const GridsView(),
+    const DevicesView(),
     const BarcodesView(),
-    // const SettingsView(),
+    const SettingsView(),
   ];
 
   Widget _navigationRail() {
