@@ -57,7 +57,12 @@ createContainerRelationship({
 /// - Drawer
 /// - box
 ///
-void createBasicContainerTypes() {
+void createBasicContainerTypes({
+  IconData? area,
+  IconData? shelf,
+  IconData? drawer,
+  IconData? box,
+}) {
   if (isar!.containerTypes.where().findAllSync().isEmpty) {
     isar!.writeTxnSync(
       (database) {
@@ -71,12 +76,12 @@ void createBasicContainerTypes() {
               ..moveable = false
               ..enclosing = false
               ..containerColor = Colors.deepOrange
-              ..iconData =
+              ..iconData = area ??
                   //  TswiriIcons.area
                   const IconData(
-                0xe7a2,
-                fontFamily: 'MaterialIcons',
-              )
+                    0xe7a2,
+                    fontFamily: 'MaterialIcons',
+                  )
               ..preferredChildContainer = 1,
             replaceOnConflict: true);
 
@@ -90,12 +95,12 @@ void createBasicContainerTypes() {
               ..moveable = false
               ..enclosing = false
               ..containerColor = Colors.green
-              ..iconData =
+              ..iconData = shelf ??
                   // TswiriIcons.shelf
                   const IconData(
-                0xe9a7,
-                fontFamily: 'MaterialIcons',
-              )
+                    0xe9a7,
+                    fontFamily: 'MaterialIcons',
+                  )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
 
@@ -109,12 +114,12 @@ void createBasicContainerTypes() {
               ..moveable = false
               ..enclosing = true
               ..containerColor = Colors.blue
-              ..iconData =
+              ..iconData = drawer ??
                   //  TswiriIcons.drawer
                   const IconData(
-                0xedac,
-                fontFamily: 'MaterialIcons',
-              )
+                    0xedac,
+                    fontFamily: 'MaterialIcons',
+                  )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
 
@@ -127,12 +132,12 @@ void createBasicContainerTypes() {
               ..moveable = true
               ..enclosing = true
               ..containerColor = const Color(0xFFF98866)
-              ..iconData =
+              ..iconData = box ??
                   // TswiriIcons.box
                   const IconData(
-                0xf134,
-                fontFamily: 'MaterialIcons',
-              )
+                    0xf134,
+                    fontFamily: 'MaterialIcons',
+                  )
               ..preferredChildContainer = 3,
             replaceOnConflict: true);
       },
