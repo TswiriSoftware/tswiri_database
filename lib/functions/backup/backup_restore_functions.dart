@@ -12,7 +12,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/backup/create_backup.dart';
 import 'package:tswiri_database/functions/backup/restore_backup.dart';
-import 'package:tswiri_database/functions/other/clear_temp_directory.dart';
 import 'package:tswiri_database/mobile_database.dart';
 import 'package:tswiri_database/models/settings/global_settings.dart';
 

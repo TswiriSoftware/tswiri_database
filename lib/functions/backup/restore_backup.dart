@@ -8,6 +8,7 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:image/image.dart' as img;
 
 ///Restores a backup zip file.
+@pragma('vm:entry-point')
 Future<void> restoreBackup(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.

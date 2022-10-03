@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/mobile_database.dart';
 
+@pragma('vm:entry-point')
 Future<void> createBackup(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.

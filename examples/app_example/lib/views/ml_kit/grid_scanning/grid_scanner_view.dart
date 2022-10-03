@@ -58,11 +58,6 @@ class _GridScannerViewState extends State<GridScannerView> {
   }
 
   void initIsolate() {
-    //Spawn Isolate.
-    FlutterIsolate.spawn(gridScanningImageProcessor, mainPort.sendPort);
-
-    FlutterIsolate.spawn(gridScanningImageProcessor, mainPort2.sendPort);
-
     //Port setup.
     mainPort.listen((msg) {
       if (msg is SendPort) {
@@ -88,6 +83,11 @@ class _GridScannerViewState extends State<GridScannerView> {
         drawImage(msg);
       }
     });
+
+    //Spawn Isolate.
+    FlutterIsolate.spawn(gridScanningImageProcessor, mainPort.sendPort);
+
+    FlutterIsolate.spawn(gridScanningImageProcessor, mainPort2.sendPort);
   }
 
   @override
