@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tswiri_database/desktop_database.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/backup/restore_backup.dart';
 
@@ -17,6 +18,7 @@ class BackupView extends StatefulWidget {
 class _BackupViewState extends State<BackupView> {
   File? selectedFile;
   bool isBusy = false;
+  String currentEvent = '';
 
   @override
   void initState() {
@@ -42,13 +44,31 @@ class _BackupViewState extends State<BackupView> {
   }
 
   Widget _body() {
-    return Center(
-      child: Column(
-        children: [
-          _restoreBackup(),
-        ],
-      ),
-    );
+    if (isBusy) {
+      return Center(
+        child: Column(
+          children: [
+            Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircularProgressIndicator(),
+                  Text(currentEvent),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Center(
+        child: Column(
+          children: [
+            _restoreBackup(),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _restoreBackup() {
@@ -84,8 +104,16 @@ class _BackupViewState extends State<BackupView> {
             ),
             const Divider(),
             Visibility(
+              visible: !isBusy,
               child: ElevatedButton(
                 onPressed: () async {
+                  setState(() {
+                    isBusy = true;
+                  });
+                  //Close isar.
+                  await isar!.close();
+
+                  //Restore backup.
                   await restoreBackupZipFile(
                     spacePath: spaceDirectory!.path,
                     temporaryDirectoryPath:
@@ -93,9 +121,21 @@ class _BackupViewState extends State<BackupView> {
                     selectedFilePath: selectedFile!.path,
                     isarVersion: '1',
                     eventCallback: (event) {
-                      log(event.toString());
+                      setState(() {
+                        if (event[0] == 'progress') {
+                          currentEvent = event[1];
+                        }
+                        log(event.toString());
+                      });
                     },
                   );
+
+                  //Open isar.
+                  isar = initiateDesktopIsar();
+
+                  setState(() {
+                    isBusy = false;
+                  });
                 },
                 child: Text(
                   'Restore',
