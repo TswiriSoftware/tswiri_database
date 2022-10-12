@@ -26,4 +26,19 @@ class MLDetectedElementText {
   ///TagTextID.
   @Name("tagTextID")
   late int? tagTextID;
+
+  ///To json.
+  Map toJson() => {
+        'id': id,
+        'detectedText': detectedText,
+        'tagTextID': tagTextID,
+      };
+
+  ///From json.
+  MLDetectedElementText fromJson(Map<String, dynamic> json) {
+    return MLDetectedElementText()
+      ..id = json['id']
+      ..detectedText = json['detectedText']
+      ..tagTextID = json['tagTextID'];
+  }
 }

@@ -50,6 +50,7 @@ class CatalogedContainer {
     return '\nUID: $containerUID, Type: $containerTypeID, Name: $name, Description: $description, BarcodeUID $barcodeUID';
   }
 
+  //To json.
   Map toJson() => {
         'id': id,
         'containerUID': containerUID,
@@ -59,6 +60,7 @@ class CatalogedContainer {
         'barcodeUID': barcodeUID,
       };
 
+  //From json
   CatalogedContainer fromJson(Map<String, dynamic> json) {
     return CatalogedContainer()
       ..id = json['id']

@@ -64,6 +64,7 @@ iconData: ${iconData.codePoint}
 -------------------------------------\n''';
   }
 
+  //To json.
   Map toJson() => {
         'id': id,
         'containerType': containerTypeName,
@@ -71,9 +72,10 @@ iconData: ${iconData.codePoint}
         'moveable': moveable,
         'enclosing': enclosing,
         'canContain': canContain,
-        'containerColor': containerColor,
+        'containerColor': containerColor.value,
       };
 
+  //From json.
   ContainerType fromJson(Map<String, dynamic> json) {
     return ContainerType()
       ..id = json['id']
@@ -82,7 +84,7 @@ iconData: ${iconData.codePoint}
       ..enclosing = json['enclosing']
       ..canContain = (json['canContain'] as List<dynamic>).cast<int>()
       ..moveable = json['moveable']
-      ..containerColor = json['containerColor'];
+      ..containerColor = Color(json['containerColor'] as int);
   }
 }
 

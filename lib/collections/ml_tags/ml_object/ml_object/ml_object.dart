@@ -41,17 +41,19 @@ class MLObject {
         boundingBox == other.boundingBox;
   }
 
+  ///To json.
   Map toJson() => {
         'id': id,
         'photoID': photoID,
         'blackListed': boundingBox,
       };
 
+  ///From json.
   MLObject fromJson(Map<String, dynamic> json) {
     return MLObject()
       ..id = json['id']
       ..photoID = json['photoID']
-      ..boundingBox = json['blackListed'];
+      ..boundingBox = (json['blackListed'] as List<dynamic>).cast<double>();
   }
 
   @override

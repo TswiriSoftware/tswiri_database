@@ -29,4 +29,19 @@ class CatalogedGrid {
   String toString() {
     return '\nbarcodeUID: $barcodeUID, parentBarcodeUID: $parentBarcodeUID';
   }
+
+  //To json.
+  Map toJson() => {
+        'id': id,
+        'barcodeUID': barcodeUID,
+        'parentBarcodeUID': parentBarcodeUID,
+      };
+
+  //From json
+  CatalogedGrid fromJson(Map<String, dynamic> json) {
+    return CatalogedGrid()
+      ..id = json['id']
+      ..barcodeUID = json['barcodeUID']
+      ..parentBarcodeUID = json['parentBarcodeUID'];
+  }
 }

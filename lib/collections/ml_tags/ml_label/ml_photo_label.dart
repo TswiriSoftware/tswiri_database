@@ -50,6 +50,7 @@ class MLPhotoLabel {
     return '\nPhotoID: $photoID, DetectedLabelTextID: $detectedLabelTextID, Confidence: $confidence, UserFeedback: $userFeedback';
   }
 
+  ///To json.
   Map toJson() => {
         'id': id,
         'photoID': photoID,
@@ -58,6 +59,7 @@ class MLPhotoLabel {
         'blackListed': userFeedback,
       };
 
+  ///To json.
   MLPhotoLabel fromJson(Map<String, dynamic> json) {
     return MLPhotoLabel()
       ..id = json['id']

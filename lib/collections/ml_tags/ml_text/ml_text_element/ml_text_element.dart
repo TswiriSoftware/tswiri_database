@@ -55,4 +55,42 @@ class MLTextElement {
         Offset(cornerPoints[0].x.toDouble(), cornerPoints[0].y.toDouble()),
         Offset(cornerPoints[2].x.toDouble(), cornerPoints[2].y.toDouble()));
   }
+
+  ///To json.
+  Map toJson() => {
+        'id': id,
+        'photoID': photoID,
+        'lineID': lineID,
+        'lineIndex': lineIndex,
+        'detectedElementTextID': detectedElementTextID,
+        'userFeedback': userFeedback,
+        'cornerPoints': [
+          cornerPoints[0].x,
+          cornerPoints[0].y,
+          cornerPoints[1].x,
+          cornerPoints[1].y,
+          cornerPoints[2].x,
+          cornerPoints[2].y,
+          cornerPoints[3].x,
+          cornerPoints[3].y,
+        ],
+      };
+
+  ///From json.
+  MLTextElement fromJson(Map<String, dynamic> json) {
+    List<int> cp = (json['cornerPoints'] as List<dynamic>).cast<int>();
+    return MLTextElement()
+      ..id = json['id']
+      ..photoID = json['photoID']
+      ..lineID = json['lineID']
+      ..lineIndex = json['lineIndex']
+      ..detectedElementTextID = json['detectedElementTextID']
+      ..userFeedback = json['userFeedback']
+      ..cornerPoints = [
+        Point(cp[0], cp[1]),
+        Point(cp[2], cp[3]),
+        Point(cp[4], cp[5]),
+        Point(cp[6], cp[7]),
+      ];
+  }
 }

@@ -50,6 +50,7 @@ class MLObjectLabel {
         userFeedback == other.userFeedback;
   }
 
+  ///To json.
   Map toJson() => {
         'id': id,
         'photoID': objectID,
@@ -58,6 +59,7 @@ class MLObjectLabel {
         'blackListed': userFeedback,
       };
 
+  ///From json.
   MLObjectLabel fromJson(Map<String, dynamic> json) {
     return MLObjectLabel()
       ..id = json['id']

@@ -44,8 +44,12 @@ class CatalogedBarcode {
   }
 
   ///To json
-  Map toJson() =>
-      {'id': id, 'barcodeUID': barcodeUID, 'height': height, 'width': width};
+  Map toJson() => {
+        'id': id,
+        'barcodeUID': barcodeUID,
+        'height': height,
+        'width': width,
+      };
 
   ///From Json
   CatalogedBarcode fromJson(Map<String, dynamic> json) {

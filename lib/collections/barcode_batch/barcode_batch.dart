@@ -40,4 +40,28 @@ class BarcodeBatch {
   String toString() {
     return '\ntimestamp: $timestamp, h: $height, w: $width';
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'timestamp': timestamp,
+        'width': width,
+        'height': height,
+        'rangeStart': rangeStart,
+        'rangeEnd': rangeEnd,
+        'imported': imported,
+      };
+
+  BarcodeBatch fromJson(Map<String, dynamic> json) {
+    return BarcodeBatch()
+      ..id = json['id']
+      ..timestamp = json['timestamp'] as int
+      ..width = json['width'] as double
+      ..height = json['height'] as double
+      ..rangeStart = json['rangeStart'] as int
+      ..rangeEnd = json['rangeEnd'] as int
+      ..imported = json['imported'] as bool;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }

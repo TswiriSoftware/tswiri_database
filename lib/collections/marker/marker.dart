@@ -19,4 +19,19 @@ class Marker {
   String toString() {
     return '\nparentContainerUID: $containerUID, barcodeUID: $barcodeUID';
   }
+
+  ///To json.
+  Map toJson() => {
+        'id': id,
+        'containerUID': containerUID,
+        'barcodeUID': barcodeUID,
+      };
+
+  ///From json.
+  Marker fromJson(Map<String, dynamic> json) {
+    return Marker()
+      ..id = json['id']
+      ..containerUID = json['containerUID']
+      ..barcodeUID = json['barcodeUID'];
+  }
 }

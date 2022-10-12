@@ -31,12 +31,14 @@ class CameraCalibrationEntry {
     return 'diagonalSize: $diagonalSize,\ndistanceFromCamera: $distanceFromCamera,\n';
   }
 
+  //To json.
   Map toJson() => {
         'id': id,
         'diagonalSize': diagonalSize,
         'distanceFromCamera': distanceFromCamera,
       };
 
+  //From json.
   CameraCalibrationEntry fromJson(Map<String, dynamic> json) {
     return CameraCalibrationEntry()
       ..id = json['id']

@@ -26,4 +26,19 @@ class MLDetectedLabelText {
   ///Blacklisted.
   @Name("hidden")
   late bool hidden;
+
+  ///To json.
+  Map toJson() => {
+        'id': id,
+        'detectedLabelText': detectedLabelText,
+        'hidden': hidden,
+      };
+
+  ///From json.
+  MLDetectedLabelText fromJson(Map<String, dynamic> json) {
+    return MLDetectedLabelText()
+      ..id = json['id']
+      ..detectedLabelText = json['detectedLabelText']
+      ..hidden = json['hidden'] as bool;
+  }
 }

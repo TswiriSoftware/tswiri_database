@@ -8,7 +8,6 @@ import 'package:tswiri_database/models/containers/container_search_controller.da
 import 'package:tswiri_database/models/settings/global_settings.dart';
 import 'package:tswiri_database/widgets/containers/container_card.dart';
 import 'package:tswiri_widgets/colors/colors.dart';
-import 'package:tswiri_widgets/widgets/containers/new_container_card.dart';
 import 'package:tswiri_widgets/widgets/general/search_text_field.dart';
 
 class ContainersView extends StatefulWidget {
@@ -252,23 +251,23 @@ class _ContainersViewState extends State<ContainersView> {
       itemCount: _containerSearch.searchResults.length + 1,
       itemBuilder: (context, index) {
         if (index == 0 && !isSearching && !isEditing) {
-          // return _newContainerCard();
-          return NewContainerCard(
-            onTap: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NewContainerView(),
-                ),
-              );
-              setState(() {
-                _containerSearch.filterContainerEntries(
-                  enteredKeyWord: null,
-                  containerFilters: containerFilters,
-                );
-              });
-            },
-          );
+          return Text('data');
+          // return NewContainerCard(
+          //   onTap: () async {
+          //     await Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const NewContainerView(),
+          //       ),
+          //     );
+          //     setState(() {
+          //       _containerSearch.filterContainerEntries(
+          //         enteredKeyWord: null,
+          //         containerFilters: containerFilters,
+          //       );
+          //     });
+          //   },
+          // );
         } else if (index > 0) {
           CatalogedContainer catalogedContainer =
               _containerSearch.searchResults[index - 1];

@@ -40,12 +40,14 @@ class ContainerRelationship {
     return '\ncontainerUID: $containerUID, parentUID: $parentUID';
   }
 
+  //To json.
   Map toJson() => {
         'id': id,
         'containerUID': containerUID,
         'parentUID': parentUID,
       };
 
+  //From json.
   ContainerRelationship fromJson(Map<String, dynamic> json) {
     return ContainerRelationship()
       ..id = json['id']

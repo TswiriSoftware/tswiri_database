@@ -72,25 +72,27 @@ class Photo {
     return Size(image.width.toDouble(), image.height.toDouble());
   }
 
-  // Map toJson() => {
-  //       'id': id,
-  //       'containerUID': containerUID,
-  //       'photoPath': photoPath.split('/').last,
-  //       'thumbnailPath': thumbnailPath.split('/').last,
-  //     };
+  Map toJson() => {
+        'id': id,
+        'containerUID': containerUID,
+        'photoName': photoName,
+        'extention': extention,
+        'thumbnailName': thumbnailName,
+        'thumbnailExtention': thumbnailExtention,
+        'photoSize': [photoSize.width, photoSize.height],
+      };
 
-  // Photo fromJson(Map<String, dynamic> json, String storagePath) {
-  //   String photoFilePath = '$storagePath/sunbird/' + json['photoPath'];
-  //   String photoThumbnail = '$storagePath/sunbird/' + json['thumbnailPath'];
-  //   return Photo()
-  //     ..id = json['id']
-  //     ..containerUID = json['containerUID']
-  //     ..photoPath = photoFilePath
-  //     ..thumbnailPath = photoThumbnail;
-  // }
-
-  // @override
-  // int get hashCode => id.hashCode;
+  Photo fromJson(Map<String, dynamic> json) {
+    List<double> size = (json['photoSize'] as List<dynamic>).cast<double>();
+    return Photo()
+      ..id = json['id']
+      ..containerUID = json['containerUID']
+      ..photoName = json['photoName'] as int
+      ..extention = json['extention']
+      ..thumbnailName = json['thumbnailName']
+      ..thumbnailExtention = json['thumbnailExtention']
+      ..photoSize = Size(size[0], size[1]);
+  }
 }
 
 class SizeConverter extends TypeConverter<Size, List<double>> {
