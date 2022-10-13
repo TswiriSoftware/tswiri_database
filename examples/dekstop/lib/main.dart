@@ -14,8 +14,8 @@ import 'package:tswiri_database/functions/isar/create_functions.dart';
 import 'package:tswiri_database/models/search/shopping_cart.dart';
 import 'package:tswiri_database/models/settings/desktop_settings.dart';
 import 'package:tswiri_network/scripts/get_device_ip.dart';
-import 'package:tswiri_network/server/shelf_server.dart';
-import 'package:tswiri_network/server/websocket_server.dart';
+import 'package:tswiri_network/server/shelf/shelf_manager.dart';
+import 'package:tswiri_network/server/websocket/ws_manager.dart';
 import 'package:tswiri_widgets/colors/colors.dart';
 import 'package:tswiri_widgets/theme/theme.dart';
 
@@ -43,8 +43,20 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ShoppingCart()),
-        ChangeNotifierProvider(create: (context) => WsManager(ip: ip ?? '')),
-        ChangeNotifierProvider(create: (context) => ShelfManager(ip: ip ?? '')),
+        //Websocket manager.
+        ChangeNotifierProvider(
+          create: (context) => WsManager(
+            ip: ip ?? '',
+            isar: isar!,
+          ),
+        ),
+        //Shelf manager.
+        ChangeNotifierProvider(
+          create: (context) => ShelfManager(
+            ip: ip ?? '',
+            isar: isar!,
+          ),
+        ),
       ],
       child: const MyApp(),
     ),

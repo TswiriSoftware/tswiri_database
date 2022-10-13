@@ -23,3 +23,4 @@ export 'collections/photo_label/photo_label.dart';
 export 'collections/tag_text/tag_text.dart';
 export 'package:tswiri_database/tswiri_database.dart';
 export 'package:tswiri_database/functions/isar/isar_functions.dart';
+export 'collections/collection_hash.dart';

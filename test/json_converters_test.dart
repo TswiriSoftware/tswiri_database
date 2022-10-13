@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:math' as m;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,7 +7,7 @@ import 'package:tswiri_database/export.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
 void main() {
-  group('Models: ', () {
+  group('Json: ', () {
     test('BarcodeBatch', () async {
       BarcodeBatch barcodeBatch = BarcodeBatch()
         ..id = 1
@@ -33,6 +34,7 @@ void main() {
       ];
 
       String jsonList = jsonEncode(barcodeBatches);
+
       List<BarcodeBatch> decodedList = (jsonDecode(jsonList) as List)
           .map((e) => BarcodeBatch().fromJson(e))
           .toList();
