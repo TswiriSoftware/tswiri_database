@@ -647,20 +647,16 @@ packages:
   tswiri_network:
     dependency: "direct main"
     description:
-      path: "."
-      ref: shelf
-      resolved-ref: "383c0383804442010fc5311888645aed3d77dd6b"
-      url: "https://github.com/TswiriSoftware/tswiri_network.git"
-    source: git
+      path: "../../packages/tswiri_network"
+      relative: true
+    source: path
     version: "0.0.1"
   tswiri_widgets:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "368e7936e433480913c5b1d422adba69aefaba34"
-      url: "https://github.com/TswiriSoftware/tswiri_widgets.git"
-    source: git
+      path: "../../packages/tswiri_widgets"
+      relative: true
+    source: path
     version: "0.0.1"
   typed_data:
     dependency: transitive
