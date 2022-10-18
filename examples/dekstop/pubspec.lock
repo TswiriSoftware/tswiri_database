@@ -14,7 +14,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.2"
   async:
     dependency: transitive
     description:
@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "2.2.3"
   barcode_widget:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: barcode_widget
       url: "https://pub.dartlang.org"
@@ -105,7 +105,7 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.1"
   cross_file:
     dependency: transitive
     description:
@@ -295,14 +295,14 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   image:
     dependency: transitive
     description:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.2"
   intl:
     dependency: "direct main"
     description:
@@ -512,7 +512,7 @@ packages:
       name: shared_preferences_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.14"
   shared_preferences_ios:
     dependency: transitive
     description:

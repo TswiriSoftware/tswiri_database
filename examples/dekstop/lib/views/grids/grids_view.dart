@@ -16,7 +16,7 @@ class GridsViewState extends State<GridsView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: const [],
     );
   }
 }

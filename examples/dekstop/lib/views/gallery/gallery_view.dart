@@ -16,7 +16,7 @@ class _GalleryViewState extends State<GalleryView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: const [],
     );
   }
 }

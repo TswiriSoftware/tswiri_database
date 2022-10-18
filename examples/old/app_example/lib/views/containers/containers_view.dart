@@ -1,5 +1,4 @@
 import 'package:app_example/views/containers/container/container_view.dart';
-import 'package:app_example/views/containers/new_container/new_container_view.dart';
 import 'package:app_example/views/ml_kit/barcode_scanner/single_scanner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tswiri_database/export.dart';
@@ -251,7 +250,7 @@ class _ContainersViewState extends State<ContainersView> {
       itemCount: _containerSearch.searchResults.length + 1,
       itemBuilder: (context, index) {
         if (index == 0 && !isSearching && !isEditing) {
-          return Text('data');
+          return const Text('data');
           // return NewContainerCard(
           //   onTap: () async {
           //     await Navigator.push(

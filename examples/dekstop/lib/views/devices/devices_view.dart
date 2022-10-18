@@ -16,7 +16,7 @@ class _DevicesViewState extends State<DevicesView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: const [],
     );
   }
 }

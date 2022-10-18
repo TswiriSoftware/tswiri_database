@@ -16,7 +16,7 @@ class SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: const [],
     );
   }
 }

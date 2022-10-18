@@ -16,7 +16,7 @@ class _ContainersViewState extends State<ContainersView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: const [],
     );
   }
 }

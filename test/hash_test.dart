@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:math' as m;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -347,19 +346,19 @@ void main() {
         MLTextBlock()
           ..id = 1
           ..cornerPoints = [
-            m.Point(1, 2),
-            m.Point(2, 1),
-            m.Point(1, 5),
-            m.Point(6, 2),
+            const m.Point(1, 2),
+            const m.Point(2, 1),
+            const m.Point(1, 5),
+            const m.Point(6, 2),
           ]
           ..recognizedLanguages = ['aa', 'za'],
         MLTextBlock()
           ..id = 1
           ..cornerPoints = [
-            m.Point(1, 5),
-            m.Point(2, 1),
-            m.Point(1, 3),
-            m.Point(6, 2),
+            const m.Point(1, 5),
+            const m.Point(2, 1),
+            const m.Point(1, 3),
+            const m.Point(6, 2),
           ]
           ..recognizedLanguages = ['aa', 'za'],
       ];
@@ -376,10 +375,10 @@ void main() {
         MLTextElement()
           ..id = 1
           ..cornerPoints = [
-            m.Point(1, 2),
-            m.Point(2, 1),
-            m.Point(1, 5),
-            m.Point(6, 2),
+            const m.Point(1, 2),
+            const m.Point(2, 1),
+            const m.Point(1, 5),
+            const m.Point(6, 2),
           ]
           ..detectedElementTextID = 1
           ..lineID = 1
@@ -389,10 +388,10 @@ void main() {
         MLTextElement()
           ..id = 1
           ..cornerPoints = [
-            m.Point(1, 2),
-            m.Point(2, 1),
-            m.Point(1, 5),
-            m.Point(6, 2),
+            const m.Point(1, 2),
+            const m.Point(2, 1),
+            const m.Point(1, 5),
+            const m.Point(6, 2),
           ]
           ..detectedElementTextID = 1
           ..lineID = 1
@@ -415,10 +414,10 @@ void main() {
           ..blockID = 1
           ..blockIndex = 1
           ..cornerPoints = [
-            m.Point(1, 2),
-            m.Point(2, 1),
-            m.Point(1, 5),
-            m.Point(6, 2),
+            const m.Point(1, 2),
+            const m.Point(2, 1),
+            const m.Point(1, 5),
+            const m.Point(6, 2),
           ]
           ..recognizedLanguages = ['aa', 'za'],
         MLTextLine()
@@ -426,10 +425,10 @@ void main() {
           ..blockID = 1
           ..blockIndex = 1
           ..cornerPoints = [
-            m.Point(1, 2),
-            m.Point(2, 1),
-            m.Point(1, 5),
-            m.Point(6, 2),
+            const m.Point(1, 2),
+            const m.Point(2, 1),
+            const m.Point(1, 5),
+            const m.Point(6, 2),
           ]
           ..recognizedLanguages = ['aa', 'za'],
       ];

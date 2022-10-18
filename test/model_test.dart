@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tswiri_database/models/acclerometer/acceleromter_data.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;

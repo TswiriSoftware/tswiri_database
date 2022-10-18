@@ -16,7 +16,7 @@ class _BarcodesViewState extends State<BarcodesView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: const [],
     );
   }
 }

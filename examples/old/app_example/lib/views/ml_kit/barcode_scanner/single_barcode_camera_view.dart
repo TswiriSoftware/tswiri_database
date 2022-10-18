@@ -1,6 +1,5 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, library_private_types_in_public_api
 
-import 'dart:developer';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';

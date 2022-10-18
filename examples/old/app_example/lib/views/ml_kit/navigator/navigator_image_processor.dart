@@ -1,6 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'dart:developer';
 import 'dart:isolate';
 import 'package:flutter/painting.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
@@ -17,7 +16,7 @@ import 'package:vector_math/vector_math_64.dart' as vm;
 
 void navigationImageProcessor(List init) {
   //1. InitalMessage.
-  int id = init[0]; //[0] ID.
+  // int id = init[0]; //[0] ID.
   SendPort sendPort = init[1]; //[1] SendPort.
   String isarDirectory = init[2]; //[2] Isar directory.
   // double focalLength = init[3]; //[3] focalLength //Not Required anymore ?
@@ -114,7 +113,7 @@ void navigationImageProcessor(List init) {
   // log(parentGrids.length.toString());
   // log(parentGrids.toString());
 
-  void _processImage(message) async {
+  void processImage(message) async {
     if (inputImageData != null && canvasSize != null) {
       InputImage inputImage = InputImage.fromBytes(
         bytes:
@@ -436,7 +435,7 @@ void navigationImageProcessor(List init) {
 
       // log('I$id: InputImageData Configured');
     } else if (message[0] == 'process') {
-      _processImage(message);
+      processImage(message);
     } else if (message[0] == 'update') {
       CatalogedCoordinate newCoordinate =
           catalogedCoordinateFromMessage(message);
