@@ -59,7 +59,7 @@ int hashMLDetectedLabelTexts(Isar isar) {
 }
 
 ///Generate a hash of the MLPhotoLabel Collection.
-int hashMLPhotoLabel2(Isar isar) {
+int hashMLPhotoLabel(Isar isar) {
   return jsonEncode(isar.mLPhotoLabels.where().findAllSync()).hashCode;
 }
 
