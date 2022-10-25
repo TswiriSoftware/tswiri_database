@@ -112,3 +112,15 @@ Future<List<String>> getSpacesOnDevice() async {
   }
   return existingSpaces;
 }
+
+///Get the spaces on this device.
+Future<List<Directory>> getSpacesDirectories() async {
+  List<Directory> existingSpaces = [];
+  Directory directory = (await getApplicationSupportDirectory());
+  for (var element in directory.listSync()) {
+    if (element is Directory) {
+      existingSpaces.add(element);
+    }
+  }
+  return existingSpaces;
+}
