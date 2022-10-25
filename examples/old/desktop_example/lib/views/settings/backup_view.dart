@@ -114,7 +114,7 @@ class _BackupViewState extends State<BackupView> {
                   await isar!.close();
 
                   //Restore backup.
-                  await restoreBackupZipFile(
+                  await restoreBackupZipFileV1(
                     spacePath: spaceDirectory!.path,
                     temporaryDirectoryPath:
                         (await getTemporaryDirectory()).path,

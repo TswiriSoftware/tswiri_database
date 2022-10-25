@@ -39,7 +39,7 @@ Future<void> createBackupIsolate(List init) async {
 /// - Isar Directory.
 /// - Photos (Excludes photoThumbnails as they can be re-generated on import).
 ///
-
+@pragma('vm:entry-point')
 Future<File> createBackupZipFile({
   required String spacePath,
   required String temporaryDirectoryPath,

@@ -59,7 +59,7 @@ class _DatabaseImportViewState extends State<DatabaseImportView> {
               //   isarVersion: '1',
               // );
 
-              await restoreBackupZipFile(
+              await restoreBackupZipFileV1(
                 spacePath: spaceDirectory!.path,
                 temporaryDirectoryPath: (await getTemporaryDirectory()).path,
                 selectedFilePath: restoreFile.path,
