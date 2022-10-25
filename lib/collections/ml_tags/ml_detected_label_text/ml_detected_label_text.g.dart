@@ -1,92 +1,88 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'ml_detected_label_text.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetMLDetectedLabelTextCollection on Isar {
   IsarCollection<MLDetectedLabelText> get mLDetectedLabelTexts =>
-      getCollection();
+      this.collection();
 }
 
 const MLDetectedLabelTextSchema = CollectionSchema(
-  name: 'MLDetectedLabelText',
-  schema:
-      '{"name":"MLDetectedLabelText","idName":"id","properties":[{"name":"detectedLabelText","type":"String"},{"name":"hidden","type":"Bool"}],"indexes":[{"name":"detectedLabelText","unique":true,"properties":[{"name":"detectedLabelText","type":"Hash","caseSensitive":true}]}],"links":[]}',
-  idName: 'id',
-  propertyIds: {'detectedLabelText': 0, 'hidden': 1},
-  listProperties: {},
-  indexIds: {'detectedLabelText': 0},
-  indexValueTypes: {
-    'detectedLabelText': [
-      IndexValueType.stringHash,
-    ]
+  name: r'MLDetectedLabelText',
+  id: -8595415678468150704,
+  properties: {
+    r'detectedLabelText': PropertySchema(
+      id: 0,
+      name: r'detectedLabelText',
+      type: IsarType.string,
+    ),
+    r'hidden': PropertySchema(
+      id: 1,
+      name: r'hidden',
+      type: IsarType.bool,
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
+  estimateSize: _mLDetectedLabelTextEstimateSize,
+  serialize: _mLDetectedLabelTextSerialize,
+  deserialize: _mLDetectedLabelTextDeserialize,
+  deserializeProp: _mLDetectedLabelTextDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'detectedLabelText': IndexSchema(
+      id: -6625307223829943034,
+      name: r'detectedLabelText',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'detectedLabelText',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
   getId: _mLDetectedLabelTextGetId,
-  setId: _mLDetectedLabelTextSetId,
   getLinks: _mLDetectedLabelTextGetLinks,
-  attachLinks: _mLDetectedLabelTextAttachLinks,
-  serializeNative: _mLDetectedLabelTextSerializeNative,
-  deserializeNative: _mLDetectedLabelTextDeserializeNative,
-  deserializePropNative: _mLDetectedLabelTextDeserializePropNative,
-  serializeWeb: _mLDetectedLabelTextSerializeWeb,
-  deserializeWeb: _mLDetectedLabelTextDeserializeWeb,
-  deserializePropWeb: _mLDetectedLabelTextDeserializePropWeb,
-  version: 3,
+  attach: _mLDetectedLabelTextAttach,
+  version: '3.0.2',
 );
 
-int? _mLDetectedLabelTextGetId(MLDetectedLabelText object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _mLDetectedLabelTextEstimateSize(
+  MLDetectedLabelText object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.detectedLabelText.length * 3;
+  return bytesCount;
 }
 
-void _mLDetectedLabelTextSetId(MLDetectedLabelText object, int id) {
-  object.id = id;
+void _mLDetectedLabelTextSerialize(
+  MLDetectedLabelText object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.detectedLabelText);
+  writer.writeBool(offsets[1], object.hidden);
 }
 
-List<IsarLinkBase> _mLDetectedLabelTextGetLinks(MLDetectedLabelText object) {
-  return [];
-}
-
-void _mLDetectedLabelTextSerializeNative(
-    IsarCollection<MLDetectedLabelText> collection,
-    IsarRawObject rawObj,
-    MLDetectedLabelText object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.detectedLabelText;
-  final _detectedLabelText = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_detectedLabelText.length) as int;
-  final value1 = object.hidden;
-  final _hidden = value1;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _detectedLabelText);
-  writer.writeBool(offsets[1], _hidden);
-}
-
-MLDetectedLabelText _mLDetectedLabelTextDeserializeNative(
-    IsarCollection<MLDetectedLabelText> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+MLDetectedLabelText _mLDetectedLabelTextDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = MLDetectedLabelText();
   object.detectedLabelText = reader.readString(offsets[0]);
   object.hidden = reader.readBool(offsets[1]);
@@ -94,201 +90,220 @@ MLDetectedLabelText _mLDetectedLabelTextDeserializeNative(
   return object;
 }
 
-P _mLDetectedLabelTextDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _mLDetectedLabelTextDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readBool(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _mLDetectedLabelTextSerializeWeb(
-    IsarCollection<MLDetectedLabelText> collection,
+Id _mLDetectedLabelTextGetId(MLDetectedLabelText object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _mLDetectedLabelTextGetLinks(
     MLDetectedLabelText object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'detectedLabelText', object.detectedLabelText);
-  IsarNative.jsObjectSet(jsObj, 'hidden', object.hidden);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  return jsObj;
+  return [];
 }
 
-MLDetectedLabelText _mLDetectedLabelTextDeserializeWeb(
-    IsarCollection<MLDetectedLabelText> collection, dynamic jsObj) {
-  final object = MLDetectedLabelText();
-  object.detectedLabelText =
-      IsarNative.jsObjectGet(jsObj, 'detectedLabelText') ?? '';
-  object.hidden = IsarNative.jsObjectGet(jsObj, 'hidden') ?? false;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  return object;
+void _mLDetectedLabelTextAttach(
+    IsarCollection<dynamic> col, Id id, MLDetectedLabelText object) {
+  object.id = id;
 }
-
-P _mLDetectedLabelTextDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'detectedLabelText':
-      return (IsarNative.jsObjectGet(jsObj, 'detectedLabelText') ?? '') as P;
-    case 'hidden':
-      return (IsarNative.jsObjectGet(jsObj, 'hidden') ?? false) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _mLDetectedLabelTextAttachLinks(
-    IsarCollection col, int id, MLDetectedLabelText object) {}
 
 extension MLDetectedLabelTextByIndex on IsarCollection<MLDetectedLabelText> {
   Future<MLDetectedLabelText?> getByDetectedLabelText(
       String detectedLabelText) {
-    return getByIndex('detectedLabelText', [detectedLabelText]);
+    return getByIndex(r'detectedLabelText', [detectedLabelText]);
   }
 
   MLDetectedLabelText? getByDetectedLabelTextSync(String detectedLabelText) {
-    return getByIndexSync('detectedLabelText', [detectedLabelText]);
+    return getByIndexSync(r'detectedLabelText', [detectedLabelText]);
   }
 
   Future<bool> deleteByDetectedLabelText(String detectedLabelText) {
-    return deleteByIndex('detectedLabelText', [detectedLabelText]);
+    return deleteByIndex(r'detectedLabelText', [detectedLabelText]);
   }
 
   bool deleteByDetectedLabelTextSync(String detectedLabelText) {
-    return deleteByIndexSync('detectedLabelText', [detectedLabelText]);
+    return deleteByIndexSync(r'detectedLabelText', [detectedLabelText]);
   }
 
   Future<List<MLDetectedLabelText?>> getAllByDetectedLabelText(
       List<String> detectedLabelTextValues) {
     final values = detectedLabelTextValues.map((e) => [e]).toList();
-    return getAllByIndex('detectedLabelText', values);
+    return getAllByIndex(r'detectedLabelText', values);
   }
 
   List<MLDetectedLabelText?> getAllByDetectedLabelTextSync(
       List<String> detectedLabelTextValues) {
     final values = detectedLabelTextValues.map((e) => [e]).toList();
-    return getAllByIndexSync('detectedLabelText', values);
+    return getAllByIndexSync(r'detectedLabelText', values);
   }
 
   Future<int> deleteAllByDetectedLabelText(
       List<String> detectedLabelTextValues) {
     final values = detectedLabelTextValues.map((e) => [e]).toList();
-    return deleteAllByIndex('detectedLabelText', values);
+    return deleteAllByIndex(r'detectedLabelText', values);
   }
 
   int deleteAllByDetectedLabelTextSync(List<String> detectedLabelTextValues) {
     final values = detectedLabelTextValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync('detectedLabelText', values);
+    return deleteAllByIndexSync(r'detectedLabelText', values);
+  }
+
+  Future<Id> putByDetectedLabelText(MLDetectedLabelText object) {
+    return putByIndex(r'detectedLabelText', object);
+  }
+
+  Id putByDetectedLabelTextSync(MLDetectedLabelText object,
+      {bool saveLinks = true}) {
+    return putByIndexSync(r'detectedLabelText', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByDetectedLabelText(
+      List<MLDetectedLabelText> objects) {
+    return putAllByIndex(r'detectedLabelText', objects);
+  }
+
+  List<Id> putAllByDetectedLabelTextSync(List<MLDetectedLabelText> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'detectedLabelText', objects,
+        saveLinks: saveLinks);
   }
 }
 
 extension MLDetectedLabelTextQueryWhereSort
     on QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QWhere> {
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
-  }
-
-  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhere>
-      anyDetectedLabelText() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'detectedLabelText'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension MLDetectedLabelTextQueryWhere
     on QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QWhereClause> {
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
-      idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
-      idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
-    }
-  }
-
-  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
-      idGreaterThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
-  }
-
-  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
-      idLessThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
       idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
       detectedLabelTextEqualTo(String detectedLabelText) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'detectedLabelText',
-      value: [detectedLabelText],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'detectedLabelText',
+        value: [detectedLabelText],
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
       detectedLabelTextNotEqualTo(String detectedLabelText) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'detectedLabelText',
-        upper: [detectedLabelText],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'detectedLabelText',
-        lower: [detectedLabelText],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'detectedLabelText',
-        lower: [detectedLabelText],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'detectedLabelText',
-        upper: [detectedLabelText],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedLabelText',
+              lower: [],
+              upper: [detectedLabelText],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedLabelText',
+              lower: [detectedLabelText],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedLabelText',
+              lower: [detectedLabelText],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedLabelText',
+              lower: [],
+              upper: [detectedLabelText],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 }
 
@@ -299,60 +314,65 @@ extension MLDetectedLabelTextQueryFilter on QueryBuilder<MLDetectedLabelText,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'detectedLabelText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'detectedLabelText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       detectedLabelTextGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'detectedLabelText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'detectedLabelText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       detectedLabelTextLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'detectedLabelText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'detectedLabelText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       detectedLabelTextBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'detectedLabelText',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'detectedLabelText',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
@@ -360,12 +380,13 @@ extension MLDetectedLabelTextQueryFilter on QueryBuilder<MLDetectedLabelText,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'detectedLabelText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'detectedLabelText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
@@ -373,161 +394,203 @@ extension MLDetectedLabelTextQueryFilter on QueryBuilder<MLDetectedLabelText,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'detectedLabelText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'detectedLabelText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       detectedLabelTextContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'detectedLabelText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'detectedLabelText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       detectedLabelTextMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'detectedLabelText',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'detectedLabelText',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      detectedLabelTextIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'detectedLabelText',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      detectedLabelTextIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'detectedLabelText',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       hiddenEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'hidden',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hidden',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
-      idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
       idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
+
+extension MLDetectedLabelTextQueryObject on QueryBuilder<MLDetectedLabelText,
+    MLDetectedLabelText, QFilterCondition> {}
 
 extension MLDetectedLabelTextQueryLinks on QueryBuilder<MLDetectedLabelText,
     MLDetectedLabelText, QFilterCondition> {}
 
-extension MLDetectedLabelTextQueryWhereSortBy
+extension MLDetectedLabelTextQuerySortBy
     on QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QSortBy> {
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       sortByDetectedLabelText() {
-    return addSortByInternal('detectedLabelText', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedLabelText', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       sortByDetectedLabelTextDesc() {
-    return addSortByInternal('detectedLabelText', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedLabelText', Sort.desc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       sortByHidden() {
-    return addSortByInternal('hidden', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hidden', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       sortByHiddenDesc() {
-    return addSortByInternal('hidden', Sort.desc);
-  }
-
-  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
-      sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
-      sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hidden', Sort.desc);
+    });
   }
 }
 
-extension MLDetectedLabelTextQueryWhereSortThenBy
+extension MLDetectedLabelTextQuerySortThenBy
     on QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QSortThenBy> {
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       thenByDetectedLabelText() {
-    return addSortByInternal('detectedLabelText', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedLabelText', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       thenByDetectedLabelTextDesc() {
-    return addSortByInternal('detectedLabelText', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedLabelText', Sort.desc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       thenByHidden() {
-    return addSortByInternal('hidden', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hidden', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       thenByHiddenDesc() {
-    return addSortByInternal('hidden', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hidden', Sort.desc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
       thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 }
 
@@ -535,33 +598,38 @@ extension MLDetectedLabelTextQueryWhereDistinct
     on QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QDistinct> {
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QDistinct>
       distinctByDetectedLabelText({bool caseSensitive = true}) {
-    return addDistinctByInternal('detectedLabelText',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'detectedLabelText',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QDistinct>
       distinctByHidden() {
-    return addDistinctByInternal('hidden');
-  }
-
-  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QDistinct>
-      distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hidden');
+    });
   }
 }
 
 extension MLDetectedLabelTextQueryProperty
     on QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QQueryProperty> {
+  QueryBuilder<MLDetectedLabelText, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
   QueryBuilder<MLDetectedLabelText, String, QQueryOperations>
       detectedLabelTextProperty() {
-    return addPropertyNameInternal('detectedLabelText');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'detectedLabelText');
+    });
   }
 
   QueryBuilder<MLDetectedLabelText, bool, QQueryOperations> hiddenProperty() {
-    return addPropertyNameInternal('hidden');
-  }
-
-  QueryBuilder<MLDetectedLabelText, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hidden');
+    });
   }
 }

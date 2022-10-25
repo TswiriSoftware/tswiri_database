@@ -58,6 +58,7 @@ class ContainerCard extends StatelessWidget {
                     ? isar!.containerTypes
                         .getSync(catalogedContainer.containerTypeID)!
                         .containerColor
+                        .color
                     : null,
                 thickness: 1,
               ),

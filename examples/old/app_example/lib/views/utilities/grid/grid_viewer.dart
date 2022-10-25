@@ -142,7 +142,7 @@ class _GirdViewerState extends State<GirdViewer> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    isar!.writeTxnSync((isar) => isar.catalogedCoordinates
+                    isar!.writeTxnSync(() => isar!.catalogedCoordinates
                         .filter()
                         .gridUIDEqualTo(gridUID)
                         .deleteAllSync());
@@ -237,8 +237,8 @@ class _GirdViewerState extends State<GirdViewer> {
               ..containerUID = null
               ..barcodeUID = scannedBarcodeUID;
 
-            isar!.writeTxnSync((isar) {
-              isar.markers.putSync(newMarker);
+            isar!.writeTxnSync(() {
+              isar!.markers.putSync(newMarker);
             });
 
             _updateMarkers();
@@ -287,9 +287,9 @@ class _GirdViewerState extends State<GirdViewer> {
               visible: !canDeleteMarker(marker),
               child: IconButton(
                 onPressed: () {
-                  isar!.writeTxnSync((isar) {
-                    isar.markers.deleteSync(marker.id);
-                    isar.catalogedCoordinates
+                  isar!.writeTxnSync(() {
+                    isar!.markers.deleteSync(marker.id);
+                    isar!.catalogedCoordinates
                         .filter()
                         .barcodeUIDMatches(marker.barcodeUID)
                         .deleteFirstSync();
@@ -318,9 +318,10 @@ class _GirdViewerState extends State<GirdViewer> {
           .map((e) => e.barcodeUID)
           .toList();
 
+      //TODO: allOf / anyOf
       markers = isar!.markers
           .filter()
-          .repeat(
+          .allOf(
               gridBarcodes, (q, String element) => q.barcodeUIDMatches(element))
           .findAllSync();
     });
@@ -401,22 +402,20 @@ class _GirdViewerState extends State<GirdViewer> {
                             ),
                           );
                           setState(() {
-                            isar!.writeTxnSync((isar) {
+                            isar!.writeTxnSync(() {
                               _gridController.catalogedGrid.barcodeUID =
                                   scannedBarcodeUID;
-                              isar.catalogedGrids.putSync(
-                                  _gridController.catalogedGrid,
-                                  replaceOnConflict: true);
+                              isar!.catalogedGrids
+                                  .putSync(_gridController.catalogedGrid);
                             });
                           });
                         } else {
                           setState(() {
-                            isar!.writeTxnSync((isar) {
+                            isar!.writeTxnSync(() {
                               _gridController.catalogedGrid.barcodeUID =
                                   scannedBarcodeUID;
-                              isar.catalogedGrids.putSync(
-                                  _gridController.catalogedGrid,
-                                  replaceOnConflict: true);
+                              isar!.catalogedGrids
+                                  .putSync(_gridController.catalogedGrid);
                             });
                           });
                         }
@@ -496,22 +495,22 @@ class _GirdViewerState extends State<GirdViewer> {
                             ),
                           );
                           setState(() {
-                            isar!.writeTxnSync((isar) {
+                            isar!.writeTxnSync(() {
                               _gridController.catalogedGrid.parentBarcodeUID =
                                   scannedBarcodeUID;
-                              isar.catalogedGrids.putSync(
-                                  _gridController.catalogedGrid,
-                                  replaceOnConflict: true);
+                              isar!.catalogedGrids.putSync(
+                                _gridController.catalogedGrid,
+                              );
                             });
                           });
                         } else {
                           setState(() {
-                            isar!.writeTxnSync((isar) {
+                            isar!.writeTxnSync(() {
                               _gridController.catalogedGrid.parentBarcodeUID =
                                   scannedBarcodeUID;
-                              isar.catalogedGrids.putSync(
-                                  _gridController.catalogedGrid,
-                                  replaceOnConflict: true);
+                              isar!.catalogedGrids.putSync(
+                                _gridController.catalogedGrid,
+                              );
                             });
                           });
                         }

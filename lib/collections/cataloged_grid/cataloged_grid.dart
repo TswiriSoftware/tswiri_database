@@ -15,7 +15,7 @@ part 'cataloged_grid.g.dart';
 @Collection()
 @Name("CatalogedGrid")
 class CatalogedGrid {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///Barcode UID.
   @Name("barcodeUID")

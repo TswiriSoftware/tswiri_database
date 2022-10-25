@@ -1,90 +1,92 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'photo_label.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetPhotoLabelCollection on Isar {
-  IsarCollection<PhotoLabel> get photoLabels => getCollection();
+  IsarCollection<PhotoLabel> get photoLabels => this.collection();
 }
 
 const PhotoLabelSchema = CollectionSchema(
-  name: 'PhotoLabel',
-  schema:
-      '{"name":"PhotoLabel","idName":"id","properties":[{"name":"hashCode","type":"Long"},{"name":"photoID","type":"Long"},{"name":"tagTextID","type":"Long"}],"indexes":[{"name":"tagTextID","unique":false,"properties":[{"name":"tagTextID","type":"Value","caseSensitive":false}]}],"links":[]}',
-  idName: 'id',
-  propertyIds: {'hashCode': 0, 'photoID': 1, 'tagTextID': 2},
-  listProperties: {},
-  indexIds: {'tagTextID': 0},
-  indexValueTypes: {
-    'tagTextID': [
-      IndexValueType.long,
-    ]
+  name: r'PhotoLabel',
+  id: 2362795667242640436,
+  properties: {
+    r'hashCode': PropertySchema(
+      id: 0,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'photoID': PropertySchema(
+      id: 1,
+      name: r'photoID',
+      type: IsarType.long,
+    ),
+    r'tagTextID': PropertySchema(
+      id: 2,
+      name: r'tagTextID',
+      type: IsarType.long,
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
+  estimateSize: _photoLabelEstimateSize,
+  serialize: _photoLabelSerialize,
+  deserialize: _photoLabelDeserialize,
+  deserializeProp: _photoLabelDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'tagTextID': IndexSchema(
+      id: -5214036049182336314,
+      name: r'tagTextID',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'tagTextID',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
   getId: _photoLabelGetId,
-  setId: _photoLabelSetId,
   getLinks: _photoLabelGetLinks,
-  attachLinks: _photoLabelAttachLinks,
-  serializeNative: _photoLabelSerializeNative,
-  deserializeNative: _photoLabelDeserializeNative,
-  deserializePropNative: _photoLabelDeserializePropNative,
-  serializeWeb: _photoLabelSerializeWeb,
-  deserializeWeb: _photoLabelDeserializeWeb,
-  deserializePropWeb: _photoLabelDeserializePropWeb,
-  version: 3,
+  attach: _photoLabelAttach,
+  version: '3.0.2',
 );
 
-int? _photoLabelGetId(PhotoLabel object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _photoLabelEstimateSize(
+  PhotoLabel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  return bytesCount;
 }
 
-void _photoLabelSetId(PhotoLabel object, int id) {
-  object.id = id;
+void _photoLabelSerialize(
+  PhotoLabel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeLong(offsets[0], object.hashCode);
+  writer.writeLong(offsets[1], object.photoID);
+  writer.writeLong(offsets[2], object.tagTextID);
 }
 
-List<IsarLinkBase> _photoLabelGetLinks(PhotoLabel object) {
-  return [];
-}
-
-void _photoLabelSerializeNative(
-    IsarCollection<PhotoLabel> collection,
-    IsarRawObject rawObj,
-    PhotoLabel object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.hashCode;
-  final _hashCode = value0;
-  final value1 = object.photoID;
-  final _photoID = value1;
-  final value2 = object.tagTextID;
-  final _tagTextID = value2;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _hashCode);
-  writer.writeLong(offsets[1], _photoID);
-  writer.writeLong(offsets[2], _tagTextID);
-}
-
-PhotoLabel _photoLabelDeserializeNative(IsarCollection<PhotoLabel> collection,
-    int id, IsarBinaryReader reader, List<int> offsets) {
+PhotoLabel _photoLabelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = PhotoLabel();
   object.id = id;
   object.photoID = reader.readLong(offsets[1]);
@@ -92,11 +94,13 @@ PhotoLabel _photoLabelDeserializeNative(IsarCollection<PhotoLabel> collection,
   return object;
 }
 
-P _photoLabelDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _photoLabelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
@@ -104,172 +108,177 @@ P _photoLabelDeserializePropNative<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _photoLabelSerializeWeb(
-    IsarCollection<PhotoLabel> collection, PhotoLabel object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'photoID', object.photoID);
-  IsarNative.jsObjectSet(jsObj, 'tagTextID', object.tagTextID);
-  return jsObj;
+Id _photoLabelGetId(PhotoLabel object) {
+  return object.id;
 }
 
-PhotoLabel _photoLabelDeserializeWeb(
-    IsarCollection<PhotoLabel> collection, dynamic jsObj) {
-  final object = PhotoLabel();
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.photoID =
-      IsarNative.jsObjectGet(jsObj, 'photoID') ?? double.negativeInfinity;
-  object.tagTextID =
-      IsarNative.jsObjectGet(jsObj, 'tagTextID') ?? double.negativeInfinity;
-  return object;
+List<IsarLinkBase<dynamic>> _photoLabelGetLinks(PhotoLabel object) {
+  return [];
 }
 
-P _photoLabelDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'hashCode':
-      return (IsarNative.jsObjectGet(jsObj, 'hashCode') ??
-          double.negativeInfinity) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    case 'photoID':
-      return (IsarNative.jsObjectGet(jsObj, 'photoID') ??
-          double.negativeInfinity) as P;
-    case 'tagTextID':
-      return (IsarNative.jsObjectGet(jsObj, 'tagTextID') ??
-          double.negativeInfinity) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
+void _photoLabelAttach(IsarCollection<dynamic> col, Id id, PhotoLabel object) {
+  object.id = id;
 }
-
-void _photoLabelAttachLinks(IsarCollection col, int id, PhotoLabel object) {}
 
 extension PhotoLabelQueryWhereSort
     on QueryBuilder<PhotoLabel, PhotoLabel, QWhere> {
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhere> anyTagTextID() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'tagTextID'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'tagTextID'),
+      );
+    });
   }
 }
 
 extension PhotoLabelQueryWhere
     on QueryBuilder<PhotoLabel, PhotoLabel, QWhereClause> {
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idGreaterThan(int id,
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDEqualTo(
       int tagTextID) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'tagTextID',
-      value: [tagTextID],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'tagTextID',
+        value: [tagTextID],
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDNotEqualTo(
       int tagTextID) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'tagTextID',
-        upper: [tagTextID],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'tagTextID',
-        lower: [tagTextID],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'tagTextID',
-        lower: [tagTextID],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'tagTextID',
-        upper: [tagTextID],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [],
+              upper: [tagTextID],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [tagTextID],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [tagTextID],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [],
+              upper: [tagTextID],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDGreaterThan(
     int tagTextID, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.greaterThan(
-      indexName: 'tagTextID',
-      lower: [tagTextID],
-      includeLower: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'tagTextID',
+        lower: [tagTextID],
+        includeLower: include,
+        upper: [],
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDLessThan(
     int tagTextID, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.lessThan(
-      indexName: 'tagTextID',
-      upper: [tagTextID],
-      includeUpper: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'tagTextID',
+        lower: [],
+        upper: [tagTextID],
+        includeUpper: include,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDBetween(
@@ -278,13 +287,15 @@ extension PhotoLabelQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'tagTextID',
-      lower: [lowerTagTextID],
-      includeLower: includeLower,
-      upper: [upperTagTextID],
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'tagTextID',
+        lower: [lowerTagTextID],
+        includeLower: includeLower,
+        upper: [upperTagTextID],
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -292,11 +303,12 @@ extension PhotoLabelQueryFilter
     on QueryBuilder<PhotoLabel, PhotoLabel, QFilterCondition> {
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> hashCodeEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
@@ -304,24 +316,26 @@ extension PhotoLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> hashCodeLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> hashCodeBetween(
@@ -330,70 +344,78 @@ extension PhotoLabelQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'hashCode',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> idEqualTo(
-      int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoIDEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'photoID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
@@ -401,24 +423,26 @@ extension PhotoLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'photoID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'photoID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoIDLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'photoID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'photoID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoIDBetween(
@@ -427,22 +451,25 @@ extension PhotoLabelQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'photoID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'photoID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextIDEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
@@ -450,24 +477,26 @@ extension PhotoLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextIDLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextIDBetween(
@@ -476,123 +505,158 @@ extension PhotoLabelQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'tagTextID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'tagTextID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
+
+extension PhotoLabelQueryObject
+    on QueryBuilder<PhotoLabel, PhotoLabel, QFilterCondition> {}
 
 extension PhotoLabelQueryLinks
     on QueryBuilder<PhotoLabel, PhotoLabel, QFilterCondition> {}
 
-extension PhotoLabelQueryWhereSortBy
+extension PhotoLabelQuerySortBy
     on QueryBuilder<PhotoLabel, PhotoLabel, QSortBy> {
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByHashCode() {
-    return addSortByInternal('hashCode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByHashCodeDesc() {
-    return addSortByInternal('hashCode', Sort.desc);
-  }
-
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByPhotoID() {
-    return addSortByInternal('photoID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByPhotoIDDesc() {
-    return addSortByInternal('photoID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.desc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByTagTextID() {
-    return addSortByInternal('tagTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByTagTextIDDesc() {
-    return addSortByInternal('tagTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.desc);
+    });
   }
 }
 
-extension PhotoLabelQueryWhereSortThenBy
+extension PhotoLabelQuerySortThenBy
     on QueryBuilder<PhotoLabel, PhotoLabel, QSortThenBy> {
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByHashCode() {
-    return addSortByInternal('hashCode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByHashCodeDesc() {
-    return addSortByInternal('hashCode', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByPhotoID() {
-    return addSortByInternal('photoID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByPhotoIDDesc() {
-    return addSortByInternal('photoID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.desc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByTagTextID() {
-    return addSortByInternal('tagTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByTagTextIDDesc() {
-    return addSortByInternal('tagTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.desc);
+    });
   }
 }
 
 extension PhotoLabelQueryWhereDistinct
     on QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> {
   QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByHashCode() {
-    return addDistinctByInternal('hashCode');
-  }
-
-  QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByPhotoID() {
-    return addDistinctByInternal('photoID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'photoID');
+    });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByTagTextID() {
-    return addDistinctByInternal('tagTextID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'tagTextID');
+    });
   }
 }
 
 extension PhotoLabelQueryProperty
     on QueryBuilder<PhotoLabel, PhotoLabel, QQueryProperty> {
-  QueryBuilder<PhotoLabel, int, QQueryOperations> hashCodeProperty() {
-    return addPropertyNameInternal('hashCode');
+  QueryBuilder<PhotoLabel, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
   }
 
-  QueryBuilder<PhotoLabel, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+  QueryBuilder<PhotoLabel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
+    });
   }
 
   QueryBuilder<PhotoLabel, int, QQueryOperations> photoIDProperty() {
-    return addPropertyNameInternal('photoID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'photoID');
+    });
   }
 
   QueryBuilder<PhotoLabel, int, QQueryOperations> tagTextIDProperty() {
-    return addPropertyNameInternal('tagTextID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'tagTextID');
+    });
   }
 }

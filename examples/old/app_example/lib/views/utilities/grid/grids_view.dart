@@ -65,10 +65,10 @@ class _GridsViewState extends State<GridsView> {
       centerTitle: true,
       leading: IconButton(
         onPressed: () {
-          isar!.writeTxnSync((isar) {
+          isar!.writeTxnSync(() {
             for (var gridUID in selectedGrids) {
-              isar.catalogedGrids.deleteSync(gridUID);
-              isar.catalogedCoordinates
+              isar!.catalogedGrids.deleteSync(gridUID);
+              isar!.catalogedCoordinates
                   .filter()
                   .gridUIDEqualTo(gridUID)
                   .deleteAllSync();

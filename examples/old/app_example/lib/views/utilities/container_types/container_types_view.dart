@@ -76,11 +76,13 @@ class _ContainerTypesViewState extends State<ContainerTypesView> {
                     containerType.containerTypeName.capitalizeFirstCharacter(),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Icon(containerType.iconData),
+                  Icon(containerType.iconData.iconData),
                 ],
               ),
               Divider(
-                color: colorModeEnabled ? containerType.containerColor : null,
+                color: colorModeEnabled
+                    ? containerType.containerColor.color
+                    : null,
                 thickness: 1,
               ),
               Padding(

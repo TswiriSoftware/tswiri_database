@@ -14,7 +14,7 @@ part 'photo_label.g.dart';
 @Collection()
 @Name("PhotoLabel")
 class PhotoLabel {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///Photo ID.
   @Name("photoID")

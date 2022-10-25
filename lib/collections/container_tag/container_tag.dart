@@ -14,7 +14,7 @@ part 'container_tag.g.dart';
 @Collection()
 @Name("ContainerTag")
 class ContainerTag {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   //ContainerUID
   @Name("containerUID")

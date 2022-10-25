@@ -15,7 +15,7 @@ part 'ml_photo_label.g.dart';
 @Collection()
 @Name("MLPhotoLabel")
 class MLPhotoLabel {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///PhotoID.
   @Name("photoID")

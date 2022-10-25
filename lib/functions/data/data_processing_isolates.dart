@@ -120,12 +120,18 @@ List<InterBarcodeVector> averageInterBarcodeVectors(
 /// - True if it HAS moved.
 bool hasMoved(CatalogedCoordinate newCoordinate,
     CatalogedCoordinate storedCoordinate, double error) {
-  if (storedCoordinate.coordinate!.x + error >= newCoordinate.coordinate!.x &&
-      storedCoordinate.coordinate!.x - error <= newCoordinate.coordinate!.x &&
-      storedCoordinate.coordinate!.y + error >= newCoordinate.coordinate!.y &&
-      storedCoordinate.coordinate!.y - error <= newCoordinate.coordinate!.y &&
-      storedCoordinate.coordinate!.z + error >= newCoordinate.coordinate!.z &&
-      storedCoordinate.coordinate!.z - error <= newCoordinate.coordinate!.z) {
+  if (storedCoordinate.coordinate!.vector.x + error >=
+          newCoordinate.coordinate!.vector.x &&
+      storedCoordinate.coordinate!.vector.x - error <=
+          newCoordinate.coordinate!.vector.x &&
+      storedCoordinate.coordinate!.vector.y + error >=
+          newCoordinate.coordinate!.vector.y &&
+      storedCoordinate.coordinate!.vector.y - error <=
+          newCoordinate.coordinate!.vector.y &&
+      storedCoordinate.coordinate!.vector.z + error >=
+          newCoordinate.coordinate!.vector.z &&
+      storedCoordinate.coordinate!.vector.z - error <=
+          newCoordinate.coordinate!.vector.z) {
     //Returns false if it has not moved.
     return false;
   }

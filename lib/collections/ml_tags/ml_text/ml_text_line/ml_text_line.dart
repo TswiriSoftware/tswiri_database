@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:isar/isar.dart';
-import 'package:tswiri_database/converters/corner_point_converter.dart';
+import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
 part 'ml_text_line.g.dart';
 
 ///TODO: finish commenting.
@@ -17,7 +17,7 @@ part 'ml_text_line.g.dart';
 @Name("MLTextLine")
 class MLTextLine {
   ///LineID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///BlockID.
   @Name("blockID")
@@ -33,8 +33,7 @@ class MLTextLine {
 
   ///CornerPoints.
   @Name("cornerPoints")
-  @CornerPointConverter()
-  late List<Point<int>> cornerPoints;
+  late CornerPoints cornerPoints;
 
   @override
   String toString() {
@@ -47,16 +46,7 @@ class MLTextLine {
         'blockID': blockID,
         'blockIndex': blockIndex,
         'recognizedLanguages': recognizedLanguages,
-        'cornerPoints': [
-          cornerPoints[0].x,
-          cornerPoints[0].y,
-          cornerPoints[1].x,
-          cornerPoints[1].y,
-          cornerPoints[2].x,
-          cornerPoints[2].y,
-          cornerPoints[3].x,
-          cornerPoints[3].y,
-        ],
+        'cornerPoints': cornerPoints.data,
       };
 
   ///From json.
@@ -68,11 +58,6 @@ class MLTextLine {
       ..blockIndex = json['blockIndex']
       ..recognizedLanguages =
           (json['recognizedLanguages'] as List<dynamic>).cast<String>()
-      ..cornerPoints = [
-        Point(cp[0], cp[1]),
-        Point(cp[2], cp[3]),
-        Point(cp[4], cp[5]),
-        Point(cp[6], cp[7]),
-      ];
+      ..cornerPoints = CornerPoints.fromMessage(cp);
   }
 }

@@ -16,7 +16,7 @@ part 'container_relationship.g.dart';
 @Name("ContainerRelationship")
 class ContainerRelationship {
   ///ID
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///ContainerUID
   @Name("containerUID")

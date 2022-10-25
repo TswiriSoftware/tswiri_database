@@ -1,274 +1,259 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'cataloged_coordinate.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetCatalogedCoordinateCollection on Isar {
   IsarCollection<CatalogedCoordinate> get catalogedCoordinates =>
-      getCollection();
+      this.collection();
 }
 
 const CatalogedCoordinateSchema = CollectionSchema(
-  name: 'CatalogedCoordinate',
-  schema:
-      '{"name":"CatalogedCoordinate","idName":"id","properties":[{"name":"barcodeUID","type":"String"},{"name":"coordinate","type":"DoubleList"},{"name":"gridUID","type":"Long"},{"name":"rotation","type":"DoubleList"},{"name":"timestamp","type":"Long"}],"indexes":[],"links":[]}',
-  idName: 'id',
-  propertyIds: {
-    'barcodeUID': 0,
-    'coordinate': 1,
-    'gridUID': 2,
-    'rotation': 3,
-    'timestamp': 4
+  name: r'CatalogedCoordinate',
+  id: -3206886641433459108,
+  properties: {
+    r'barcodeUID': PropertySchema(
+      id: 0,
+      name: r'barcodeUID',
+      type: IsarType.string,
+    ),
+    r'coordinate': PropertySchema(
+      id: 1,
+      name: r'coordinate',
+      type: IsarType.object,
+      target: r'EmbeddedVector3',
+    ),
+    r'gridUID': PropertySchema(
+      id: 2,
+      name: r'gridUID',
+      type: IsarType.long,
+    ),
+    r'rotation': PropertySchema(
+      id: 3,
+      name: r'rotation',
+      type: IsarType.object,
+      target: r'EmbeddedVector3',
+    ),
+    r'timestamp': PropertySchema(
+      id: 4,
+      name: r'timestamp',
+      type: IsarType.long,
+    )
   },
-  listProperties: {'coordinate', 'rotation'},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {},
-  backlinkLinkNames: {},
+  estimateSize: _catalogedCoordinateEstimateSize,
+  serialize: _catalogedCoordinateSerialize,
+  deserialize: _catalogedCoordinateDeserialize,
+  deserializeProp: _catalogedCoordinateDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {r'EmbeddedVector3': EmbeddedVector3Schema},
   getId: _catalogedCoordinateGetId,
-  setId: _catalogedCoordinateSetId,
   getLinks: _catalogedCoordinateGetLinks,
-  attachLinks: _catalogedCoordinateAttachLinks,
-  serializeNative: _catalogedCoordinateSerializeNative,
-  deserializeNative: _catalogedCoordinateDeserializeNative,
-  deserializePropNative: _catalogedCoordinateDeserializePropNative,
-  serializeWeb: _catalogedCoordinateSerializeWeb,
-  deserializeWeb: _catalogedCoordinateDeserializeWeb,
-  deserializePropWeb: _catalogedCoordinateDeserializePropWeb,
-  version: 3,
+  attach: _catalogedCoordinateAttach,
+  version: '3.0.2',
 );
 
-int? _catalogedCoordinateGetId(CatalogedCoordinate object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
+int _catalogedCoordinateEstimateSize(
+  CatalogedCoordinate object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.barcodeUID.length * 3;
+  {
+    final value = object.coordinate;
+    if (value != null) {
+      bytesCount += 3 +
+          EmbeddedVector3Schema.estimateSize(
+              value, allOffsets[EmbeddedVector3]!, allOffsets);
+    }
   }
+  {
+    final value = object.rotation;
+    if (value != null) {
+      bytesCount += 3 +
+          EmbeddedVector3Schema.estimateSize(
+              value, allOffsets[EmbeddedVector3]!, allOffsets);
+    }
+  }
+  return bytesCount;
 }
 
-void _catalogedCoordinateSetId(CatalogedCoordinate object, int id) {
-  object.id = id;
+void _catalogedCoordinateSerialize(
+  CatalogedCoordinate object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.barcodeUID);
+  writer.writeObject<EmbeddedVector3>(
+    offsets[1],
+    allOffsets,
+    EmbeddedVector3Schema.serialize,
+    object.coordinate,
+  );
+  writer.writeLong(offsets[2], object.gridUID);
+  writer.writeObject<EmbeddedVector3>(
+    offsets[3],
+    allOffsets,
+    EmbeddedVector3Schema.serialize,
+    object.rotation,
+  );
+  writer.writeLong(offsets[4], object.timestamp);
 }
 
-List<IsarLinkBase> _catalogedCoordinateGetLinks(CatalogedCoordinate object) {
-  return [];
-}
-
-const _catalogedCoordinateVector3Converter = Vector3Converter();
-
-void _catalogedCoordinateSerializeNative(
-    IsarCollection<CatalogedCoordinate> collection,
-    IsarRawObject rawObj,
-    CatalogedCoordinate object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.barcodeUID;
-  final _barcodeUID = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_barcodeUID.length) as int;
-  final value1 = _catalogedCoordinateVector3Converter.toIsar(object.coordinate);
-  dynamicSize += (value1?.length ?? 0) * 8;
-  final _coordinate = value1;
-  final value2 = object.gridUID;
-  final _gridUID = value2;
-  final value3 = _catalogedCoordinateVector3Converter.toIsar(object.rotation);
-  dynamicSize += (value3?.length ?? 0) * 8;
-  final _rotation = value3;
-  final value4 = object.timestamp;
-  final _timestamp = value4;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _barcodeUID);
-  writer.writeDoubleList(offsets[1], _coordinate);
-  writer.writeLong(offsets[2], _gridUID);
-  writer.writeDoubleList(offsets[3], _rotation);
-  writer.writeLong(offsets[4], _timestamp);
-}
-
-CatalogedCoordinate _catalogedCoordinateDeserializeNative(
-    IsarCollection<CatalogedCoordinate> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+CatalogedCoordinate _catalogedCoordinateDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = CatalogedCoordinate();
   object.barcodeUID = reader.readString(offsets[0]);
-  object.coordinate = _catalogedCoordinateVector3Converter
-      .fromIsar(reader.readDoubleList(offsets[1]));
+  object.coordinate = reader.readObjectOrNull<EmbeddedVector3>(
+    offsets[1],
+    EmbeddedVector3Schema.deserialize,
+    allOffsets,
+  );
   object.gridUID = reader.readLong(offsets[2]);
   object.id = id;
-  object.rotation = _catalogedCoordinateVector3Converter
-      .fromIsar(reader.readDoubleList(offsets[3]));
+  object.rotation = reader.readObjectOrNull<EmbeddedVector3>(
+    offsets[3],
+    EmbeddedVector3Schema.deserialize,
+    allOffsets,
+  );
   object.timestamp = reader.readLong(offsets[4]);
   return object;
 }
 
-P _catalogedCoordinateDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _catalogedCoordinateDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (_catalogedCoordinateVector3Converter
-          .fromIsar(reader.readDoubleList(offset))) as P;
+      return (reader.readObjectOrNull<EmbeddedVector3>(
+        offset,
+        EmbeddedVector3Schema.deserialize,
+        allOffsets,
+      )) as P;
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (_catalogedCoordinateVector3Converter
-          .fromIsar(reader.readDoubleList(offset))) as P;
+      return (reader.readObjectOrNull<EmbeddedVector3>(
+        offset,
+        EmbeddedVector3Schema.deserialize,
+        allOffsets,
+      )) as P;
     case 4:
       return (reader.readLong(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _catalogedCoordinateSerializeWeb(
-    IsarCollection<CatalogedCoordinate> collection,
+Id _catalogedCoordinateGetId(CatalogedCoordinate object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _catalogedCoordinateGetLinks(
     CatalogedCoordinate object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'barcodeUID', object.barcodeUID);
-  IsarNative.jsObjectSet(jsObj, 'coordinate',
-      _catalogedCoordinateVector3Converter.toIsar(object.coordinate));
-  IsarNative.jsObjectSet(jsObj, 'gridUID', object.gridUID);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'rotation',
-      _catalogedCoordinateVector3Converter.toIsar(object.rotation));
-  IsarNative.jsObjectSet(jsObj, 'timestamp', object.timestamp);
-  return jsObj;
+  return [];
 }
 
-CatalogedCoordinate _catalogedCoordinateDeserializeWeb(
-    IsarCollection<CatalogedCoordinate> collection, dynamic jsObj) {
-  final object = CatalogedCoordinate();
-  object.barcodeUID = IsarNative.jsObjectGet(jsObj, 'barcodeUID') ?? '';
-  object.coordinate = _catalogedCoordinateVector3Converter.fromIsar(
-      (IsarNative.jsObjectGet(jsObj, 'coordinate') as List?)
-          ?.map((e) => e ?? double.negativeInfinity)
-          .toList()
-          .cast<double>());
-  object.gridUID =
-      IsarNative.jsObjectGet(jsObj, 'gridUID') ?? double.negativeInfinity;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.rotation = _catalogedCoordinateVector3Converter.fromIsar(
-      (IsarNative.jsObjectGet(jsObj, 'rotation') as List?)
-          ?.map((e) => e ?? double.negativeInfinity)
-          .toList()
-          .cast<double>());
-  object.timestamp =
-      IsarNative.jsObjectGet(jsObj, 'timestamp') ?? double.negativeInfinity;
-  return object;
+void _catalogedCoordinateAttach(
+    IsarCollection<dynamic> col, Id id, CatalogedCoordinate object) {
+  object.id = id;
 }
-
-P _catalogedCoordinateDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'barcodeUID':
-      return (IsarNative.jsObjectGet(jsObj, 'barcodeUID') ?? '') as P;
-    case 'coordinate':
-      return (_catalogedCoordinateVector3Converter.fromIsar(
-          (IsarNative.jsObjectGet(jsObj, 'coordinate') as List?)
-              ?.map((e) => e ?? double.negativeInfinity)
-              .toList()
-              .cast<double>())) as P;
-    case 'gridUID':
-      return (IsarNative.jsObjectGet(jsObj, 'gridUID') ??
-          double.negativeInfinity) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    case 'rotation':
-      return (_catalogedCoordinateVector3Converter.fromIsar(
-          (IsarNative.jsObjectGet(jsObj, 'rotation') as List?)
-              ?.map((e) => e ?? double.negativeInfinity)
-              .toList()
-              .cast<double>())) as P;
-    case 'timestamp':
-      return (IsarNative.jsObjectGet(jsObj, 'timestamp') ??
-          double.negativeInfinity) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _catalogedCoordinateAttachLinks(
-    IsarCollection col, int id, CatalogedCoordinate object) {}
 
 extension CatalogedCoordinateQueryWhereSort
     on QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QWhere> {
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension CatalogedCoordinateQueryWhere
     on QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QWhereClause> {
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
-      idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
-      idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
+    });
+  }
+
+  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
-    }
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
-      idGreaterThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
-      idLessThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterWhereClause>
       idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -279,60 +264,65 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       barcodeUIDGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       barcodeUIDLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       barcodeUIDBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'barcodeUID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'barcodeUID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -340,12 +330,13 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -353,90 +344,83 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       barcodeUIDContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       barcodeUIDMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'barcodeUID',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'barcodeUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
+      barcodeUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcodeUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
+      barcodeUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'barcodeUID',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       coordinateIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'coordinate',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'coordinate',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      coordinateAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'coordinate',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      coordinateAnyGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'coordinate',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      coordinateAnyLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'coordinate',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      coordinateAnyBetween(double? lower, double? upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'coordinate',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+      coordinateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'coordinate',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       gridUIDEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'gridUID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'gridUID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -444,12 +428,13 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'gridUID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'gridUID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -457,12 +442,13 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'gridUID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'gridUID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -472,122 +458,99 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'gridUID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'gridUID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       rotationIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'rotation',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'rotation',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      rotationAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'rotation',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      rotationAnyGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'rotation',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      rotationAnyLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'rotation',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
-      rotationAnyBetween(double? lower, double? upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'rotation',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+      rotationIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'rotation',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
       timestampEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'timestamp',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'timestamp',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -595,12 +558,13 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'timestamp',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'timestamp',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -608,12 +572,13 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'timestamp',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'timestamp',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
@@ -623,102 +588,139 @@ extension CatalogedCoordinateQueryFilter on QueryBuilder<CatalogedCoordinate,
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'timestamp',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'timestamp',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension CatalogedCoordinateQueryObject on QueryBuilder<CatalogedCoordinate,
+    CatalogedCoordinate, QFilterCondition> {
+  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
+      coordinate(FilterQuery<EmbeddedVector3> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'coordinate');
+    });
+  }
+
+  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterFilterCondition>
+      rotation(FilterQuery<EmbeddedVector3> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'rotation');
+    });
   }
 }
 
 extension CatalogedCoordinateQueryLinks on QueryBuilder<CatalogedCoordinate,
     CatalogedCoordinate, QFilterCondition> {}
 
-extension CatalogedCoordinateQueryWhereSortBy
+extension CatalogedCoordinateQuerySortBy
     on QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QSortBy> {
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       sortByBarcodeUID() {
-    return addSortByInternal('barcodeUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       sortByBarcodeUIDDesc() {
-    return addSortByInternal('barcodeUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       sortByGridUID() {
-    return addSortByInternal('gridUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'gridUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       sortByGridUIDDesc() {
-    return addSortByInternal('gridUID', Sort.desc);
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
-      sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
-      sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'gridUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       sortByTimestamp() {
-    return addSortByInternal('timestamp', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timestamp', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       sortByTimestampDesc() {
-    return addSortByInternal('timestamp', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timestamp', Sort.desc);
+    });
   }
 }
 
-extension CatalogedCoordinateQueryWhereSortThenBy
+extension CatalogedCoordinateQuerySortThenBy
     on QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QSortThenBy> {
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByBarcodeUID() {
-    return addSortByInternal('barcodeUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByBarcodeUIDDesc() {
-    return addSortByInternal('barcodeUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByGridUID() {
-    return addSortByInternal('gridUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'gridUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByGridUIDDesc() {
-    return addSortByInternal('gridUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'gridUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByTimestamp() {
-    return addSortByInternal('timestamp', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timestamp', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QAfterSortBy>
       thenByTimestampDesc() {
-    return addSortByInternal('timestamp', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timestamp', Sort.desc);
+    });
   }
 }
 
@@ -726,51 +728,64 @@ extension CatalogedCoordinateQueryWhereDistinct
     on QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QDistinct> {
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QDistinct>
       distinctByBarcodeUID({bool caseSensitive = true}) {
-    return addDistinctByInternal('barcodeUID', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'barcodeUID', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QDistinct>
       distinctByGridUID() {
-    return addDistinctByInternal('gridUID');
-  }
-
-  QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QDistinct>
-      distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'gridUID');
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QDistinct>
       distinctByTimestamp() {
-    return addDistinctByInternal('timestamp');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'timestamp');
+    });
   }
 }
 
 extension CatalogedCoordinateQueryProperty
     on QueryBuilder<CatalogedCoordinate, CatalogedCoordinate, QQueryProperty> {
-  QueryBuilder<CatalogedCoordinate, String, QQueryOperations>
-      barcodeUIDProperty() {
-    return addPropertyNameInternal('barcodeUID');
+  QueryBuilder<CatalogedCoordinate, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
   }
 
-  QueryBuilder<CatalogedCoordinate, vm.Vector3?, QQueryOperations>
+  QueryBuilder<CatalogedCoordinate, String, QQueryOperations>
+      barcodeUIDProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'barcodeUID');
+    });
+  }
+
+  QueryBuilder<CatalogedCoordinate, EmbeddedVector3?, QQueryOperations>
       coordinateProperty() {
-    return addPropertyNameInternal('coordinate');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'coordinate');
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, int, QQueryOperations> gridUIDProperty() {
-    return addPropertyNameInternal('gridUID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'gridUID');
+    });
   }
 
-  QueryBuilder<CatalogedCoordinate, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
-  }
-
-  QueryBuilder<CatalogedCoordinate, vm.Vector3?, QQueryOperations>
+  QueryBuilder<CatalogedCoordinate, EmbeddedVector3?, QQueryOperations>
       rotationProperty() {
-    return addPropertyNameInternal('rotation');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'rotation');
+    });
   }
 
   QueryBuilder<CatalogedCoordinate, int, QQueryOperations> timestampProperty() {
-    return addPropertyNameInternal('timestamp');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'timestamp');
+    });
   }
 }

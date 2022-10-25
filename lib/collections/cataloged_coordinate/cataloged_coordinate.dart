@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 // ignore: depend_on_referenced_packages
 import 'package:vector_math/vector_math_64.dart' as vm;
 part 'cataloged_coordinate.g.dart';
@@ -16,7 +17,7 @@ part 'cataloged_coordinate.g.dart';
 @Collection()
 @Name("CatalogedCoordinate")
 class CatalogedCoordinate {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   @Name("barcodeUID")
   late String barcodeUID;
@@ -31,13 +32,11 @@ class CatalogedCoordinate {
 
   ///The vector3 coordinate.
   @Name("coordinate")
-  @Vector3Converter()
-  late vm.Vector3? coordinate;
+  late EmbeddedVector3? coordinate;
 
   ///The rotation of this barcode.
   @Name("rotation")
-  @Vector3Converter()
-  late vm.Vector3? rotation;
+  late EmbeddedVector3? rotation;
 
   @override
   String toString() {
@@ -51,33 +50,36 @@ class CatalogedCoordinate {
         'gridUID': gridUID,
         'timestamp': timestamp,
         'coordinate': [
-          coordinate!.x, // [4][0]
-          coordinate!.y, // [4][1]
-          coordinate!.z, // [4][2]
+          coordinate!.vector.x, // [4][0]
+          coordinate!.vector.y, // [4][1]
+          coordinate!.vector.z, // [4][2]
         ],
         'rotation': [
-          rotation?.x, // [4][0]
-          rotation?.y, // [4][1]
-          rotation?.z, // [4][2]
+          rotation?.vector.x, // [4][0]
+          rotation?.vector.y, // [4][1]
+          rotation?.vector.z, // [4][2]
         ],
       };
 
   ///From json.
   CatalogedCoordinate fromJson(Map<String, dynamic> json) {
-    List<double> points = (json['coordinate'] as List<dynamic>).cast<double>();
+    List<double> coordinateMessage =
+        (json['coordinate'] as List<dynamic>).cast<double>();
     List<double?> rotations =
         (json['coordinate'] as List<dynamic>).cast<double?>();
-    vm.Vector3? decodedRotation = null;
 
+    EmbeddedVector3? decodedRotation = null;
     if (rotations[0] != null && rotations[1] != null && rotations[2] != null) {
-      decodedRotation = vm.Vector3(rotations[0]!, rotations[1]!, rotations[2]!);
+      decodedRotation = EmbeddedVector3.fromMessage(
+          [rotations[0]!, rotations[1]!, rotations[2]!]);
     }
+
     return CatalogedCoordinate()
       ..id = json['id']
       ..barcodeUID = json['barcodeUID']
       ..gridUID = json['gridUID']
       ..timestamp = json['timestamp']
-      ..coordinate = vm.Vector3(points[0], points[1], points[2])
+      ..coordinate = EmbeddedVector3.fromMessage(coordinateMessage)
       ..rotation = decodedRotation;
   }
 
@@ -87,48 +89,41 @@ class CatalogedCoordinate {
       barcodeUID, //[1]
       gridUID, //[2]
       timestamp, //[3]
-      [
-        coordinate!.x, // [4][0]
-        coordinate!.y, // [4][1]
-        coordinate!.z, // [4][2]
-      ],
+      coordinate!.data, //[4]
     ];
   }
 }
 
 CatalogedCoordinate catalogedCoordinateFromMessage(List<dynamic> message) {
+  EmbeddedVector3 coordinate = EmbeddedVector3.fromMessage(message[4]);
   return CatalogedCoordinate()
     ..barcodeUID = message[1]
-    ..coordinate = vm.Vector3(
-      message[4][0] as double,
-      message[4][1] as double,
-      message[4][2] as double,
-    )
+    ..coordinate = coordinate
     ..gridUID = message[2] as int
     ..timestamp = message[3] as int
     ..rotation = null;
 }
 
-class Vector3Converter extends TypeConverter<vm.Vector3?, List<double>?> {
-  const Vector3Converter(); // Converters need to have an empty const constructor
+// class Vector3Converter extends TypeConverter<vm.Vector3?, List<double>?> {
+//   const Vector3Converter(); // Converters need to have an empty const constructor
 
-  @override
-  vm.Vector3? fromIsar(List<double>? object) {
-    if (object != null) {
-      return vm.Vector3(object[0], object[1], object[2]);
-    }
-    return null;
-  }
+//   @override
+//   vm.Vector3? fromIsar(List<double>? object) {
+//     if (object != null) {
+//       return vm.Vector3(object[0], object[1], object[2]);
+//     }
+//     return null;
+//   }
 
-  @override
-  List<double>? toIsar(vm.Vector3? object) {
-    if (object != null) {
-      return [
-        object.x,
-        object.y,
-        object.z,
-      ];
-    }
-    return null;
-  }
-}
+//   @override
+//   List<double>? toIsar(vm.Vector3? object) {
+//     if (object != null) {
+//       return [
+//         object.x,
+//         object.y,
+//         object.z,
+//       ];
+//     }
+//     return null;
+//   }
+// }

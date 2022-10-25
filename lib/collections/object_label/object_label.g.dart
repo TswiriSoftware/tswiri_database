@@ -1,93 +1,92 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'object_label.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetObjectLabelCollection on Isar {
-  IsarCollection<ObjectLabel> get objectLabels => getCollection();
+  IsarCollection<ObjectLabel> get objectLabels => this.collection();
 }
 
 const ObjectLabelSchema = CollectionSchema(
-  name: 'ObjectLabel',
-  schema:
-      '{"name":"ObjectLabel","idName":"id","properties":[{"name":"hashCode","type":"Long"},{"name":"objectID","type":"Long"},{"name":"tagTextID","type":"Long"}],"indexes":[{"name":"tagTextID","unique":false,"properties":[{"name":"tagTextID","type":"Value","caseSensitive":false}]}],"links":[]}',
-  idName: 'id',
-  propertyIds: {'hashCode': 0, 'objectID': 1, 'tagTextID': 2},
-  listProperties: {},
-  indexIds: {'tagTextID': 0},
-  indexValueTypes: {
-    'tagTextID': [
-      IndexValueType.long,
-    ]
+  name: r'ObjectLabel',
+  id: 527779606956548866,
+  properties: {
+    r'hashCode': PropertySchema(
+      id: 0,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'objectID': PropertySchema(
+      id: 1,
+      name: r'objectID',
+      type: IsarType.long,
+    ),
+    r'tagTextID': PropertySchema(
+      id: 2,
+      name: r'tagTextID',
+      type: IsarType.long,
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
+  estimateSize: _objectLabelEstimateSize,
+  serialize: _objectLabelSerialize,
+  deserialize: _objectLabelDeserialize,
+  deserializeProp: _objectLabelDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'tagTextID': IndexSchema(
+      id: -5214036049182336314,
+      name: r'tagTextID',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'tagTextID',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
   getId: _objectLabelGetId,
-  setId: _objectLabelSetId,
   getLinks: _objectLabelGetLinks,
-  attachLinks: _objectLabelAttachLinks,
-  serializeNative: _objectLabelSerializeNative,
-  deserializeNative: _objectLabelDeserializeNative,
-  deserializePropNative: _objectLabelDeserializePropNative,
-  serializeWeb: _objectLabelSerializeWeb,
-  deserializeWeb: _objectLabelDeserializeWeb,
-  deserializePropWeb: _objectLabelDeserializePropWeb,
-  version: 3,
+  attach: _objectLabelAttach,
+  version: '3.0.2',
 );
 
-int? _objectLabelGetId(ObjectLabel object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _objectLabelEstimateSize(
+  ObjectLabel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  return bytesCount;
 }
 
-void _objectLabelSetId(ObjectLabel object, int id) {
-  object.id = id;
+void _objectLabelSerialize(
+  ObjectLabel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeLong(offsets[0], object.hashCode);
+  writer.writeLong(offsets[1], object.objectID);
+  writer.writeLong(offsets[2], object.tagTextID);
 }
 
-List<IsarLinkBase> _objectLabelGetLinks(ObjectLabel object) {
-  return [];
-}
-
-void _objectLabelSerializeNative(
-    IsarCollection<ObjectLabel> collection,
-    IsarRawObject rawObj,
-    ObjectLabel object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.hashCode;
-  final _hashCode = value0;
-  final value1 = object.objectID;
-  final _objectID = value1;
-  final value2 = object.tagTextID;
-  final _tagTextID = value2;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _hashCode);
-  writer.writeLong(offsets[1], _objectID);
-  writer.writeLong(offsets[2], _tagTextID);
-}
-
-ObjectLabel _objectLabelDeserializeNative(
-    IsarCollection<ObjectLabel> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+ObjectLabel _objectLabelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = ObjectLabel();
   object.id = id;
   object.objectID = reader.readLong(offsets[1]);
@@ -95,11 +94,13 @@ ObjectLabel _objectLabelDeserializeNative(
   return object;
 }
 
-P _objectLabelDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _objectLabelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
@@ -107,152 +108,151 @@ P _objectLabelDeserializePropNative<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _objectLabelSerializeWeb(
-    IsarCollection<ObjectLabel> collection, ObjectLabel object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'objectID', object.objectID);
-  IsarNative.jsObjectSet(jsObj, 'tagTextID', object.tagTextID);
-  return jsObj;
+Id _objectLabelGetId(ObjectLabel object) {
+  return object.id;
 }
 
-ObjectLabel _objectLabelDeserializeWeb(
-    IsarCollection<ObjectLabel> collection, dynamic jsObj) {
-  final object = ObjectLabel();
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.objectID =
-      IsarNative.jsObjectGet(jsObj, 'objectID') ?? double.negativeInfinity;
-  object.tagTextID =
-      IsarNative.jsObjectGet(jsObj, 'tagTextID') ?? double.negativeInfinity;
-  return object;
+List<IsarLinkBase<dynamic>> _objectLabelGetLinks(ObjectLabel object) {
+  return [];
 }
 
-P _objectLabelDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'hashCode':
-      return (IsarNative.jsObjectGet(jsObj, 'hashCode') ??
-          double.negativeInfinity) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    case 'objectID':
-      return (IsarNative.jsObjectGet(jsObj, 'objectID') ??
-          double.negativeInfinity) as P;
-    case 'tagTextID':
-      return (IsarNative.jsObjectGet(jsObj, 'tagTextID') ??
-          double.negativeInfinity) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
+void _objectLabelAttach(
+    IsarCollection<dynamic> col, Id id, ObjectLabel object) {
+  object.id = id;
 }
-
-void _objectLabelAttachLinks(IsarCollection col, int id, ObjectLabel object) {}
 
 extension ObjectLabelQueryWhereSort
     on QueryBuilder<ObjectLabel, ObjectLabel, QWhere> {
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhere> anyTagTextID() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'tagTextID'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'tagTextID'),
+      );
+    });
   }
 }
 
 extension ObjectLabelQueryWhere
     on QueryBuilder<ObjectLabel, ObjectLabel, QWhereClause> {
-  QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+  QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idNotEqualTo(
-      int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
-  QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idGreaterThan(
-      int id,
+  QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
-  QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> tagTextIDEqualTo(
       int tagTextID) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'tagTextID',
-      value: [tagTextID],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'tagTextID',
+        value: [tagTextID],
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> tagTextIDNotEqualTo(
       int tagTextID) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'tagTextID',
-        upper: [tagTextID],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'tagTextID',
-        lower: [tagTextID],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'tagTextID',
-        lower: [tagTextID],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'tagTextID',
-        upper: [tagTextID],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [],
+              upper: [tagTextID],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [tagTextID],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [tagTextID],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextID',
+              lower: [],
+              upper: [tagTextID],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause>
@@ -260,22 +260,28 @@ extension ObjectLabelQueryWhere
     int tagTextID, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.greaterThan(
-      indexName: 'tagTextID',
-      lower: [tagTextID],
-      includeLower: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'tagTextID',
+        lower: [tagTextID],
+        includeLower: include,
+        upper: [],
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> tagTextIDLessThan(
     int tagTextID, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.lessThan(
-      indexName: 'tagTextID',
-      upper: [tagTextID],
-      includeUpper: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'tagTextID',
+        lower: [],
+        upper: [tagTextID],
+        includeUpper: include,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterWhereClause> tagTextIDBetween(
@@ -284,13 +290,15 @@ extension ObjectLabelQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'tagTextID',
-      lower: [lowerTagTextID],
-      includeLower: includeLower,
-      upper: [upperTagTextID],
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'tagTextID',
+        lower: [lowerTagTextID],
+        includeLower: includeLower,
+        upper: [upperTagTextID],
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -298,11 +306,12 @@ extension ObjectLabelQueryFilter
     on QueryBuilder<ObjectLabel, ObjectLabel, QFilterCondition> {
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> hashCodeEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -310,12 +319,13 @@ extension ObjectLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -323,12 +333,13 @@ extension ObjectLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> hashCodeBetween(
@@ -337,70 +348,78 @@ extension ObjectLabelQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'hashCode',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> idEqualTo(
-      int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> objectIDEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'objectID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'objectID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -408,12 +427,13 @@ extension ObjectLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'objectID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'objectID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -421,12 +441,13 @@ extension ObjectLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'objectID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'objectID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition> objectIDBetween(
@@ -435,22 +456,25 @@ extension ObjectLabelQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'objectID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'objectID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
       tagTextIDEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -458,12 +482,13 @@ extension ObjectLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -471,12 +496,13 @@ extension ObjectLabelQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterFilterCondition>
@@ -486,123 +512,158 @@ extension ObjectLabelQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'tagTextID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'tagTextID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
+
+extension ObjectLabelQueryObject
+    on QueryBuilder<ObjectLabel, ObjectLabel, QFilterCondition> {}
 
 extension ObjectLabelQueryLinks
     on QueryBuilder<ObjectLabel, ObjectLabel, QFilterCondition> {}
 
-extension ObjectLabelQueryWhereSortBy
+extension ObjectLabelQuerySortBy
     on QueryBuilder<ObjectLabel, ObjectLabel, QSortBy> {
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByHashCode() {
-    return addSortByInternal('hashCode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByHashCodeDesc() {
-    return addSortByInternal('hashCode', Sort.desc);
-  }
-
-  QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByObjectID() {
-    return addSortByInternal('objectID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'objectID', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByObjectIDDesc() {
-    return addSortByInternal('objectID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'objectID', Sort.desc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByTagTextID() {
-    return addSortByInternal('tagTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> sortByTagTextIDDesc() {
-    return addSortByInternal('tagTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.desc);
+    });
   }
 }
 
-extension ObjectLabelQueryWhereSortThenBy
+extension ObjectLabelQuerySortThenBy
     on QueryBuilder<ObjectLabel, ObjectLabel, QSortThenBy> {
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByHashCode() {
-    return addSortByInternal('hashCode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByHashCodeDesc() {
-    return addSortByInternal('hashCode', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByObjectID() {
-    return addSortByInternal('objectID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'objectID', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByObjectIDDesc() {
-    return addSortByInternal('objectID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'objectID', Sort.desc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByTagTextID() {
-    return addSortByInternal('tagTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QAfterSortBy> thenByTagTextIDDesc() {
-    return addSortByInternal('tagTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.desc);
+    });
   }
 }
 
 extension ObjectLabelQueryWhereDistinct
     on QueryBuilder<ObjectLabel, ObjectLabel, QDistinct> {
   QueryBuilder<ObjectLabel, ObjectLabel, QDistinct> distinctByHashCode() {
-    return addDistinctByInternal('hashCode');
-  }
-
-  QueryBuilder<ObjectLabel, ObjectLabel, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QDistinct> distinctByObjectID() {
-    return addDistinctByInternal('objectID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'objectID');
+    });
   }
 
   QueryBuilder<ObjectLabel, ObjectLabel, QDistinct> distinctByTagTextID() {
-    return addDistinctByInternal('tagTextID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'tagTextID');
+    });
   }
 }
 
 extension ObjectLabelQueryProperty
     on QueryBuilder<ObjectLabel, ObjectLabel, QQueryProperty> {
-  QueryBuilder<ObjectLabel, int, QQueryOperations> hashCodeProperty() {
-    return addPropertyNameInternal('hashCode');
+  QueryBuilder<ObjectLabel, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
   }
 
-  QueryBuilder<ObjectLabel, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+  QueryBuilder<ObjectLabel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
+    });
   }
 
   QueryBuilder<ObjectLabel, int, QQueryOperations> objectIDProperty() {
-    return addPropertyNameInternal('objectID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'objectID');
+    });
   }
 
   QueryBuilder<ObjectLabel, int, QQueryOperations> tagTextIDProperty() {
-    return addPropertyNameInternal('tagTextID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'tagTextID');
+    });
   }
 }

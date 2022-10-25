@@ -63,7 +63,7 @@ class _ContainerViewState extends State<ContainerView> {
   late final ContainerType _containerType =
       isar!.containerTypes.getSync(_catalogedContainer.containerTypeID)!;
 
-  late Color containerColor = _containerType.containerColor;
+  late Color containerColor = _containerType.containerColor.color;
 
   late List<ContainerRelationship> containerRelationships = isar!
       .containerRelationships
@@ -201,8 +201,7 @@ class _ContainerViewState extends State<ContainerView> {
           ..tagTextID = tagTextID;
 
         //Write to isar.
-        isar!.writeTxnSync(
-            (isar) => isar.containerTags.putSync(newContainerTag));
+        isar!.writeTxnSync(() => isar!.containerTags.putSync(newContainerTag));
 
         _updateAssignedTags();
       },
@@ -247,10 +246,9 @@ class _ContainerViewState extends State<ContainerView> {
       initialValue: _catalogedContainer.name,
       onSubmitted: (value) {
         isar!.writeTxnSync(
-          (isar) {
+          () {
             _catalogedContainer.name = value;
-            isar.catalogedContainers
-                .putSync(_catalogedContainer, replaceOnConflict: true);
+            isar!.catalogedContainers.putSync(_catalogedContainer);
           },
         );
       },
@@ -265,10 +263,9 @@ class _ContainerViewState extends State<ContainerView> {
       initialValue: _catalogedContainer.description,
       onSubmitted: (value) {
         isar!.writeTxnSync(
-          (isar) {
+          () {
             _catalogedContainer.description = value;
-            isar.catalogedContainers
-                .putSync(_catalogedContainer, replaceOnConflict: true);
+            isar!.catalogedContainers.putSync(_catalogedContainer);
           },
         );
       },
@@ -431,7 +428,7 @@ class _ContainerViewState extends State<ContainerView> {
       onDeleted: () {
         ///Remove the tag from the database.
         isar!.writeTxnSync(
-            (isar) => isar.containerTags.deleteSync(containerTag.id));
+            () => isar!.containerTags.deleteSync(containerTag.id));
 
         _updateAssignedTags();
 

@@ -138,7 +138,7 @@ class MLLabelPhotoPainter extends CustomPainter {
 
         List<Offset> offsetPoints = <Offset>[];
 
-        for (var point in textBlock.cornerPoints) {
+        for (var point in textBlock.cornerPoints.cp) {
           double x =
               translateX(point.x.toDouble(), rotation, size, absoluteSize);
           double y =

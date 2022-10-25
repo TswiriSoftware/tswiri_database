@@ -1,91 +1,79 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'camera_calibration_entry.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetCameraCalibrationEntryCollection on Isar {
   IsarCollection<CameraCalibrationEntry> get cameraCalibrationEntrys =>
-      getCollection();
+      this.collection();
 }
 
 const CameraCalibrationEntrySchema = CollectionSchema(
-  name: 'CameraCalibrationEntry',
-  schema:
-      '{"name":"CameraCalibrationEntry","idName":"id","properties":[{"name":"diagonalSize","type":"Double"},{"name":"distanceFromCamera","type":"Double"},{"name":"hashCode","type":"Long"}],"indexes":[],"links":[]}',
-  idName: 'id',
-  propertyIds: {'diagonalSize': 0, 'distanceFromCamera': 1, 'hashCode': 2},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {},
-  backlinkLinkNames: {},
+  name: r'CameraCalibrationEntry',
+  id: 330827334019573009,
+  properties: {
+    r'diagonalSize': PropertySchema(
+      id: 0,
+      name: r'diagonalSize',
+      type: IsarType.double,
+    ),
+    r'distanceFromCamera': PropertySchema(
+      id: 1,
+      name: r'distanceFromCamera',
+      type: IsarType.double,
+    ),
+    r'hashCode': PropertySchema(
+      id: 2,
+      name: r'hashCode',
+      type: IsarType.long,
+    )
+  },
+  estimateSize: _cameraCalibrationEntryEstimateSize,
+  serialize: _cameraCalibrationEntrySerialize,
+  deserialize: _cameraCalibrationEntryDeserialize,
+  deserializeProp: _cameraCalibrationEntryDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {},
   getId: _cameraCalibrationEntryGetId,
-  setId: _cameraCalibrationEntrySetId,
   getLinks: _cameraCalibrationEntryGetLinks,
-  attachLinks: _cameraCalibrationEntryAttachLinks,
-  serializeNative: _cameraCalibrationEntrySerializeNative,
-  deserializeNative: _cameraCalibrationEntryDeserializeNative,
-  deserializePropNative: _cameraCalibrationEntryDeserializePropNative,
-  serializeWeb: _cameraCalibrationEntrySerializeWeb,
-  deserializeWeb: _cameraCalibrationEntryDeserializeWeb,
-  deserializePropWeb: _cameraCalibrationEntryDeserializePropWeb,
-  version: 3,
+  attach: _cameraCalibrationEntryAttach,
+  version: '3.0.2',
 );
 
-int? _cameraCalibrationEntryGetId(CameraCalibrationEntry object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _cameraCalibrationEntryEstimateSize(
+  CameraCalibrationEntry object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  return bytesCount;
 }
 
-void _cameraCalibrationEntrySetId(CameraCalibrationEntry object, int id) {
-  object.id = id;
+void _cameraCalibrationEntrySerialize(
+  CameraCalibrationEntry object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeDouble(offsets[0], object.diagonalSize);
+  writer.writeDouble(offsets[1], object.distanceFromCamera);
+  writer.writeLong(offsets[2], object.hashCode);
 }
 
-List<IsarLinkBase> _cameraCalibrationEntryGetLinks(
-    CameraCalibrationEntry object) {
-  return [];
-}
-
-void _cameraCalibrationEntrySerializeNative(
-    IsarCollection<CameraCalibrationEntry> collection,
-    IsarRawObject rawObj,
-    CameraCalibrationEntry object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.diagonalSize;
-  final _diagonalSize = value0;
-  final value1 = object.distanceFromCamera;
-  final _distanceFromCamera = value1;
-  final value2 = object.hashCode;
-  final _hashCode = value2;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeDouble(offsets[0], _diagonalSize);
-  writer.writeDouble(offsets[1], _distanceFromCamera);
-  writer.writeLong(offsets[2], _hashCode);
-}
-
-CameraCalibrationEntry _cameraCalibrationEntryDeserializeNative(
-    IsarCollection<CameraCalibrationEntry> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+CameraCalibrationEntry _cameraCalibrationEntryDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = CameraCalibrationEntry();
   object.diagonalSize = reader.readDouble(offsets[0]);
   object.distanceFromCamera = reader.readDouble(offsets[1]);
@@ -93,11 +81,13 @@ CameraCalibrationEntry _cameraCalibrationEntryDeserializeNative(
   return object;
 }
 
-P _cameraCalibrationEntryDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _cameraCalibrationEntryDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
@@ -105,196 +95,247 @@ P _cameraCalibrationEntryDeserializePropNative<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _cameraCalibrationEntrySerializeWeb(
-    IsarCollection<CameraCalibrationEntry> collection,
+Id _cameraCalibrationEntryGetId(CameraCalibrationEntry object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _cameraCalibrationEntryGetLinks(
     CameraCalibrationEntry object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'diagonalSize', object.diagonalSize);
-  IsarNative.jsObjectSet(
-      jsObj, 'distanceFromCamera', object.distanceFromCamera);
-  IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  return jsObj;
+  return [];
 }
 
-CameraCalibrationEntry _cameraCalibrationEntryDeserializeWeb(
-    IsarCollection<CameraCalibrationEntry> collection, dynamic jsObj) {
-  final object = CameraCalibrationEntry();
-  object.diagonalSize =
-      IsarNative.jsObjectGet(jsObj, 'diagonalSize') ?? double.negativeInfinity;
-  object.distanceFromCamera =
-      IsarNative.jsObjectGet(jsObj, 'distanceFromCamera') ??
-          double.negativeInfinity;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  return object;
+void _cameraCalibrationEntryAttach(
+    IsarCollection<dynamic> col, Id id, CameraCalibrationEntry object) {
+  object.id = id;
 }
-
-P _cameraCalibrationEntryDeserializePropWeb<P>(
-    Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'diagonalSize':
-      return (IsarNative.jsObjectGet(jsObj, 'diagonalSize') ??
-          double.negativeInfinity) as P;
-    case 'distanceFromCamera':
-      return (IsarNative.jsObjectGet(jsObj, 'distanceFromCamera') ??
-          double.negativeInfinity) as P;
-    case 'hashCode':
-      return (IsarNative.jsObjectGet(jsObj, 'hashCode') ??
-          double.negativeInfinity) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _cameraCalibrationEntryAttachLinks(
-    IsarCollection col, int id, CameraCalibrationEntry object) {}
 
 extension CameraCalibrationEntryQueryWhereSort
     on QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QWhere> {
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterWhere>
       anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension CameraCalibrationEntryQueryWhere on QueryBuilder<
     CameraCalibrationEntry, CameraCalibrationEntry, QWhereClause> {
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterWhereClause> idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      QAfterWhereClause> idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
+      QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
+    });
+  }
+
+  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
+      QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
-    }
-  }
-
-  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterWhereClause> idGreaterThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
-  }
-
-  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterWhereClause> idLessThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
       QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
 extension CameraCalibrationEntryQueryFilter on QueryBuilder<
     CameraCalibrationEntry, CameraCalibrationEntry, QFilterCondition> {
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterFilterCondition> diagonalSizeGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'diagonalSize',
-      value: value,
-    ));
+      QAfterFilterCondition> diagonalSizeEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'diagonalSize',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterFilterCondition> diagonalSizeLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'diagonalSize',
-      value: value,
-    ));
+      QAfterFilterCondition> diagonalSizeGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'diagonalSize',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterFilterCondition> diagonalSizeBetween(double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'diagonalSize',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+      QAfterFilterCondition> diagonalSizeLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'diagonalSize',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterFilterCondition> distanceFromCameraGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'distanceFromCamera',
-      value: value,
-    ));
+      QAfterFilterCondition> diagonalSizeBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'diagonalSize',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterFilterCondition> distanceFromCameraLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'distanceFromCamera',
-      value: value,
-    ));
+      QAfterFilterCondition> distanceFromCameraEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'distanceFromCamera',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-          QAfterFilterCondition>
-      distanceFromCameraBetween(double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'distanceFromCamera',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+      QAfterFilterCondition> distanceFromCameraGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'distanceFromCamera',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
+      QAfterFilterCondition> distanceFromCameraLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'distanceFromCamera',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
+      QAfterFilterCondition> distanceFromCameraBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'distanceFromCamera',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
       QAfterFilterCondition> hashCodeEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
@@ -302,12 +343,13 @@ extension CameraCalibrationEntryQueryFilter on QueryBuilder<
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
@@ -315,12 +357,13 @@ extension CameraCalibrationEntryQueryFilter on QueryBuilder<
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'hashCode',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
@@ -330,153 +373,181 @@ extension CameraCalibrationEntryQueryFilter on QueryBuilder<
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'hashCode',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
-      QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      QAfterFilterCondition> idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
       QAfterFilterCondition> idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
       QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry,
       QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
+
+extension CameraCalibrationEntryQueryObject on QueryBuilder<
+    CameraCalibrationEntry, CameraCalibrationEntry, QFilterCondition> {}
 
 extension CameraCalibrationEntryQueryLinks on QueryBuilder<
     CameraCalibrationEntry, CameraCalibrationEntry, QFilterCondition> {}
 
-extension CameraCalibrationEntryQueryWhereSortBy
+extension CameraCalibrationEntryQuerySortBy
     on QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QSortBy> {
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       sortByDiagonalSize() {
-    return addSortByInternal('diagonalSize', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'diagonalSize', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       sortByDiagonalSizeDesc() {
-    return addSortByInternal('diagonalSize', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'diagonalSize', Sort.desc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       sortByDistanceFromCamera() {
-    return addSortByInternal('distanceFromCamera', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'distanceFromCamera', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       sortByDistanceFromCameraDesc() {
-    return addSortByInternal('distanceFromCamera', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'distanceFromCamera', Sort.desc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       sortByHashCode() {
-    return addSortByInternal('hashCode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       sortByHashCodeDesc() {
-    return addSortByInternal('hashCode', Sort.desc);
-  }
-
-  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
-      sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
-      sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
   }
 }
 
-extension CameraCalibrationEntryQueryWhereSortThenBy on QueryBuilder<
+extension CameraCalibrationEntryQuerySortThenBy on QueryBuilder<
     CameraCalibrationEntry, CameraCalibrationEntry, QSortThenBy> {
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByDiagonalSize() {
-    return addSortByInternal('diagonalSize', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'diagonalSize', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByDiagonalSizeDesc() {
-    return addSortByInternal('diagonalSize', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'diagonalSize', Sort.desc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByDistanceFromCamera() {
-    return addSortByInternal('distanceFromCamera', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'distanceFromCamera', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByDistanceFromCameraDesc() {
-    return addSortByInternal('distanceFromCamera', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'distanceFromCamera', Sort.desc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByHashCode() {
-    return addSortByInternal('hashCode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByHashCodeDesc() {
-    return addSortByInternal('hashCode', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QAfterSortBy>
       thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 }
 
@@ -484,43 +555,52 @@ extension CameraCalibrationEntryQueryWhereDistinct
     on QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QDistinct> {
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QDistinct>
       distinctByDiagonalSize() {
-    return addDistinctByInternal('diagonalSize');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'diagonalSize');
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QDistinct>
       distinctByDistanceFromCamera() {
-    return addDistinctByInternal('distanceFromCamera');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'distanceFromCamera');
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QDistinct>
       distinctByHashCode() {
-    return addDistinctByInternal('hashCode');
-  }
-
-  QueryBuilder<CameraCalibrationEntry, CameraCalibrationEntry, QDistinct>
-      distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
   }
 }
 
 extension CameraCalibrationEntryQueryProperty on QueryBuilder<
     CameraCalibrationEntry, CameraCalibrationEntry, QQueryProperty> {
+  QueryBuilder<CameraCalibrationEntry, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
   QueryBuilder<CameraCalibrationEntry, double, QQueryOperations>
       diagonalSizeProperty() {
-    return addPropertyNameInternal('diagonalSize');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'diagonalSize');
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, double, QQueryOperations>
       distanceFromCameraProperty() {
-    return addPropertyNameInternal('distanceFromCamera');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'distanceFromCamera');
+    });
   }
 
   QueryBuilder<CameraCalibrationEntry, int, QQueryOperations>
       hashCodeProperty() {
-    return addPropertyNameInternal('hashCode');
-  }
-
-  QueryBuilder<CameraCalibrationEntry, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
+    });
   }
 }

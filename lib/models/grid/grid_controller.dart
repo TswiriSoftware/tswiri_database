@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:ui';
 
 // ignore: depend_on_referenced_packages
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/data/data_processing.dart';
 import 'package:tswiri_database/models/display/display_point.dart';
@@ -51,15 +52,15 @@ class GridController {
     );
 
     //6. Create/Update Coordinates.
-    isar!.writeTxnSync((isar) {
+    isar!.writeTxnSync(() {
       //1. detele IT if IT exists.
-      isar.catalogedCoordinates
+      isar!.catalogedCoordinates
           .filter()
           .gridUIDEqualTo(gridUID)
           .deleteAllSync();
       for (var coordinate in coordinates) {
         //2. input IT.
-        isar.catalogedCoordinates.putSync(coordinate);
+        isar!.catalogedCoordinates.putSync(coordinate);
       }
     });
 
@@ -97,17 +98,17 @@ class GridController {
 
       if (catalogedCoordinate.coordinate != null) {
         Offset barcodePosition = Offset(
-            (catalogedCoordinate.coordinate!.x * unitOffset.dx) +
+            (catalogedCoordinate.coordinate!.vector.x * unitOffset.dx) +
                 (size.width / 2) -
                 (size.width / 8),
-            (catalogedCoordinate.coordinate!.y * unitOffset.dy) +
+            (catalogedCoordinate.coordinate!.vector.y * unitOffset.dy) +
                 (size.height / 2) -
                 (size.height / 8));
 
         List<String> barcodeRealPosition = [
-          catalogedCoordinate.coordinate!.x.toStringAsFixed(4),
-          catalogedCoordinate.coordinate!.y.toStringAsFixed(4),
-          catalogedCoordinate.coordinate!.z.toStringAsFixed(4),
+          catalogedCoordinate.coordinate!.vector.x.toStringAsFixed(4),
+          catalogedCoordinate.coordinate!.vector.y.toStringAsFixed(4),
+          catalogedCoordinate.coordinate!.vector.z.toStringAsFixed(4),
         ];
 
         DisplayPointType displayPointType = DisplayPointType.unkown;
@@ -153,20 +154,20 @@ class GridController {
     if (catalogedCoordinates.isNotEmpty) {
       return isar!.markers
           .filter()
-          .repeat(catalogedCoordinates,
+          .anyOf(catalogedCoordinates,
               (q, CatalogedCoordinate e) => q.barcodeUIDMatches(e.barcodeUID))
           .findAllSync();
     } else {
       //No Coordinates found so create a marker from the grid barcode.
       CatalogedCoordinate catalogedCoordinate = CatalogedCoordinate()
         ..barcodeUID = isar!.catalogedGrids.getSync(gridUID)!.barcodeUID
-        ..coordinate = vm.Vector3(0, 0, 0)
+        ..coordinate = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
         ..gridUID = gridUID
         ..rotation = null
         ..timestamp = DateTime.now().millisecondsSinceEpoch;
 
       isar!.writeTxnSync(
-          (isar) => isar.catalogedCoordinates.putSync(catalogedCoordinate));
+          () => isar!.catalogedCoordinates.putSync(catalogedCoordinate));
 
       Marker marker = isar!.markers
           .filter()

@@ -12,7 +12,7 @@ class MLTextPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double photoAspectRatio = photoSize.height / photoSize.width;
-    Rect boundingBox = mlTextElement.getBoundingBox();
+    Rect boundingBox = mlTextElement.cornerPoints.getBoundingBox;
     double boundingBoxWidth = boundingBox.width;
     double boundingBoxHeight = boundingBox.height;
 
@@ -23,7 +23,7 @@ class MLTextPainter extends CustomPainter {
     }
 
     final dst = Offset.zero & size;
-    final src = mlTextElement.getBoundingBox();
+    final src = mlTextElement.cornerPoints.getBoundingBox;
     canvas.drawImageRect(image, src, dst, Paint());
   }
 

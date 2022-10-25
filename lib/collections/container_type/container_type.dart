@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/embedded/embedded_color/embedded_color.dart';
+import 'package:tswiri_database/embedded/embedded_icon_data/embedded_icon_data.dart';
 part 'container_type.g.dart';
 
 ///Specifies details for a specific container type.
@@ -17,7 +19,7 @@ part 'container_type.g.dart';
 @Name("ContainerType")
 class ContainerType {
   ///containerTypeID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///ContainerUID.
   @Name("containerTypeName")
@@ -45,13 +47,11 @@ class ContainerType {
 
   ///Container color.
   @Name("containerColor")
-  @ColorConverter()
-  late Color containerColor;
+  late EmbeddedColor containerColor;
 
   ///Container Icon.
   @Name("iconData")
-  @IconConverter()
-  late IconData iconData;
+  late EmbeddedIconData iconData;
 
   @override
   String toString() {
@@ -60,7 +60,7 @@ containerType: $containerTypeName,
 containerDescription: $containerDescription,
 moveable: $moveable, canContain: $canContain
 color: $containerColor
-iconData: ${iconData.codePoint}
+iconData: ${iconData.data}
 -------------------------------------\n''';
   }
 
@@ -72,7 +72,7 @@ iconData: ${iconData.codePoint}
         'moveable': moveable,
         'enclosing': enclosing,
         'canContain': canContain,
-        'containerColor': containerColor.value,
+        'containerColor': containerColor.color.value,
       };
 
   //From json.
@@ -84,40 +84,41 @@ iconData: ${iconData.codePoint}
       ..enclosing = json['enclosing']
       ..canContain = (json['canContain'] as List<dynamic>).cast<int>()
       ..moveable = json['moveable']
-      ..containerColor = Color(json['containerColor'] as int);
+      ..containerColor =
+          EmbeddedColor.fromColor(Color(json['containerColor'] as int));
   }
 }
 
-class IconConverter extends TypeConverter<IconData, List<String>> {
-  const IconConverter(); // Converters need to have an empty const constructor
+// class IconConverter extends TypeConverter<IconData, List<String>> {
+//   const IconConverter(); // Converters need to have an empty const constructor
 
-  @override
-  IconData fromIsar(List<String> object) {
-    return IconData(
-      int.parse(object[0]),
-      fontFamily: object[1],
-    );
-  }
+//   @override
+//   IconData fromIsar(List<String> object) {
+//     return IconData(
+//       int.parse(object[0]),
+//       fontFamily: object[1],
+//     );
+//   }
 
-  @override
-  List<String> toIsar(IconData object) {
-    return [
-      object.codePoint.toString(),
-      object.fontFamily.toString(),
-    ];
-  }
-}
+//   @override
+//   List<String> toIsar(IconData object) {
+//     return [
+//       object.codePoint.toString(),
+//       object.fontFamily.toString(),
+//     ];
+//   }
+// }
 
-class ColorConverter extends TypeConverter<Color, String> {
-  const ColorConverter(); // Converters need to have an empty const constructor
+// class ColorConverter extends TypeConverter<Color, String> {
+//   const ColorConverter(); // Converters need to have an empty const constructor
 
-  @override
-  Color fromIsar(String object) {
-    return Color(int.parse(object)).withOpacity(1);
-  }
+//   @override
+//   Color fromIsar(String object) {
+//     return Color(int.parse(object)).withOpacity(1);
+//   }
 
-  @override
-  String toIsar(Color object) {
-    return object.value.toString();
-  }
-}
+//   @override
+//   String toIsar(Color object) {
+//     return object.value.toString();
+//   }
+// }

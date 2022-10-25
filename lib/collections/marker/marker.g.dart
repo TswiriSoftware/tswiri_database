@@ -1,88 +1,79 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'marker.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetMarkerCollection on Isar {
-  IsarCollection<Marker> get markers => getCollection();
+  IsarCollection<Marker> get markers => this.collection();
 }
 
 const MarkerSchema = CollectionSchema(
-  name: 'Marker',
-  schema:
-      '{"name":"Marker","idName":"id","properties":[{"name":"barcodeUID","type":"String"},{"name":"containerUID","type":"String"}],"indexes":[],"links":[]}',
-  idName: 'id',
-  propertyIds: {'barcodeUID': 0, 'containerUID': 1},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {},
-  backlinkLinkNames: {},
+  name: r'Marker',
+  id: 3108554499511749668,
+  properties: {
+    r'barcodeUID': PropertySchema(
+      id: 0,
+      name: r'barcodeUID',
+      type: IsarType.string,
+    ),
+    r'containerUID': PropertySchema(
+      id: 1,
+      name: r'containerUID',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _markerEstimateSize,
+  serialize: _markerSerialize,
+  deserialize: _markerDeserialize,
+  deserializeProp: _markerDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {},
   getId: _markerGetId,
-  setId: _markerSetId,
   getLinks: _markerGetLinks,
-  attachLinks: _markerAttachLinks,
-  serializeNative: _markerSerializeNative,
-  deserializeNative: _markerDeserializeNative,
-  deserializePropNative: _markerDeserializePropNative,
-  serializeWeb: _markerSerializeWeb,
-  deserializeWeb: _markerDeserializeWeb,
-  deserializePropWeb: _markerDeserializePropWeb,
-  version: 3,
+  attach: _markerAttach,
+  version: '3.0.2',
 );
 
-int? _markerGetId(Marker object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
+int _markerEstimateSize(
+  Marker object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.barcodeUID.length * 3;
+  {
+    final value = object.containerUID;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
   }
+  return bytesCount;
 }
 
-void _markerSetId(Marker object, int id) {
-  object.id = id;
+void _markerSerialize(
+  Marker object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.barcodeUID);
+  writer.writeString(offsets[1], object.containerUID);
 }
 
-List<IsarLinkBase> _markerGetLinks(Marker object) {
-  return [];
-}
-
-void _markerSerializeNative(
-    IsarCollection<Marker> collection,
-    IsarRawObject rawObj,
-    Marker object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.barcodeUID;
-  final _barcodeUID = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_barcodeUID.length) as int;
-  final value1 = object.containerUID;
-  IsarUint8List? _containerUID;
-  if (value1 != null) {
-    _containerUID = IsarBinaryWriter.utf8Encoder.convert(value1);
-  }
-  dynamicSize += (_containerUID?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _barcodeUID);
-  writer.writeBytes(offsets[1], _containerUID);
-}
-
-Marker _markerDeserializeNative(IsarCollection<Marker> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
+Marker _markerDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = Marker();
   object.barcodeUID = reader.readString(offsets[0]);
   object.containerUID = reader.readStringOrNull(offsets[1]);
@@ -90,110 +81,106 @@ Marker _markerDeserializeNative(IsarCollection<Marker> collection, int id,
   return object;
 }
 
-P _markerDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _markerDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _markerSerializeWeb(IsarCollection<Marker> collection, Marker object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'barcodeUID', object.barcodeUID);
-  IsarNative.jsObjectSet(jsObj, 'containerUID', object.containerUID);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  return jsObj;
+Id _markerGetId(Marker object) {
+  return object.id;
 }
 
-Marker _markerDeserializeWeb(IsarCollection<Marker> collection, dynamic jsObj) {
-  final object = Marker();
-  object.barcodeUID = IsarNative.jsObjectGet(jsObj, 'barcodeUID') ?? '';
-  object.containerUID = IsarNative.jsObjectGet(jsObj, 'containerUID');
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  return object;
+List<IsarLinkBase<dynamic>> _markerGetLinks(Marker object) {
+  return [];
 }
 
-P _markerDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'barcodeUID':
-      return (IsarNative.jsObjectGet(jsObj, 'barcodeUID') ?? '') as P;
-    case 'containerUID':
-      return (IsarNative.jsObjectGet(jsObj, 'containerUID')) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    default:
-      throw 'Illegal propertyName';
-  }
+void _markerAttach(IsarCollection<dynamic> col, Id id, Marker object) {
+  object.id = id;
 }
-
-void _markerAttachLinks(IsarCollection col, int id, Marker object) {}
 
 extension MarkerQueryWhereSort on QueryBuilder<Marker, Marker, QWhere> {
   QueryBuilder<Marker, Marker, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension MarkerQueryWhere on QueryBuilder<Marker, Marker, QWhereClause> {
-  QueryBuilder<Marker, Marker, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+  QueryBuilder<Marker, Marker, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
-  QueryBuilder<Marker, Marker, QAfterWhereClause> idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+  QueryBuilder<Marker, Marker, QAfterWhereClause> idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
-  QueryBuilder<Marker, Marker, QAfterWhereClause> idGreaterThan(int id,
+  QueryBuilder<Marker, Marker, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
-  QueryBuilder<Marker, Marker, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<Marker, Marker, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -202,345 +189,431 @@ extension MarkerQueryFilter on QueryBuilder<Marker, Marker, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'barcodeUID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'barcodeUID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'barcodeUID',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'barcodeUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcodeUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> barcodeUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'barcodeUID',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'containerUID',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'containerUID',
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'containerUID',
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDGreaterThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDLessThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDBetween(
     String? lower,
     String? upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'containerUID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'containerUID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'containerUID',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'containerUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
-  QueryBuilder<Marker, Marker, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'containerUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> containerUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'containerUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
+
+extension MarkerQueryObject on QueryBuilder<Marker, Marker, QFilterCondition> {}
 
 extension MarkerQueryLinks on QueryBuilder<Marker, Marker, QFilterCondition> {}
 
-extension MarkerQueryWhereSortBy on QueryBuilder<Marker, Marker, QSortBy> {
+extension MarkerQuerySortBy on QueryBuilder<Marker, Marker, QSortBy> {
   QueryBuilder<Marker, Marker, QAfterSortBy> sortByBarcodeUID() {
-    return addSortByInternal('barcodeUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.asc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> sortByBarcodeUIDDesc() {
-    return addSortByInternal('barcodeUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.desc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> sortByContainerUID() {
-    return addSortByInternal('containerUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.asc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> sortByContainerUIDDesc() {
-    return addSortByInternal('containerUID', Sort.desc);
-  }
-
-  QueryBuilder<Marker, Marker, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Marker, Marker, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.desc);
+    });
   }
 }
 
-extension MarkerQueryWhereSortThenBy
-    on QueryBuilder<Marker, Marker, QSortThenBy> {
+extension MarkerQuerySortThenBy on QueryBuilder<Marker, Marker, QSortThenBy> {
   QueryBuilder<Marker, Marker, QAfterSortBy> thenByBarcodeUID() {
-    return addSortByInternal('barcodeUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.asc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> thenByBarcodeUIDDesc() {
-    return addSortByInternal('barcodeUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.desc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> thenByContainerUID() {
-    return addSortByInternal('containerUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.asc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> thenByContainerUIDDesc() {
-    return addSortByInternal('containerUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.desc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<Marker, Marker, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 }
 
 extension MarkerQueryWhereDistinct on QueryBuilder<Marker, Marker, QDistinct> {
   QueryBuilder<Marker, Marker, QDistinct> distinctByBarcodeUID(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('barcodeUID', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'barcodeUID', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Marker, Marker, QDistinct> distinctByContainerUID(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('containerUID', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Marker, Marker, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'containerUID', caseSensitive: caseSensitive);
+    });
   }
 }
 
 extension MarkerQueryProperty on QueryBuilder<Marker, Marker, QQueryProperty> {
+  QueryBuilder<Marker, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
   QueryBuilder<Marker, String, QQueryOperations> barcodeUIDProperty() {
-    return addPropertyNameInternal('barcodeUID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'barcodeUID');
+    });
   }
 
   QueryBuilder<Marker, String?, QQueryOperations> containerUIDProperty() {
-    return addPropertyNameInternal('containerUID');
-  }
-
-  QueryBuilder<Marker, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'containerUID');
+    });
   }
 }

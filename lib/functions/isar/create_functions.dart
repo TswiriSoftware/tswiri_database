@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tswiri_database/embedded/embedded_color/embedded_color.dart';
+import 'package:tswiri_database/embedded/embedded_icon_data/embedded_icon_data.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/tswiri_icons.dart';
 
@@ -28,7 +30,7 @@ CatalogedContainer createNewCatalogedContainer({
     ..name = name;
 
   isar!.writeTxnSync(
-    (isar) => isar.catalogedContainers.putSync(newCatalogedContainer),
+    () => isar!.catalogedContainers.putSync(newCatalogedContainer),
   );
 
   return isar!.catalogedContainers
@@ -46,8 +48,7 @@ createContainerRelationship({
     ..parentUID = parentContainerUID
     ..containerUID = containerUID;
 
-  isar!.writeTxnSync(
-      (isar) => isar.containerRelationships.putSync(relationship));
+  isar!.writeTxnSync(() => isar!.containerRelationships.putSync(relationship));
 }
 
 ///Create the basic cotainerTypes
@@ -65,81 +66,79 @@ void createBasicContainerTypes({
 }) {
   if (isar!.containerTypes.where().findAllSync().isEmpty) {
     isar!.writeTxnSync(
-      (database) {
-        database.containerTypes.putSync(
-            ContainerType()
-              ..id = 0
-              ..containerTypeName = 'Area'
-              ..containerDescription =
-                  '- An Area is a stationary container with a marker.\n- which can contain all other types of containers.\n- It is part of the childrens grid.'
-              ..canContain = [1, 2, 3]
-              ..moveable = false
-              ..enclosing = false
-              ..containerColor = Colors.deepOrange
-              ..iconData = area ??
-                  //  TswiriIcons.area
-                  const IconData(
-                    0xe7a2,
-                    fontFamily: 'MaterialIcons',
-                  )
-              ..preferredChildContainer = 1,
-            replaceOnConflict: true);
+      () {
+        isar!.containerTypes.putSync(ContainerType()
+          ..id = 0
+          ..containerTypeName = 'Area'
+          ..containerDescription =
+              '- An Area is a stationary container with a marker.\n- which can contain all other types of containers.\n- It is part of the childrens grid.'
+          ..canContain = [1, 2, 3]
+          ..moveable = false
+          ..enclosing = false
+          ..containerColor = EmbeddedColor.fromColor(Colors.deepOrange)
+          ..iconData = EmbeddedIconData.fromIconData(area ??
+              //  TswiriIcons.area
+              const IconData(
+                0xe7a2,
+                fontFamily: 'MaterialIcons',
+              ))
+          ..preferredChildContainer = 1);
 
-        database.containerTypes.putSync(
-            ContainerType()
-              ..id = 1
-              ..containerTypeName = 'Shelf'
-              ..containerDescription =
-                  '- A Shelf is a stationary container with a marker.\n- which can contain Boxes and/or Drawers.\n- It is part of the childrens grid.'
-              ..canContain = [2, 3]
-              ..moveable = false
-              ..enclosing = false
-              ..containerColor = Colors.green
-              ..iconData = shelf ??
-                  // TswiriIcons.shelf
-                  const IconData(
-                    0xe9a7,
-                    fontFamily: 'MaterialIcons',
-                  )
-              ..preferredChildContainer = 3,
-            replaceOnConflict: true);
+        isar!.containerTypes.putSync(
+          ContainerType()
+            ..id = 1
+            ..containerTypeName = 'Shelf'
+            ..containerDescription =
+                '- A Shelf is a stationary container with a marker.\n- which can contain Boxes and/or Drawers.\n- It is part of the childrens grid.'
+            ..canContain = [2, 3]
+            ..moveable = false
+            ..enclosing = false
+            ..containerColor = EmbeddedColor.fromColor(Colors.green)
+            ..iconData = EmbeddedIconData.fromIconData(shelf ??
+                // TswiriIcons.shelf
+                const IconData(
+                  0xe9a7,
+                  fontFamily: 'MaterialIcons',
+                ))
+            ..preferredChildContainer = 3,
+        );
 
-        database.containerTypes.putSync(
-            ContainerType()
-              ..id = 2
-              ..containerTypeName = 'Drawer'
-              ..containerDescription =
-                  '- A Drawer is a stationary container.\n- which can contain boxes.\n- It does not form part of the childrens grid.'
-              ..canContain = [1]
-              ..moveable = false
-              ..enclosing = true
-              ..containerColor = Colors.blue
-              ..iconData = drawer ??
-                  //  TswiriIcons.drawer
-                  const IconData(
-                    0xedac,
-                    fontFamily: 'MaterialIcons',
-                  )
-              ..preferredChildContainer = 3,
-            replaceOnConflict: true);
+        isar!.containerTypes.putSync(
+          ContainerType()
+            ..id = 2
+            ..containerTypeName = 'Drawer'
+            ..containerDescription =
+                '- A Drawer is a stationary container.\n- which can contain boxes.\n- It does not form part of the childrens grid.'
+            ..canContain = [1]
+            ..moveable = false
+            ..enclosing = true
+            ..containerColor = EmbeddedColor.fromColor(Colors.blue)
+            ..iconData = EmbeddedIconData.fromIconData(drawer ??
+                //  TswiriIcons.drawer
+                const IconData(
+                  0xedac,
+                  fontFamily: 'MaterialIcons',
+                ))
+            ..preferredChildContainer = 3,
+        );
 
-        database.containerTypes.putSync(
-            ContainerType()
-              ..id = 3
-              ..containerTypeName = 'Box'
-              ..containerDescription = '- A Box is a moveable container...'
-              ..canContain = [1]
-              ..moveable = true
-              ..enclosing = true
-              ..containerColor = const Color(0xFFF98866)
-              ..iconData = box ??
-                  // TswiriIcons.box
-                  const IconData(
-                    0xf134,
-                    fontFamily: 'MaterialIcons',
-                  )
-              ..preferredChildContainer = 3,
-            replaceOnConflict: true);
+        isar!.containerTypes.putSync(
+          ContainerType()
+            ..id = 3
+            ..containerTypeName = 'Box'
+            ..containerDescription = '- A Box is a moveable container...'
+            ..canContain = [1]
+            ..moveable = true
+            ..enclosing = true
+            ..containerColor = EmbeddedColor.fromColor(const Color(0xFFF98866))
+            ..iconData = EmbeddedIconData.fromIconData(box ??
+                // TswiriIcons.box
+                const IconData(
+                  0xf134,
+                  fontFamily: 'MaterialIcons',
+                ))
+            ..preferredChildContainer = 3,
+        );
       },
     );
   }

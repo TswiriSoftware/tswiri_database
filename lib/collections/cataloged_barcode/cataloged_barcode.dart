@@ -11,7 +11,7 @@ part 'cataloged_barcode.g.dart';
 @Collection()
 @Name("CatalogedBarcode")
 class CatalogedBarcode {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///UID (num_timestamp)
   @Name("barcodeUID")

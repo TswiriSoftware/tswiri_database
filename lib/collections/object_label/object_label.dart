@@ -13,7 +13,7 @@ part 'object_label.g.dart';
 @Collection()
 @Name("ObjectLabel")
 class ObjectLabel {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///ObjectID.
   @Name("objectID")

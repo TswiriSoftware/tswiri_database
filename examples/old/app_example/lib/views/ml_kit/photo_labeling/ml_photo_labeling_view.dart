@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
 
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/isar/get_functions.dart';
@@ -683,7 +684,7 @@ class _MlPhotoLabelingViewState extends State<MlPhotoLabelingView> {
 
         MLTextBlock mlTextBlock = MLTextBlock()
           ..id = i
-          ..cornerPoints = textBlock.cornerPoints
+          ..cornerPoints = CornerPoints.fromCornerPoints(textBlock.cornerPoints)
           ..recognizedLanguages = recognizedText.blocks[i].recognizedLanguages;
 
         mlTextBlocks.add(mlTextBlock);
@@ -694,7 +695,8 @@ class _MlPhotoLabelingViewState extends State<MlPhotoLabelingView> {
           MLTextLine mlTextLine = MLTextLine()
             ..blockID = i
             ..blockIndex = x
-            ..cornerPoints = textLine.cornerPoints
+            ..cornerPoints =
+                CornerPoints.fromCornerPoints(textLine.cornerPoints)
             ..id = mlTextLines.length + 1
             ..recognizedLanguages = textLine.recognizedLanguages;
 
@@ -703,7 +705,8 @@ class _MlPhotoLabelingViewState extends State<MlPhotoLabelingView> {
           for (var z = 0; z < textLine.elements.length; z++) {
             TextElement textElement = textLine.elements[z];
             MLTextElement mlTextElement = MLTextElement()
-              ..cornerPoints = textElement.cornerPoints
+              ..cornerPoints =
+                  CornerPoints.fromCornerPoints(textElement.cornerPoints)
               ..detectedElementTextID =
                   getMLDetectedElementTextID(textElement.text)
               ..lineID = mlTextLine.id

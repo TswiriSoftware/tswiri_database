@@ -25,8 +25,7 @@ bool changeParent({
 
     if (containerRelationship != null) {
       isar!.writeTxnSync(
-        (isar) =>
-            isar.containerRelationships.deleteSync(containerRelationship.id),
+        () => isar!.containerRelationships.deleteSync(containerRelationship.id),
       );
     }
 
@@ -34,8 +33,8 @@ bool changeParent({
       ..containerUID = currentContainer.containerUID
       ..parentUID = parentContainer.containerUID;
 
-    isar!.writeTxnSync((isar) =>
-        isar.containerRelationships.putSync(newContainerRelationship));
+    isar!.writeTxnSync(
+        () => isar!.containerRelationships.putSync(newContainerRelationship));
 
     return true;
   }

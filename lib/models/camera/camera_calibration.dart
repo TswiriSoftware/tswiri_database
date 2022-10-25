@@ -106,7 +106,8 @@ class CameraCalibration {
         .toList();
 
     isar!.writeTxnSync(
-        (isar) => isar.cameraCalibrationEntrys.putAllSync(distanceSizeEntries));
+      () => isar!.cameraCalibrationEntrys.putAllSync(distanceSizeEntries),
+    );
   }
 
   double _calculateBarcodeDiagonalLength(Barcode barcode) {

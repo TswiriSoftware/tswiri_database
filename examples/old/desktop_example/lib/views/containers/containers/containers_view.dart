@@ -164,6 +164,7 @@ class _ContainersViewState extends State<ContainersView> {
                     ? isar!.containerTypes
                         .getSync(catalogedContainer.containerTypeID)!
                         .containerColor
+                        .color
                     : null,
                 thickness: 1,
               ),

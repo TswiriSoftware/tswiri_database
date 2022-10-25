@@ -8,7 +8,7 @@ part 'camera_calibration_entry.g.dart';
 @Collection()
 @Name("CameraCalibrationEntry")
 class CameraCalibrationEntry {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///Diagonal size.
   @Name("diagonalSize")

@@ -1,93 +1,88 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'ml_detected_element_text.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetMLDetectedElementTextCollection on Isar {
   IsarCollection<MLDetectedElementText> get mLDetectedElementTexts =>
-      getCollection();
+      this.collection();
 }
 
 const MLDetectedElementTextSchema = CollectionSchema(
-  name: 'MLDetectedElementText',
-  schema:
-      '{"name":"MLDetectedElementText","idName":"id","properties":[{"name":"detectedText","type":"String"},{"name":"tagTextID","type":"Long"}],"indexes":[{"name":"detectedText","unique":true,"properties":[{"name":"detectedText","type":"Hash","caseSensitive":true}]}],"links":[]}',
-  idName: 'id',
-  propertyIds: {'detectedText': 0, 'tagTextID': 1},
-  listProperties: {},
-  indexIds: {'detectedText': 0},
-  indexValueTypes: {
-    'detectedText': [
-      IndexValueType.stringHash,
-    ]
+  name: r'MLDetectedElementText',
+  id: -81910300862143460,
+  properties: {
+    r'detectedText': PropertySchema(
+      id: 0,
+      name: r'detectedText',
+      type: IsarType.string,
+    ),
+    r'tagTextID': PropertySchema(
+      id: 1,
+      name: r'tagTextID',
+      type: IsarType.long,
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
+  estimateSize: _mLDetectedElementTextEstimateSize,
+  serialize: _mLDetectedElementTextSerialize,
+  deserialize: _mLDetectedElementTextDeserialize,
+  deserializeProp: _mLDetectedElementTextDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'detectedText': IndexSchema(
+      id: -5803330501683015084,
+      name: r'detectedText',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'detectedText',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
   getId: _mLDetectedElementTextGetId,
-  setId: _mLDetectedElementTextSetId,
   getLinks: _mLDetectedElementTextGetLinks,
-  attachLinks: _mLDetectedElementTextAttachLinks,
-  serializeNative: _mLDetectedElementTextSerializeNative,
-  deserializeNative: _mLDetectedElementTextDeserializeNative,
-  deserializePropNative: _mLDetectedElementTextDeserializePropNative,
-  serializeWeb: _mLDetectedElementTextSerializeWeb,
-  deserializeWeb: _mLDetectedElementTextDeserializeWeb,
-  deserializePropWeb: _mLDetectedElementTextDeserializePropWeb,
-  version: 3,
+  attach: _mLDetectedElementTextAttach,
+  version: '3.0.2',
 );
 
-int? _mLDetectedElementTextGetId(MLDetectedElementText object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _mLDetectedElementTextEstimateSize(
+  MLDetectedElementText object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.detectedText.length * 3;
+  return bytesCount;
 }
 
-void _mLDetectedElementTextSetId(MLDetectedElementText object, int id) {
-  object.id = id;
+void _mLDetectedElementTextSerialize(
+  MLDetectedElementText object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.detectedText);
+  writer.writeLong(offsets[1], object.tagTextID);
 }
 
-List<IsarLinkBase> _mLDetectedElementTextGetLinks(
-    MLDetectedElementText object) {
-  return [];
-}
-
-void _mLDetectedElementTextSerializeNative(
-    IsarCollection<MLDetectedElementText> collection,
-    IsarRawObject rawObj,
-    MLDetectedElementText object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.detectedText;
-  final _detectedText = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_detectedText.length) as int;
-  final value1 = object.tagTextID;
-  final _tagTextID = value1;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _detectedText);
-  writer.writeLong(offsets[1], _tagTextID);
-}
-
-MLDetectedElementText _mLDetectedElementTextDeserializeNative(
-    IsarCollection<MLDetectedElementText> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+MLDetectedElementText _mLDetectedElementTextDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = MLDetectedElementText();
   object.detectedText = reader.readString(offsets[0]);
   object.id = id;
@@ -95,95 +90,92 @@ MLDetectedElementText _mLDetectedElementTextDeserializeNative(
   return object;
 }
 
-P _mLDetectedElementTextDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _mLDetectedElementTextDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readLongOrNull(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _mLDetectedElementTextSerializeWeb(
-    IsarCollection<MLDetectedElementText> collection,
+Id _mLDetectedElementTextGetId(MLDetectedElementText object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _mLDetectedElementTextGetLinks(
     MLDetectedElementText object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'detectedText', object.detectedText);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'tagTextID', object.tagTextID);
-  return jsObj;
+  return [];
 }
 
-MLDetectedElementText _mLDetectedElementTextDeserializeWeb(
-    IsarCollection<MLDetectedElementText> collection, dynamic jsObj) {
-  final object = MLDetectedElementText();
-  object.detectedText = IsarNative.jsObjectGet(jsObj, 'detectedText') ?? '';
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.tagTextID = IsarNative.jsObjectGet(jsObj, 'tagTextID');
-  return object;
+void _mLDetectedElementTextAttach(
+    IsarCollection<dynamic> col, Id id, MLDetectedElementText object) {
+  object.id = id;
 }
-
-P _mLDetectedElementTextDeserializePropWeb<P>(
-    Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'detectedText':
-      return (IsarNative.jsObjectGet(jsObj, 'detectedText') ?? '') as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    case 'tagTextID':
-      return (IsarNative.jsObjectGet(jsObj, 'tagTextID')) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _mLDetectedElementTextAttachLinks(
-    IsarCollection col, int id, MLDetectedElementText object) {}
 
 extension MLDetectedElementTextByIndex
     on IsarCollection<MLDetectedElementText> {
   Future<MLDetectedElementText?> getByDetectedText(String detectedText) {
-    return getByIndex('detectedText', [detectedText]);
+    return getByIndex(r'detectedText', [detectedText]);
   }
 
   MLDetectedElementText? getByDetectedTextSync(String detectedText) {
-    return getByIndexSync('detectedText', [detectedText]);
+    return getByIndexSync(r'detectedText', [detectedText]);
   }
 
   Future<bool> deleteByDetectedText(String detectedText) {
-    return deleteByIndex('detectedText', [detectedText]);
+    return deleteByIndex(r'detectedText', [detectedText]);
   }
 
   bool deleteByDetectedTextSync(String detectedText) {
-    return deleteByIndexSync('detectedText', [detectedText]);
+    return deleteByIndexSync(r'detectedText', [detectedText]);
   }
 
   Future<List<MLDetectedElementText?>> getAllByDetectedText(
       List<String> detectedTextValues) {
     final values = detectedTextValues.map((e) => [e]).toList();
-    return getAllByIndex('detectedText', values);
+    return getAllByIndex(r'detectedText', values);
   }
 
   List<MLDetectedElementText?> getAllByDetectedTextSync(
       List<String> detectedTextValues) {
     final values = detectedTextValues.map((e) => [e]).toList();
-    return getAllByIndexSync('detectedText', values);
+    return getAllByIndexSync(r'detectedText', values);
   }
 
   Future<int> deleteAllByDetectedText(List<String> detectedTextValues) {
     final values = detectedTextValues.map((e) => [e]).toList();
-    return deleteAllByIndex('detectedText', values);
+    return deleteAllByIndex(r'detectedText', values);
   }
 
   int deleteAllByDetectedTextSync(List<String> detectedTextValues) {
     final values = detectedTextValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync('detectedText', values);
+    return deleteAllByIndexSync(r'detectedText', values);
+  }
+
+  Future<Id> putByDetectedText(MLDetectedElementText object) {
+    return putByIndex(r'detectedText', object);
+  }
+
+  Id putByDetectedTextSync(MLDetectedElementText object,
+      {bool saveLinks = true}) {
+    return putByIndexSync(r'detectedText', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByDetectedText(List<MLDetectedElementText> objects) {
+    return putAllByIndex(r'detectedText', objects);
+  }
+
+  List<Id> putAllByDetectedTextSync(List<MLDetectedElementText> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'detectedText', objects, saveLinks: saveLinks);
   }
 }
 
@@ -191,105 +183,125 @@ extension MLDetectedElementTextQueryWhereSort
     on QueryBuilder<MLDetectedElementText, MLDetectedElementText, QWhere> {
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhere>
       anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
-  }
-
-  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhere>
-      anyDetectedText() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'detectedText'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension MLDetectedElementTextQueryWhere on QueryBuilder<MLDetectedElementText,
     MLDetectedElementText, QWhereClause> {
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
-      idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
-      idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
+    });
+  }
+
+  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
-    }
-  }
-
-  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
-      idGreaterThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
-  }
-
-  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
-      idLessThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
       idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
       detectedTextEqualTo(String detectedText) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'detectedText',
-      value: [detectedText],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'detectedText',
+        value: [detectedText],
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterWhereClause>
       detectedTextNotEqualTo(String detectedText) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'detectedText',
-        upper: [detectedText],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'detectedText',
-        lower: [detectedText],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'detectedText',
-        lower: [detectedText],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'detectedText',
-        upper: [detectedText],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedText',
+              lower: [],
+              upper: [detectedText],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedText',
+              lower: [detectedText],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedText',
+              lower: [detectedText],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'detectedText',
+              lower: [],
+              upper: [detectedText],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 }
 
@@ -300,60 +312,65 @@ extension MLDetectedElementTextQueryFilter on QueryBuilder<
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'detectedText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'detectedText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> detectedTextGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'detectedText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'detectedText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> detectedTextLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'detectedText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'detectedText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> detectedTextBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'detectedText',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'detectedText',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
@@ -361,12 +378,13 @@ extension MLDetectedElementTextQueryFilter on QueryBuilder<
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'detectedText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'detectedText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
@@ -374,103 +392,141 @@ extension MLDetectedElementTextQueryFilter on QueryBuilder<
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'detectedText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'detectedText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
           QAfterFilterCondition>
       detectedTextContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'detectedText',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'detectedText',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
           QAfterFilterCondition>
       detectedTextMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'detectedText',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'detectedText',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
-      QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      QAfterFilterCondition> detectedTextIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'detectedText',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedElementText, MLDetectedElementText,
+      QAfterFilterCondition> detectedTextIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'detectedText',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedElementText, MLDetectedElementText,
+      QAfterFilterCondition> idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> tagTextIDIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'tagTextID',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'tagTextID',
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedElementText, MLDetectedElementText,
+      QAfterFilterCondition> tagTextIDIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'tagTextID',
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
       QAfterFilterCondition> tagTextIDEqualTo(int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
@@ -478,12 +534,13 @@ extension MLDetectedElementTextQueryFilter on QueryBuilder<
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
@@ -491,12 +548,13 @@ extension MLDetectedElementTextQueryFilter on QueryBuilder<
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'tagTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'tagTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText,
@@ -506,82 +564,97 @@ extension MLDetectedElementTextQueryFilter on QueryBuilder<
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'tagTextID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'tagTextID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
+
+extension MLDetectedElementTextQueryObject on QueryBuilder<
+    MLDetectedElementText, MLDetectedElementText, QFilterCondition> {}
 
 extension MLDetectedElementTextQueryLinks on QueryBuilder<MLDetectedElementText,
     MLDetectedElementText, QFilterCondition> {}
 
-extension MLDetectedElementTextQueryWhereSortBy
+extension MLDetectedElementTextQuerySortBy
     on QueryBuilder<MLDetectedElementText, MLDetectedElementText, QSortBy> {
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       sortByDetectedText() {
-    return addSortByInternal('detectedText', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedText', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       sortByDetectedTextDesc() {
-    return addSortByInternal('detectedText', Sort.desc);
-  }
-
-  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
-      sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
-      sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedText', Sort.desc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       sortByTagTextID() {
-    return addSortByInternal('tagTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       sortByTagTextIDDesc() {
-    return addSortByInternal('tagTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.desc);
+    });
   }
 }
 
-extension MLDetectedElementTextQueryWhereSortThenBy
+extension MLDetectedElementTextQuerySortThenBy
     on QueryBuilder<MLDetectedElementText, MLDetectedElementText, QSortThenBy> {
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       thenByDetectedText() {
-    return addSortByInternal('detectedText', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedText', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       thenByDetectedTextDesc() {
-    return addSortByInternal('detectedText', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedText', Sort.desc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       thenByTagTextID() {
-    return addSortByInternal('tagTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QAfterSortBy>
       thenByTagTextIDDesc() {
-    return addSortByInternal('tagTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tagTextID', Sort.desc);
+    });
   }
 }
 
@@ -589,33 +662,38 @@ extension MLDetectedElementTextQueryWhereDistinct
     on QueryBuilder<MLDetectedElementText, MLDetectedElementText, QDistinct> {
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QDistinct>
       distinctByDetectedText({bool caseSensitive = true}) {
-    return addDistinctByInternal('detectedText', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<MLDetectedElementText, MLDetectedElementText, QDistinct>
-      distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'detectedText', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<MLDetectedElementText, MLDetectedElementText, QDistinct>
       distinctByTagTextID() {
-    return addDistinctByInternal('tagTextID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'tagTextID');
+    });
   }
 }
 
 extension MLDetectedElementTextQueryProperty on QueryBuilder<
     MLDetectedElementText, MLDetectedElementText, QQueryProperty> {
-  QueryBuilder<MLDetectedElementText, String, QQueryOperations>
-      detectedTextProperty() {
-    return addPropertyNameInternal('detectedText');
+  QueryBuilder<MLDetectedElementText, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
   }
 
-  QueryBuilder<MLDetectedElementText, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+  QueryBuilder<MLDetectedElementText, String, QQueryOperations>
+      detectedTextProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'detectedText');
+    });
   }
 
   QueryBuilder<MLDetectedElementText, int?, QQueryOperations>
       tagTextIDProperty() {
-    return addPropertyNameInternal('tagTextID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'tagTextID');
+    });
   }
 }

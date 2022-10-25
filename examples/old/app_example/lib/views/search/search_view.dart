@@ -148,6 +148,7 @@ class _SearchViewState extends State<SearchView> {
                   ? isar!.containerTypes
                       .getSync(result.containerTypeID)!
                       .containerColor
+                      .color
                   : tswiriOrange,
             );
 

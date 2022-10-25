@@ -49,7 +49,7 @@ class _CalibrationViewState extends State<CalibrationView> {
             ? IconButton(
                 onPressed: () {
                   isar!.writeTxnSync(
-                    (isar) => isar.cameraCalibrationEntrys.clearSync(),
+                    () => isar!.cameraCalibrationEntrys.clearSync(),
                   );
                   _updatePage();
                 },

@@ -5,7 +5,7 @@ part 'marker.g.dart';
 @Collection()
 @Name("Marker")
 class Marker {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   //Generation Time.
   @Name("containerUID")

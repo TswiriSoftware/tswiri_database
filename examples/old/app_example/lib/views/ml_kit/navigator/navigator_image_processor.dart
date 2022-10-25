@@ -245,14 +245,15 @@ void navigationImageProcessor(List init) {
 
           if (catalogedCoordinate.gridUID == selectedBarcodeGrid) {
             //In the correct grid.
-            Offset realScreenCenter = Offset(catalogedCoordinate.coordinate!.x,
-                    catalogedCoordinate.coordinate!.y) -
+            Offset realScreenCenter = Offset(
+                    catalogedCoordinate.coordinate!.vector.x,
+                    catalogedCoordinate.coordinate!.vector.y) -
                 realOffsetToScreenCenter;
 
             Offset offsetToBarcode = rotateOffset(
               offset: Offset(
-                    targetCoordinate.coordinate!.x,
-                    targetCoordinate.coordinate!.y,
+                    targetCoordinate.coordinate!.vector.x,
+                    targetCoordinate.coordinate!.vector.y,
                   ) -
                   realScreenCenter,
               angleRadians:
@@ -287,14 +288,14 @@ void navigationImageProcessor(List init) {
 
                 //In the correct grid.
                 Offset realScreenCenter = Offset(
-                        catalogedCoordinate.coordinate!.x,
-                        catalogedCoordinate.coordinate!.y) -
+                        catalogedCoordinate.coordinate!.vector.x,
+                        catalogedCoordinate.coordinate!.vector.y) -
                     realOffsetToScreenCenter;
 
                 Offset offsetToBarcode = rotateOffset(
                   offset: Offset(
-                        targetCoordinate.coordinate!.x,
-                        targetCoordinate.coordinate!.y,
+                        targetCoordinate.coordinate!.vector.x,
+                        targetCoordinate.coordinate!.vector.y,
                       ) -
                       realScreenCenter,
                   angleRadians: -onImageBarcodeData.accelerometerData
@@ -335,14 +336,14 @@ void navigationImageProcessor(List init) {
 
                   //In the correct grid.
                   Offset realScreenCenter = Offset(
-                          catalogedCoordinate.coordinate!.x,
-                          catalogedCoordinate.coordinate!.y) -
+                          catalogedCoordinate.coordinate!.vector.x,
+                          catalogedCoordinate.coordinate!.vector.y) -
                       realOffsetToScreenCenter;
 
                   Offset offsetToBarcode = rotateOffset(
                     offset: Offset(
-                          targetCoordinate.coordinate!.x,
-                          targetCoordinate.coordinate!.y,
+                          targetCoordinate.coordinate!.vector.x,
+                          targetCoordinate.coordinate!.vector.y,
                         ) -
                         realScreenCenter,
                     angleRadians: -onImageBarcodeData.accelerometerData

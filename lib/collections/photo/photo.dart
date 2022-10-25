@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:image/image.dart' as img;
 part 'photo.g.dart';
@@ -18,7 +19,7 @@ part 'photo.g.dart';
 @Name("Photo")
 class Photo {
   ///ID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///ContainerUID.
   @Name("containerUID")
@@ -42,8 +43,7 @@ class Photo {
 
   ///Photo Size.
   @Name("photoSize")
-  @SizeConverter()
-  late Size photoSize;
+  late EmbeddedSize photoSize;
 
   @override
   String toString() {
@@ -79,7 +79,7 @@ class Photo {
         'extention': extention,
         'thumbnailName': thumbnailName,
         'thumbnailExtention': thumbnailExtention,
-        'photoSize': [photoSize.width, photoSize.height],
+        'photoSize': photoSize.data,
       };
 
   Photo fromJson(Map<String, dynamic> json) {
@@ -91,23 +91,6 @@ class Photo {
       ..extention = json['extention']
       ..thumbnailName = json['thumbnailName']
       ..thumbnailExtention = json['thumbnailExtention']
-      ..photoSize = Size(size[0], size[1]);
-  }
-}
-
-class SizeConverter extends TypeConverter<Size, List<double>> {
-  const SizeConverter(); // Converters need to have an empty const constructor
-
-  @override
-  Size fromIsar(List<double> object) {
-    return Size(object[0], object[1]);
-  }
-
-  @override
-  List<double> toIsar(Size object) {
-    return [
-      object.width,
-      object.height,
-    ];
+      ..photoSize = EmbeddedSize.fromMessage(size);
   }
 }

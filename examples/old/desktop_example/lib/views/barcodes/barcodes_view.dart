@@ -281,8 +281,8 @@ class _BarcodesViewState extends State<BarcodesView> {
                               if (newSize != batch.height) {
                                 batch.height = newSize;
 
-                                isar!.writeTxnSync((isar) => isar.barcodeBatchs
-                                    .putSync(batch, replaceOnConflict: true));
+                                isar!.writeTxnSync(
+                                    () => isar!.barcodeBatchs.putSync(batch));
 
                                 List<CatalogedBarcode> relatedBarcodes = isar!
                                     .catalogedBarcodes
@@ -290,12 +290,13 @@ class _BarcodesViewState extends State<BarcodesView> {
                                     .batchIDEqualTo(batch.id)
                                     .findAllSync();
 
-                                isar!.writeTxnSync((isar) {
+                                isar!.writeTxnSync(() {
                                   for (CatalogedBarcode barcode
                                       in relatedBarcodes) {
                                     barcode.height = newSize;
-                                    isar.catalogedBarcodes.putSync(barcode,
-                                        replaceOnConflict: true);
+                                    isar!.catalogedBarcodes.putSync(
+                                      barcode,
+                                    );
                                   }
                                 });
 
@@ -366,8 +367,8 @@ class _BarcodesViewState extends State<BarcodesView> {
                               if (newSize != batch.width) {
                                 batch.width = newSize;
 
-                                isar!.writeTxnSync((isar) => isar.barcodeBatchs
-                                    .putSync(batch, replaceOnConflict: true));
+                                isar!.writeTxnSync(
+                                    () => isar!.barcodeBatchs.putSync(batch));
 
                                 List<CatalogedBarcode> relatedBarcodes = isar!
                                     .catalogedBarcodes
@@ -375,12 +376,11 @@ class _BarcodesViewState extends State<BarcodesView> {
                                     .batchIDEqualTo(batch.id)
                                     .findAllSync();
 
-                                isar!.writeTxnSync((isar) {
+                                isar!.writeTxnSync(() {
                                   for (CatalogedBarcode barcode
                                       in relatedBarcodes) {
                                     barcode.width = newSize;
-                                    isar.catalogedBarcodes.putSync(barcode,
-                                        replaceOnConflict: true);
+                                    isar!.catalogedBarcodes.putSync(barcode);
                                   }
                                 });
 
@@ -470,9 +470,9 @@ class _BarcodesViewState extends State<BarcodesView> {
                         });
 
                         if (canDelete == true) {
-                          isar!.writeTxnSync((isar) {
-                            isar.barcodeBatchs.deleteSync(batch.id);
-                            isar.catalogedBarcodes
+                          isar!.writeTxnSync(() {
+                            isar!.barcodeBatchs.deleteSync(batch.id);
+                            isar!.catalogedBarcodes
                                 .filter()
                                 .batchIDEqualTo(batch.id)
                                 .deleteAllSync();
@@ -544,12 +544,12 @@ class _BarcodesViewState extends State<BarcodesView> {
       ..imported = false;
 
     //Write to database.
-    isar!.writeTxnSync((isar) {
-      int batchID = isar.barcodeBatchs.putSync(newBarcodeBatch);
+    isar!.writeTxnSync(() {
+      int batchID = isar!.barcodeBatchs.putSync(newBarcodeBatch);
 
       for (var i = startUID; i <= endUID; i++) {
         String barcodeUID = '${i}_$timestamp';
-        isar.catalogedBarcodes.putSync(CatalogedBarcode()
+        isar!.catalogedBarcodes.putSync(CatalogedBarcode()
           ..barcodeUID = barcodeUID
           ..width = barcodeSize
           ..height = barcodeSize

@@ -10,7 +10,7 @@ part 'barcode_batch.g.dart';
 @Collection()
 @Name("BarcodeBatch")
 class BarcodeBatch {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   //Generation Time.
   @Name("timestamp")

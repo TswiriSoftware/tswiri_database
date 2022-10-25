@@ -1,118 +1,124 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'cataloged_container.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetCatalogedContainerCollection on Isar {
-  IsarCollection<CatalogedContainer> get catalogedContainers => getCollection();
+  IsarCollection<CatalogedContainer> get catalogedContainers =>
+      this.collection();
 }
 
 const CatalogedContainerSchema = CollectionSchema(
-  name: 'CatalogedContainer',
-  schema:
-      '{"name":"CatalogedContainer","idName":"id","properties":[{"name":"barcodeUID","type":"String"},{"name":"containerTypeID","type":"Long"},{"name":"containerUID","type":"String"},{"name":"description","type":"String"},{"name":"name","type":"String"}],"indexes":[{"name":"containerUID","unique":true,"properties":[{"name":"containerUID","type":"Hash","caseSensitive":true}]}],"links":[]}',
-  idName: 'id',
-  propertyIds: {
-    'barcodeUID': 0,
-    'containerTypeID': 1,
-    'containerUID': 2,
-    'description': 3,
-    'name': 4
+  name: r'CatalogedContainer',
+  id: -1328495142418178125,
+  properties: {
+    r'barcodeUID': PropertySchema(
+      id: 0,
+      name: r'barcodeUID',
+      type: IsarType.string,
+    ),
+    r'containerTypeID': PropertySchema(
+      id: 1,
+      name: r'containerTypeID',
+      type: IsarType.long,
+    ),
+    r'containerUID': PropertySchema(
+      id: 2,
+      name: r'containerUID',
+      type: IsarType.string,
+    ),
+    r'description': PropertySchema(
+      id: 3,
+      name: r'description',
+      type: IsarType.string,
+    ),
+    r'name': PropertySchema(
+      id: 4,
+      name: r'name',
+      type: IsarType.string,
+    )
   },
-  listProperties: {},
-  indexIds: {'containerUID': 0},
-  indexValueTypes: {
-    'containerUID': [
-      IndexValueType.stringHash,
-    ]
+  estimateSize: _catalogedContainerEstimateSize,
+  serialize: _catalogedContainerSerialize,
+  deserialize: _catalogedContainerDeserialize,
+  deserializeProp: _catalogedContainerDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'containerUID': IndexSchema(
+      id: 3918990956816157529,
+      name: r'containerUID',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'containerUID',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
+  links: {},
+  embeddedSchemas: {},
   getId: _catalogedContainerGetId,
-  setId: _catalogedContainerSetId,
   getLinks: _catalogedContainerGetLinks,
-  attachLinks: _catalogedContainerAttachLinks,
-  serializeNative: _catalogedContainerSerializeNative,
-  deserializeNative: _catalogedContainerDeserializeNative,
-  deserializePropNative: _catalogedContainerDeserializePropNative,
-  serializeWeb: _catalogedContainerSerializeWeb,
-  deserializeWeb: _catalogedContainerDeserializeWeb,
-  deserializePropWeb: _catalogedContainerDeserializePropWeb,
-  version: 3,
+  attach: _catalogedContainerAttach,
+  version: '3.0.2',
 );
 
-int? _catalogedContainerGetId(CatalogedContainer object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
+int _catalogedContainerEstimateSize(
+  CatalogedContainer object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  {
+    final value = object.barcodeUID;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
   }
+  bytesCount += 3 + object.containerUID.length * 3;
+  {
+    final value = object.description;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.name;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  return bytesCount;
 }
 
-void _catalogedContainerSetId(CatalogedContainer object, int id) {
-  object.id = id;
+void _catalogedContainerSerialize(
+  CatalogedContainer object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.barcodeUID);
+  writer.writeLong(offsets[1], object.containerTypeID);
+  writer.writeString(offsets[2], object.containerUID);
+  writer.writeString(offsets[3], object.description);
+  writer.writeString(offsets[4], object.name);
 }
 
-List<IsarLinkBase> _catalogedContainerGetLinks(CatalogedContainer object) {
-  return [];
-}
-
-void _catalogedContainerSerializeNative(
-    IsarCollection<CatalogedContainer> collection,
-    IsarRawObject rawObj,
-    CatalogedContainer object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.barcodeUID;
-  IsarUint8List? _barcodeUID;
-  if (value0 != null) {
-    _barcodeUID = IsarBinaryWriter.utf8Encoder.convert(value0);
-  }
-  dynamicSize += (_barcodeUID?.length ?? 0) as int;
-  final value1 = object.containerTypeID;
-  final _containerTypeID = value1;
-  final value2 = object.containerUID;
-  final _containerUID = IsarBinaryWriter.utf8Encoder.convert(value2);
-  dynamicSize += (_containerUID.length) as int;
-  final value3 = object.description;
-  IsarUint8List? _description;
-  if (value3 != null) {
-    _description = IsarBinaryWriter.utf8Encoder.convert(value3);
-  }
-  dynamicSize += (_description?.length ?? 0) as int;
-  final value4 = object.name;
-  IsarUint8List? _name;
-  if (value4 != null) {
-    _name = IsarBinaryWriter.utf8Encoder.convert(value4);
-  }
-  dynamicSize += (_name?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _barcodeUID);
-  writer.writeLong(offsets[1], _containerTypeID);
-  writer.writeBytes(offsets[2], _containerUID);
-  writer.writeBytes(offsets[3], _description);
-  writer.writeBytes(offsets[4], _name);
-}
-
-CatalogedContainer _catalogedContainerDeserializeNative(
-    IsarCollection<CatalogedContainer> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+CatalogedContainer _catalogedContainerDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = CatalogedContainer();
   object.barcodeUID = reader.readStringOrNull(offsets[0]);
   object.containerTypeID = reader.readLong(offsets[1]);
@@ -123,11 +129,13 @@ CatalogedContainer _catalogedContainerDeserializeNative(
   return object;
 }
 
-P _catalogedContainerDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _catalogedContainerDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
@@ -139,201 +147,203 @@ P _catalogedContainerDeserializePropNative<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _catalogedContainerSerializeWeb(
-    IsarCollection<CatalogedContainer> collection, CatalogedContainer object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'barcodeUID', object.barcodeUID);
-  IsarNative.jsObjectSet(jsObj, 'containerTypeID', object.containerTypeID);
-  IsarNative.jsObjectSet(jsObj, 'containerUID', object.containerUID);
-  IsarNative.jsObjectSet(jsObj, 'description', object.description);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'name', object.name);
-  return jsObj;
+Id _catalogedContainerGetId(CatalogedContainer object) {
+  return object.id;
 }
 
-CatalogedContainer _catalogedContainerDeserializeWeb(
-    IsarCollection<CatalogedContainer> collection, dynamic jsObj) {
-  final object = CatalogedContainer();
-  object.barcodeUID = IsarNative.jsObjectGet(jsObj, 'barcodeUID');
-  object.containerTypeID = IsarNative.jsObjectGet(jsObj, 'containerTypeID') ??
-      double.negativeInfinity;
-  object.containerUID = IsarNative.jsObjectGet(jsObj, 'containerUID') ?? '';
-  object.description = IsarNative.jsObjectGet(jsObj, 'description');
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.name = IsarNative.jsObjectGet(jsObj, 'name');
-  return object;
+List<IsarLinkBase<dynamic>> _catalogedContainerGetLinks(
+    CatalogedContainer object) {
+  return [];
 }
 
-P _catalogedContainerDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'barcodeUID':
-      return (IsarNative.jsObjectGet(jsObj, 'barcodeUID')) as P;
-    case 'containerTypeID':
-      return (IsarNative.jsObjectGet(jsObj, 'containerTypeID') ??
-          double.negativeInfinity) as P;
-    case 'containerUID':
-      return (IsarNative.jsObjectGet(jsObj, 'containerUID') ?? '') as P;
-    case 'description':
-      return (IsarNative.jsObjectGet(jsObj, 'description')) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    case 'name':
-      return (IsarNative.jsObjectGet(jsObj, 'name')) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
+void _catalogedContainerAttach(
+    IsarCollection<dynamic> col, Id id, CatalogedContainer object) {
+  object.id = id;
 }
-
-void _catalogedContainerAttachLinks(
-    IsarCollection col, int id, CatalogedContainer object) {}
 
 extension CatalogedContainerByIndex on IsarCollection<CatalogedContainer> {
   Future<CatalogedContainer?> getByContainerUID(String containerUID) {
-    return getByIndex('containerUID', [containerUID]);
+    return getByIndex(r'containerUID', [containerUID]);
   }
 
   CatalogedContainer? getByContainerUIDSync(String containerUID) {
-    return getByIndexSync('containerUID', [containerUID]);
+    return getByIndexSync(r'containerUID', [containerUID]);
   }
 
   Future<bool> deleteByContainerUID(String containerUID) {
-    return deleteByIndex('containerUID', [containerUID]);
+    return deleteByIndex(r'containerUID', [containerUID]);
   }
 
   bool deleteByContainerUIDSync(String containerUID) {
-    return deleteByIndexSync('containerUID', [containerUID]);
+    return deleteByIndexSync(r'containerUID', [containerUID]);
   }
 
   Future<List<CatalogedContainer?>> getAllByContainerUID(
       List<String> containerUIDValues) {
     final values = containerUIDValues.map((e) => [e]).toList();
-    return getAllByIndex('containerUID', values);
+    return getAllByIndex(r'containerUID', values);
   }
 
   List<CatalogedContainer?> getAllByContainerUIDSync(
       List<String> containerUIDValues) {
     final values = containerUIDValues.map((e) => [e]).toList();
-    return getAllByIndexSync('containerUID', values);
+    return getAllByIndexSync(r'containerUID', values);
   }
 
   Future<int> deleteAllByContainerUID(List<String> containerUIDValues) {
     final values = containerUIDValues.map((e) => [e]).toList();
-    return deleteAllByIndex('containerUID', values);
+    return deleteAllByIndex(r'containerUID', values);
   }
 
   int deleteAllByContainerUIDSync(List<String> containerUIDValues) {
     final values = containerUIDValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync('containerUID', values);
+    return deleteAllByIndexSync(r'containerUID', values);
+  }
+
+  Future<Id> putByContainerUID(CatalogedContainer object) {
+    return putByIndex(r'containerUID', object);
+  }
+
+  Id putByContainerUIDSync(CatalogedContainer object, {bool saveLinks = true}) {
+    return putByIndexSync(r'containerUID', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByContainerUID(List<CatalogedContainer> objects) {
+    return putAllByIndex(r'containerUID', objects);
+  }
+
+  List<Id> putAllByContainerUIDSync(List<CatalogedContainer> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'containerUID', objects, saveLinks: saveLinks);
   }
 }
 
 extension CatalogedContainerQueryWhereSort
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QWhere> {
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
-  }
-
-  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhere>
-      anyContainerUID() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'containerUID'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension CatalogedContainerQueryWhere
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QWhereClause> {
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
-      idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
-      idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
-    }
-  }
-
-  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
-      idGreaterThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
-  }
-
-  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
-      idLessThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
       idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
       containerUIDEqualTo(String containerUID) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'containerUID',
-      value: [containerUID],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'containerUID',
+        value: [containerUID],
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterWhereClause>
       containerUIDNotEqualTo(String containerUID) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'containerUID',
-        upper: [containerUID],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'containerUID',
-        lower: [containerUID],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'containerUID',
-        lower: [containerUID],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'containerUID',
-        upper: [containerUID],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'containerUID',
+              lower: [],
+              upper: [containerUID],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'containerUID',
+              lower: [containerUID],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'containerUID',
+              lower: [containerUID],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'containerUID',
+              lower: [],
+              upper: [containerUID],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 }
 
@@ -341,11 +351,20 @@ extension CatalogedContainerQueryFilter
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QFilterCondition> {
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       barcodeUIDIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'barcodeUID',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'barcodeUID',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      barcodeUIDIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'barcodeUID',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -353,60 +372,65 @@ extension CatalogedContainerQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       barcodeUIDGreaterThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       barcodeUIDLessThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       barcodeUIDBetween(
     String? lower,
     String? upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'barcodeUID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'barcodeUID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -414,12 +438,13 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -427,41 +452,65 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       barcodeUIDContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'barcodeUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'barcodeUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       barcodeUIDMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'barcodeUID',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'barcodeUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      barcodeUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcodeUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      barcodeUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'barcodeUID',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       containerTypeIDEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'containerTypeID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'containerTypeID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -469,12 +518,13 @@ extension CatalogedContainerQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'containerTypeID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'containerTypeID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -482,12 +532,13 @@ extension CatalogedContainerQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'containerTypeID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'containerTypeID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -497,13 +548,15 @@ extension CatalogedContainerQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'containerTypeID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'containerTypeID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -511,60 +564,65 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       containerUIDGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       containerUIDLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       containerUIDBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'containerUID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'containerUID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -572,12 +630,13 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -585,41 +644,73 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       containerUIDContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'containerUID',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'containerUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       containerUIDMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'containerUID',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'containerUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      containerUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'containerUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      containerUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'containerUID',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       descriptionIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'description',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'description',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      descriptionIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'description',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -627,60 +718,65 @@ extension CatalogedContainerQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'description',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       descriptionGreaterThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'description',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       descriptionLessThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'description',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       descriptionBetween(
     String? lower,
     String? upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'description',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'description',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -688,12 +784,13 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'description',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -701,92 +798,129 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'description',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       descriptionContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'description',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       descriptionMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'description',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'description',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
-      idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      descriptionIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'description',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      descriptionIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'description',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       nameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'name',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'name',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      nameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'name',
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -794,60 +928,65 @@ extension CatalogedContainerQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'name',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       nameGreaterThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'name',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       nameLessThan(
     String? value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'name',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       nameBetween(
     String? lower,
     String? upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'name',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'name',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -855,12 +994,13 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'name',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
@@ -868,161 +1008,221 @@ extension CatalogedContainerQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'name',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       nameContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'name',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
       nameMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'name',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'name',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterFilterCondition>
+      nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
+      ));
+    });
   }
 }
+
+extension CatalogedContainerQueryObject
+    on QueryBuilder<CatalogedContainer, CatalogedContainer, QFilterCondition> {}
 
 extension CatalogedContainerQueryLinks
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QFilterCondition> {}
 
-extension CatalogedContainerQueryWhereSortBy
+extension CatalogedContainerQuerySortBy
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QSortBy> {
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByBarcodeUID() {
-    return addSortByInternal('barcodeUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByBarcodeUIDDesc() {
-    return addSortByInternal('barcodeUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByContainerTypeID() {
-    return addSortByInternal('containerTypeID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerTypeID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByContainerTypeIDDesc() {
-    return addSortByInternal('containerTypeID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerTypeID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByContainerUID() {
-    return addSortByInternal('containerUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByContainerUIDDesc() {
-    return addSortByInternal('containerUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByDescription() {
-    return addSortByInternal('description', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByDescriptionDesc() {
-    return addSortByInternal('description', Sort.desc);
-  }
-
-  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
-      sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
-      sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByName() {
-    return addSortByInternal('name', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       sortByNameDesc() {
-    return addSortByInternal('name', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
   }
 }
 
-extension CatalogedContainerQueryWhereSortThenBy
+extension CatalogedContainerQuerySortThenBy
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QSortThenBy> {
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByBarcodeUID() {
-    return addSortByInternal('barcodeUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByBarcodeUIDDesc() {
-    return addSortByInternal('barcodeUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcodeUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByContainerTypeID() {
-    return addSortByInternal('containerTypeID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerTypeID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByContainerTypeIDDesc() {
-    return addSortByInternal('containerTypeID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerTypeID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByContainerUID() {
-    return addSortByInternal('containerUID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByContainerUIDDesc() {
-    return addSortByInternal('containerUID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'containerUID', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByDescription() {
-    return addSortByInternal('description', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByDescriptionDesc() {
-    return addSortByInternal('description', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByName() {
-    return addSortByInternal('name', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QAfterSortBy>
       thenByNameDesc() {
-    return addSortByInternal('name', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
   }
 }
 
@@ -1030,62 +1230,79 @@ extension CatalogedContainerQueryWhereDistinct
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct> {
   QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct>
       distinctByBarcodeUID({bool caseSensitive = true}) {
-    return addDistinctByInternal('barcodeUID', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'barcodeUID', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct>
       distinctByContainerTypeID() {
-    return addDistinctByInternal('containerTypeID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'containerTypeID');
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct>
       distinctByContainerUID({bool caseSensitive = true}) {
-    return addDistinctByInternal('containerUID', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'containerUID', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct>
       distinctByDescription({bool caseSensitive = true}) {
-    return addDistinctByInternal('description', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct>
-      distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<CatalogedContainer, CatalogedContainer, QDistinct>
       distinctByName({bool caseSensitive = true}) {
-    return addDistinctByInternal('name', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
   }
 }
 
 extension CatalogedContainerQueryProperty
     on QueryBuilder<CatalogedContainer, CatalogedContainer, QQueryProperty> {
+  QueryBuilder<CatalogedContainer, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
   QueryBuilder<CatalogedContainer, String?, QQueryOperations>
       barcodeUIDProperty() {
-    return addPropertyNameInternal('barcodeUID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'barcodeUID');
+    });
   }
 
   QueryBuilder<CatalogedContainer, int, QQueryOperations>
       containerTypeIDProperty() {
-    return addPropertyNameInternal('containerTypeID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'containerTypeID');
+    });
   }
 
   QueryBuilder<CatalogedContainer, String, QQueryOperations>
       containerUIDProperty() {
-    return addPropertyNameInternal('containerUID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'containerUID');
+    });
   }
 
   QueryBuilder<CatalogedContainer, String?, QQueryOperations>
       descriptionProperty() {
-    return addPropertyNameInternal('description');
-  }
-
-  QueryBuilder<CatalogedContainer, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'description');
+    });
   }
 
   QueryBuilder<CatalogedContainer, String?, QQueryOperations> nameProperty() {
-    return addPropertyNameInternal('name');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'name');
+    });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tswiri_database/embedded/embedded_color/embedded_color.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_widgets/colors/colors.dart';
 import 'package:tswiri_widgets/widgets/general/custom_text_field.dart';
@@ -21,9 +22,9 @@ class _ContainerTypeEditorViewState extends State<ContainerTypeEditorView> {
   late final List<ContainerType> _containerTypes =
       isar!.containerTypes.where().findAllSync();
 
-  late int red = _containerType.containerColor.red;
-  late int blue = _containerType.containerColor.blue;
-  late int green = _containerType.containerColor.green;
+  late int red = _containerType.containerColor.color.red;
+  late int blue = _containerType.containerColor.color.blue;
+  late int green = _containerType.containerColor.color.green;
 
   @override
   void initState() {
@@ -285,14 +286,14 @@ class _ContainerTypeEditorViewState extends State<ContainerTypeEditorView> {
   void _updateColor() {
     Color color = Color.fromRGBO(red, green, blue, 1.0);
     setState(() {
-      _containerType.containerColor = color;
+      _containerType.containerColor = EmbeddedColor.fromColor(color);
     });
     _updateIsar();
   }
 
   void _updateIsar() {
-    isar!.writeTxnSync((isar) {
-      isar.containerTypes.putSync(_containerType, replaceOnConflict: true);
+    isar!.writeTxnSync(() {
+      isar!.containerTypes.putSync(_containerType);
     });
   }
 }

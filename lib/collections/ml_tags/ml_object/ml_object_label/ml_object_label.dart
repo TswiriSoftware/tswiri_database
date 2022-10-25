@@ -16,7 +16,7 @@ part 'ml_object_label.g.dart';
 @Name("MLObjectLabel")
 class MLObjectLabel {
   ///ObjectLabelID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///ObjectID.
   @Name("objectID")

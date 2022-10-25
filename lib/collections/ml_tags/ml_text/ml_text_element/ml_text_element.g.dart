@@ -1,111 +1,112 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'ml_text_element.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetMLTextElementCollection on Isar {
-  IsarCollection<MLTextElement> get mLTextElements => getCollection();
+  IsarCollection<MLTextElement> get mLTextElements => this.collection();
 }
 
 const MLTextElementSchema = CollectionSchema(
-  name: 'MLTextElement',
-  schema:
-      '{"name":"MLTextElement","idName":"id","properties":[{"name":"cornerPoints","type":"LongList"},{"name":"detectedElementTextID","type":"Long"},{"name":"lineID","type":"Long"},{"name":"lineIndex","type":"Long"},{"name":"photoID","type":"Long"},{"name":"userFeedback","type":"Bool"}],"indexes":[],"links":[]}',
-  idName: 'id',
-  propertyIds: {
-    'cornerPoints': 0,
-    'detectedElementTextID': 1,
-    'lineID': 2,
-    'lineIndex': 3,
-    'photoID': 4,
-    'userFeedback': 5
+  name: r'MLTextElement',
+  id: -8153687795569615519,
+  properties: {
+    r'cornerPoints': PropertySchema(
+      id: 0,
+      name: r'cornerPoints',
+      type: IsarType.object,
+      target: r'CornerPoints',
+    ),
+    r'detectedElementTextID': PropertySchema(
+      id: 1,
+      name: r'detectedElementTextID',
+      type: IsarType.long,
+    ),
+    r'lineID': PropertySchema(
+      id: 2,
+      name: r'lineID',
+      type: IsarType.long,
+    ),
+    r'lineIndex': PropertySchema(
+      id: 3,
+      name: r'lineIndex',
+      type: IsarType.long,
+    ),
+    r'photoID': PropertySchema(
+      id: 4,
+      name: r'photoID',
+      type: IsarType.long,
+    ),
+    r'userFeedback': PropertySchema(
+      id: 5,
+      name: r'userFeedback',
+      type: IsarType.bool,
+    )
   },
-  listProperties: {'cornerPoints'},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {},
-  backlinkLinkNames: {},
+  estimateSize: _mLTextElementEstimateSize,
+  serialize: _mLTextElementSerialize,
+  deserialize: _mLTextElementDeserialize,
+  deserializeProp: _mLTextElementDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {r'CornerPoints': CornerPointsSchema},
   getId: _mLTextElementGetId,
-  setId: _mLTextElementSetId,
   getLinks: _mLTextElementGetLinks,
-  attachLinks: _mLTextElementAttachLinks,
-  serializeNative: _mLTextElementSerializeNative,
-  deserializeNative: _mLTextElementDeserializeNative,
-  deserializePropNative: _mLTextElementDeserializePropNative,
-  serializeWeb: _mLTextElementSerializeWeb,
-  deserializeWeb: _mLTextElementDeserializeWeb,
-  deserializePropWeb: _mLTextElementDeserializePropWeb,
-  version: 3,
+  attach: _mLTextElementAttach,
+  version: '3.0.2',
 );
 
-int? _mLTextElementGetId(MLTextElement object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _mLTextElementEstimateSize(
+  MLTextElement object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 +
+      CornerPointsSchema.estimateSize(
+          object.cornerPoints, allOffsets[CornerPoints]!, allOffsets);
+  return bytesCount;
 }
 
-void _mLTextElementSetId(MLTextElement object, int id) {
-  object.id = id;
+void _mLTextElementSerialize(
+  MLTextElement object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeObject<CornerPoints>(
+    offsets[0],
+    allOffsets,
+    CornerPointsSchema.serialize,
+    object.cornerPoints,
+  );
+  writer.writeLong(offsets[1], object.detectedElementTextID);
+  writer.writeLong(offsets[2], object.lineID);
+  writer.writeLong(offsets[3], object.lineIndex);
+  writer.writeLong(offsets[4], object.photoID);
+  writer.writeBool(offsets[5], object.userFeedback);
 }
 
-List<IsarLinkBase> _mLTextElementGetLinks(MLTextElement object) {
-  return [];
-}
-
-const _mLTextElementCornerPointConverter = CornerPointConverter();
-
-void _mLTextElementSerializeNative(
-    IsarCollection<MLTextElement> collection,
-    IsarRawObject rawObj,
-    MLTextElement object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = _mLTextElementCornerPointConverter.toIsar(object.cornerPoints);
-  dynamicSize += (value0.length) * 8;
-  final _cornerPoints = value0;
-  final value1 = object.detectedElementTextID;
-  final _detectedElementTextID = value1;
-  final value2 = object.lineID;
-  final _lineID = value2;
-  final value3 = object.lineIndex;
-  final _lineIndex = value3;
-  final value4 = object.photoID;
-  final _photoID = value4;
-  final value5 = object.userFeedback;
-  final _userFeedback = value5;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLongList(offsets[0], _cornerPoints);
-  writer.writeLong(offsets[1], _detectedElementTextID);
-  writer.writeLong(offsets[2], _lineID);
-  writer.writeLong(offsets[3], _lineIndex);
-  writer.writeLong(offsets[4], _photoID);
-  writer.writeBool(offsets[5], _userFeedback);
-}
-
-MLTextElement _mLTextElementDeserializeNative(
-    IsarCollection<MLTextElement> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+MLTextElement _mLTextElementDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = MLTextElement();
-  object.cornerPoints = _mLTextElementCornerPointConverter
-      .fromIsar(reader.readLongList(offsets[0]) ?? []);
+  object.cornerPoints = reader.readObjectOrNull<CornerPoints>(
+        offsets[0],
+        CornerPointsSchema.deserialize,
+        allOffsets,
+      ) ??
+      CornerPoints();
   object.detectedElementTextID = reader.readLong(offsets[1]);
   object.id = id;
   object.lineID = reader.readLong(offsets[2]);
@@ -115,14 +116,20 @@ MLTextElement _mLTextElementDeserializeNative(
   return object;
 }
 
-P _mLTextElementDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _mLTextElementDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
-      return (_mLTextElementCornerPointConverter
-          .fromIsar(reader.readLongList(offset) ?? [])) as P;
+      return (reader.readObjectOrNull<CornerPoints>(
+            offset,
+            CornerPointsSchema.deserialize,
+            allOffsets,
+          ) ??
+          CornerPoints()) as P;
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
@@ -134,209 +141,114 @@ P _mLTextElementDeserializePropNative<P>(
     case 5:
       return (reader.readBoolOrNull(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _mLTextElementSerializeWeb(
-    IsarCollection<MLTextElement> collection, MLTextElement object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'cornerPoints',
-      _mLTextElementCornerPointConverter.toIsar(object.cornerPoints));
-  IsarNative.jsObjectSet(
-      jsObj, 'detectedElementTextID', object.detectedElementTextID);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'lineID', object.lineID);
-  IsarNative.jsObjectSet(jsObj, 'lineIndex', object.lineIndex);
-  IsarNative.jsObjectSet(jsObj, 'photoID', object.photoID);
-  IsarNative.jsObjectSet(jsObj, 'userFeedback', object.userFeedback);
-  return jsObj;
+Id _mLTextElementGetId(MLTextElement object) {
+  return object.id;
 }
 
-MLTextElement _mLTextElementDeserializeWeb(
-    IsarCollection<MLTextElement> collection, dynamic jsObj) {
-  final object = MLTextElement();
-  object.cornerPoints = _mLTextElementCornerPointConverter.fromIsar(
-      (IsarNative.jsObjectGet(jsObj, 'cornerPoints') as List?)
-              ?.map((e) => e ?? double.negativeInfinity)
-              .toList()
-              .cast<int>() ??
-          []);
-  object.detectedElementTextID =
-      IsarNative.jsObjectGet(jsObj, 'detectedElementTextID') ??
-          double.negativeInfinity;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-  object.lineID =
-      IsarNative.jsObjectGet(jsObj, 'lineID') ?? double.negativeInfinity;
-  object.lineIndex =
-      IsarNative.jsObjectGet(jsObj, 'lineIndex') ?? double.negativeInfinity;
-  object.photoID =
-      IsarNative.jsObjectGet(jsObj, 'photoID') ?? double.negativeInfinity;
-  object.userFeedback = IsarNative.jsObjectGet(jsObj, 'userFeedback');
-  return object;
+List<IsarLinkBase<dynamic>> _mLTextElementGetLinks(MLTextElement object) {
+  return [];
 }
 
-P _mLTextElementDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'cornerPoints':
-      return (_mLTextElementCornerPointConverter.fromIsar(
-          (IsarNative.jsObjectGet(jsObj, 'cornerPoints') as List?)
-                  ?.map((e) => e ?? double.negativeInfinity)
-                  .toList()
-                  .cast<int>() ??
-              [])) as P;
-    case 'detectedElementTextID':
-      return (IsarNative.jsObjectGet(jsObj, 'detectedElementTextID') ??
-          double.negativeInfinity) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
-    case 'lineID':
-      return (IsarNative.jsObjectGet(jsObj, 'lineID') ??
-          double.negativeInfinity) as P;
-    case 'lineIndex':
-      return (IsarNative.jsObjectGet(jsObj, 'lineIndex') ??
-          double.negativeInfinity) as P;
-    case 'photoID':
-      return (IsarNative.jsObjectGet(jsObj, 'photoID') ??
-          double.negativeInfinity) as P;
-    case 'userFeedback':
-      return (IsarNative.jsObjectGet(jsObj, 'userFeedback')) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
+void _mLTextElementAttach(
+    IsarCollection<dynamic> col, Id id, MLTextElement object) {
+  object.id = id;
 }
-
-void _mLTextElementAttachLinks(
-    IsarCollection col, int id, MLTextElement object) {}
 
 extension MLTextElementQueryWhereSort
     on QueryBuilder<MLTextElement, MLTextElement, QWhere> {
   QueryBuilder<MLTextElement, MLTextElement, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension MLTextElementQueryWhere
     on QueryBuilder<MLTextElement, MLTextElement, QWhereClause> {
   QueryBuilder<MLTextElement, MLTextElement, QAfterWhereClause> idEqualTo(
-      int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterWhereClause> idNotEqualTo(
-      int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterWhereClause> idGreaterThan(
-      int id,
+      Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterWhereClause> idLessThan(
-      int id,
+      Id id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
 extension MLTextElementQueryFilter
     on QueryBuilder<MLTextElement, MLTextElement, QFilterCondition> {
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
-      cornerPointsAnyEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'cornerPoints',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
-      cornerPointsAnyGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'cornerPoints',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
-      cornerPointsAnyLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'cornerPoints',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
-      cornerPointsAnyBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'cornerPoints',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       detectedElementTextIDEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'detectedElementTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'detectedElementTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -344,12 +256,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'detectedElementTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'detectedElementTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -357,12 +270,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'detectedElementTextID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'detectedElementTextID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -372,71 +286,79 @@ extension MLTextElementQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'detectedElementTextID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'detectedElementTextID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition> idEqualTo(
-      int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       lineIDEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'lineID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lineID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -444,12 +366,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'lineID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lineID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -457,12 +380,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'lineID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lineID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -472,22 +396,25 @@ extension MLTextElementQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'lineID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lineID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       lineIndexEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'lineIndex',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lineIndex',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -495,12 +422,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'lineIndex',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lineIndex',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -508,12 +436,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'lineIndex',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lineIndex',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -523,22 +452,25 @@ extension MLTextElementQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'lineIndex',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lineIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       photoIDEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'photoID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -546,12 +478,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'photoID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'photoID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -559,12 +492,13 @@ extension MLTextElementQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'photoID',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'photoID',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
@@ -574,146 +508,204 @@ extension MLTextElementQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'photoID',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'photoID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       userFeedbackIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'userFeedback',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'userFeedback',
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
+      userFeedbackIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'userFeedback',
+      ));
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
       userFeedbackEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'userFeedback',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userFeedback',
+        value: value,
+      ));
+    });
+  }
+}
+
+extension MLTextElementQueryObject
+    on QueryBuilder<MLTextElement, MLTextElement, QFilterCondition> {
+  QueryBuilder<MLTextElement, MLTextElement, QAfterFilterCondition>
+      cornerPoints(FilterQuery<CornerPoints> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'cornerPoints');
+    });
   }
 }
 
 extension MLTextElementQueryLinks
     on QueryBuilder<MLTextElement, MLTextElement, QFilterCondition> {}
 
-extension MLTextElementQueryWhereSortBy
+extension MLTextElementQuerySortBy
     on QueryBuilder<MLTextElement, MLTextElement, QSortBy> {
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       sortByDetectedElementTextID() {
-    return addSortByInternal('detectedElementTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedElementTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       sortByDetectedElementTextIDDesc() {
-    return addSortByInternal('detectedElementTextID', Sort.desc);
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedElementTextID', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortByLineID() {
-    return addSortByInternal('lineID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortByLineIDDesc() {
-    return addSortByInternal('lineID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineID', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortByLineIndex() {
-    return addSortByInternal('lineIndex', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineIndex', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       sortByLineIndexDesc() {
-    return addSortByInternal('lineIndex', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineIndex', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortByPhotoID() {
-    return addSortByInternal('photoID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> sortByPhotoIDDesc() {
-    return addSortByInternal('photoID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       sortByUserFeedback() {
-    return addSortByInternal('userFeedback', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userFeedback', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       sortByUserFeedbackDesc() {
-    return addSortByInternal('userFeedback', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userFeedback', Sort.desc);
+    });
   }
 }
 
-extension MLTextElementQueryWhereSortThenBy
+extension MLTextElementQuerySortThenBy
     on QueryBuilder<MLTextElement, MLTextElement, QSortThenBy> {
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       thenByDetectedElementTextID() {
-    return addSortByInternal('detectedElementTextID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedElementTextID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       thenByDetectedElementTextIDDesc() {
-    return addSortByInternal('detectedElementTextID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'detectedElementTextID', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenByLineID() {
-    return addSortByInternal('lineID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenByLineIDDesc() {
-    return addSortByInternal('lineID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineID', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenByLineIndex() {
-    return addSortByInternal('lineIndex', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineIndex', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       thenByLineIndexDesc() {
-    return addSortByInternal('lineIndex', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lineIndex', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenByPhotoID() {
-    return addSortByInternal('photoID', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy> thenByPhotoIDDesc() {
-    return addSortByInternal('photoID', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoID', Sort.desc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       thenByUserFeedback() {
-    return addSortByInternal('userFeedback', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userFeedback', Sort.asc);
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QAfterSortBy>
       thenByUserFeedbackDesc() {
-    return addSortByInternal('userFeedback', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userFeedback', Sort.desc);
+    });
   }
 }
 
@@ -721,60 +713,80 @@ extension MLTextElementQueryWhereDistinct
     on QueryBuilder<MLTextElement, MLTextElement, QDistinct> {
   QueryBuilder<MLTextElement, MLTextElement, QDistinct>
       distinctByDetectedElementTextID() {
-    return addDistinctByInternal('detectedElementTextID');
-  }
-
-  QueryBuilder<MLTextElement, MLTextElement, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'detectedElementTextID');
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QDistinct> distinctByLineID() {
-    return addDistinctByInternal('lineID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lineID');
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QDistinct> distinctByLineIndex() {
-    return addDistinctByInternal('lineIndex');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lineIndex');
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QDistinct> distinctByPhotoID() {
-    return addDistinctByInternal('photoID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'photoID');
+    });
   }
 
   QueryBuilder<MLTextElement, MLTextElement, QDistinct>
       distinctByUserFeedback() {
-    return addDistinctByInternal('userFeedback');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'userFeedback');
+    });
   }
 }
 
 extension MLTextElementQueryProperty
     on QueryBuilder<MLTextElement, MLTextElement, QQueryProperty> {
-  QueryBuilder<MLTextElement, List<Point<int>>, QQueryOperations>
+  QueryBuilder<MLTextElement, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<MLTextElement, CornerPoints, QQueryOperations>
       cornerPointsProperty() {
-    return addPropertyNameInternal('cornerPoints');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'cornerPoints');
+    });
   }
 
   QueryBuilder<MLTextElement, int, QQueryOperations>
       detectedElementTextIDProperty() {
-    return addPropertyNameInternal('detectedElementTextID');
-  }
-
-  QueryBuilder<MLTextElement, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'detectedElementTextID');
+    });
   }
 
   QueryBuilder<MLTextElement, int, QQueryOperations> lineIDProperty() {
-    return addPropertyNameInternal('lineID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lineID');
+    });
   }
 
   QueryBuilder<MLTextElement, int, QQueryOperations> lineIndexProperty() {
-    return addPropertyNameInternal('lineIndex');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lineIndex');
+    });
   }
 
   QueryBuilder<MLTextElement, int, QQueryOperations> photoIDProperty() {
-    return addPropertyNameInternal('photoID');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'photoID');
+    });
   }
 
   QueryBuilder<MLTextElement, bool?, QQueryOperations> userFeedbackProperty() {
-    return addPropertyNameInternal('userFeedback');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'userFeedback');
+    });
   }
 }

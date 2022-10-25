@@ -4,9 +4,9 @@ List<CatalogedContainer> createContainersWithRelationships(
   List<CatalogedBarcode> catalogedBarcodes,
 ) {
   int timestamp = 1662456261516;
-  isar!.writeTxnSync((isar) {
+  isar!.writeTxnSync(() {
     //Create a shelf (parent).
-    isar.catalogedContainers.putSync(
+    isar!.catalogedContainers.putSync(
       CatalogedContainer()
         ..barcodeUID = catalogedBarcodes[0].barcodeUID
         ..containerTypeID = 1
@@ -18,7 +18,7 @@ List<CatalogedContainer> createContainersWithRelationships(
     //Create boxes (children).
     for (var i = 1; i <= 5; i++) {
       timestamp++;
-      isar.catalogedContainers.putSync(
+      isar!.catalogedContainers.putSync(
         CatalogedContainer()
           ..barcodeUID = catalogedBarcodes[i].barcodeUID
           ..containerTypeID = 3
@@ -27,7 +27,7 @@ List<CatalogedContainer> createContainersWithRelationships(
           ..name = 'Box $i',
       );
 
-      isar.containerRelationships.putSync(
+      isar!.containerRelationships.putSync(
         ContainerRelationship()
           ..containerUID = 'box_$timestamp'
           ..parentUID = 'shelf_1662456261516',

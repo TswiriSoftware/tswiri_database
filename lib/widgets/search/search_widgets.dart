@@ -250,7 +250,7 @@ class ObjectLabelResultCard extends StatelessWidget {
                     painter: ImagePainter(
                       result.mlObject,
                       snapshot.data!,
-                      result.photo.photoSize,
+                      result.photo.photoSize.size,
                     ),
                   ),
                 );
@@ -368,7 +368,7 @@ class MLObjectLabelResultCard extends StatelessWidget {
                     painter: ImagePainter(
                       result.mlObject,
                       snapshot.data!,
-                      result.photo.photoSize,
+                      result.photo.photoSize.size,
                     ),
                   ),
                 );
@@ -437,7 +437,7 @@ class MLTextElementResultCard extends StatelessWidget {
                     painter: MLTextPainter(
                       result.mlTextElement,
                       snapshot.data!,
-                      result.photo.photoSize,
+                      result.photo.photoSize.size,
                     ),
                   ),
                 );

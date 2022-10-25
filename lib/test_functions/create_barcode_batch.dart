@@ -10,9 +10,9 @@ List<CatalogedBarcode> createBarcodeBatch() {
   int rangeEnd = 100;
   double size = 80.0;
 
-  isar!.writeTxnSync((isar) {
+  isar!.writeTxnSync(() {
     //Create barcode batch.
-    int batchID = isar.barcodeBatchs.putSync(
+    int batchID = isar!.barcodeBatchs.putSync(
       BarcodeBatch()
         ..imported = false
         ..rangeEnd = rangeEnd
@@ -24,7 +24,7 @@ List<CatalogedBarcode> createBarcodeBatch() {
 
     //Create Cataloged Barcodes.
     for (var i = rangeStart; i <= rangeEnd; i++) {
-      isar.catalogedBarcodes.putSync(
+      isar!.catalogedBarcodes.putSync(
         CatalogedBarcode()
           ..barcodeUID = '${i}_$timestamp'
           ..batchID = batchID

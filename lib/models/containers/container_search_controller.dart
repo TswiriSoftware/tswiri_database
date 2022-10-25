@@ -18,15 +18,11 @@ class ContainerSearchController {
       searchResults.addAll(
         isar!.catalogedContainers
             .filter()
-            .group(
-              (q) => q.repeat(
+            .anyOf(
                 containerTypes,
                 (q, ContainerType containerType) => q.optional(
-                  containerFilters.contains(containerType.containerTypeName),
-                  (q) => q.containerTypeIDEqualTo(containerType.id),
-                ),
-              ),
-            )
+                    containerFilters.contains(containerType.containerTypeName),
+                    (q) => q.containerTypeIDEqualTo(containerType.id)))
             .and()
             .nameContains(enteredKeyWord, caseSensitive: false)
             .findAllSync(),
@@ -68,7 +64,7 @@ class ContainerSearchController {
       List<CatalogedContainer> containers = isar!.catalogedContainers
           .filter()
           .group(
-            (q) => q.repeat(
+            (q) => q.anyOf(
               containerTypes,
               (q, ContainerType containerType) => q.optional(
                 containerFilters.contains(containerType.containerTypeName),

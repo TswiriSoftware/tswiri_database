@@ -16,7 +16,7 @@ part 'ml_detected_label_text.g.dart';
 @Name("MLDetectedLabelText")
 class MLDetectedLabelText {
   ///MLDetectedLabelTextID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///MLDetectedLabelText.
   @Name("detectedLabelText")

@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'dart:ui';
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/models/inter_barcode/inter_barcode_vector.dart';
 import 'package:tswiri_database/models/inter_barcode/on_image_barcode_data.dart';
@@ -251,13 +252,14 @@ List<CatalogedCoordinate> generateCoordinates(
     coordinates.add(
       CatalogedCoordinate()
         ..barcodeUID = isar!.catalogedGrids.getSync(gridUID)!.barcodeUID
-        ..coordinate = vm.Vector3(0, 0, 0)
+        ..coordinate = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
         ..gridUID = gridUID
         ..rotation = null
         ..timestamp = DateTime.now().millisecondsSinceEpoch,
     );
   } else {
-    coordinates[index].coordinate = vm.Vector3(0, 0, 0);
+    coordinates[index].coordinate =
+        EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0));
   }
 
   int nonNullPositions = 1;
@@ -319,37 +321,39 @@ List<CatalogedCoordinate> generateCoordinates(
             if (relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                     .endBarcodeUID ==
                 endBarcodeRealPosition.barcodeUID) {
-              endBarcodeRealPosition.coordinate = vm.Vector3(
-                startBarcode.coordinate!.x +
+              endBarcodeRealPosition.coordinate =
+                  EmbeddedVector3.fromVector(vm.Vector3(
+                startBarcode.coordinate!.vector.x +
                     relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                         .vector3
                         .x,
-                startBarcode.coordinate!.y +
+                startBarcode.coordinate!.vector.y +
                     relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                         .vector3
                         .y,
-                startBarcode.coordinate!.z +
+                startBarcode.coordinate!.vector.z +
                     relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                         .vector3
                         .z,
-              );
+              ));
             } else if (relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                     .startBarcodeUID ==
                 endBarcodeRealPosition.barcodeUID) {
-              endBarcodeRealPosition.coordinate = vm.Vector3(
-                startBarcode.coordinate!.x -
+              endBarcodeRealPosition.coordinate =
+                  EmbeddedVector3.fromVector(vm.Vector3(
+                startBarcode.coordinate!.vector.x -
                     relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                         .vector3
                         .x,
-                startBarcode.coordinate!.y -
+                startBarcode.coordinate!.vector.y -
                     relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                         .vector3
                         .y,
-                startBarcode.coordinate!.z -
+                startBarcode.coordinate!.vector.z -
                     relevantInterBarcodeVectors[interBarcodeOffsetIndex]
                         .vector3
                         .z,
-              );
+              ));
 
               // startBarcode.coordinate! +
               //     relevantInterBarcodeVectors[interBarcodeOffsetIndex].vector3;
@@ -389,8 +393,8 @@ Offset calculateUnitVectors(
     CatalogedCoordinate catalogedCoordinate = coordinateEntries.elementAt(i);
 
     if (catalogedCoordinate.coordinate != null) {
-      double xDistance = catalogedCoordinate.coordinate!.x;
-      double yDistance = catalogedCoordinate.coordinate!.y;
+      double xDistance = catalogedCoordinate.coordinate!.vector.x;
+      double yDistance = catalogedCoordinate.coordinate!.vector.y;
 
       if (xDistance < sX) {
         sX = xDistance;

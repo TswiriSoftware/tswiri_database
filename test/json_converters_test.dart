@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'dart:math' as m;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
+import 'package:tswiri_database/embedded/embedded_color/embedded_color.dart';
+import 'package:tswiri_database/embedded/embedded_icon_data/embedded_icon_data.dart';
+import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
@@ -118,9 +123,9 @@ void main() {
       CatalogedCoordinate catalogedCoordinate = CatalogedCoordinate()
         ..id = 1
         ..barcodeUID = 'barcodeUID'
-        ..coordinate = vm.Vector3(0, 0, 0)
+        ..coordinate = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
         ..gridUID = 1
-        ..rotation = vm.Vector3(0, 0, 0)
+        ..rotation = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
         ..timestamp = 9999;
 
       String json = jsonEncode(catalogedCoordinate.toJson());
@@ -185,11 +190,12 @@ void main() {
       ContainerType containerType = ContainerType()
         ..id = 1
         ..canContain = [1, 2]
-        ..containerColor = const Color.fromARGB(255, 190, 37, 26)
+        ..containerColor =
+            EmbeddedColor.fromColor(const Color.fromARGB(255, 190, 37, 26))
         ..containerDescription = ''
         ..containerTypeName = ''
         ..enclosing = false
-        ..iconData = Icons.dangerous
+        ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
         ..moveable = false
         ..preferredChildContainer = 1;
       String json = jsonEncode(containerType.toJson());
@@ -294,12 +300,12 @@ void main() {
     test('MLTextBlock', () async {
       MLTextBlock mlTextBlock = MLTextBlock()
         ..id = 1
-        ..cornerPoints = [
+        ..cornerPoints = CornerPoints.fromCornerPoints([
           const m.Point(1, 2),
           const m.Point(2, 1),
           const m.Point(1, 5),
           const m.Point(6, 2),
-        ]
+        ])
         ..recognizedLanguages = ['aa', 'za'];
       String json = jsonEncode(mlTextBlock);
 
@@ -314,12 +320,12 @@ void main() {
     test('MLTextElement', () async {
       MLTextElement mlTextElement = MLTextElement()
         ..id = 1
-        ..cornerPoints = [
+        ..cornerPoints = CornerPoints.fromCornerPoints([
           const m.Point(1, 2),
           const m.Point(2, 1),
           const m.Point(1, 5),
           const m.Point(6, 2),
-        ]
+        ])
         ..detectedElementTextID = 1
         ..lineID = 1
         ..lineIndex = 1
@@ -339,12 +345,12 @@ void main() {
         ..id = 1
         ..blockID = 1
         ..blockIndex = 1
-        ..cornerPoints = [
+        ..cornerPoints = CornerPoints.fromCornerPoints([
           const m.Point(1, 2),
           const m.Point(2, 1),
           const m.Point(1, 5),
           const m.Point(6, 2),
-        ]
+        ])
         ..recognizedLanguages = ['aa', 'za'];
       String json = jsonEncode(mlTextLine);
 
@@ -375,7 +381,7 @@ void main() {
         ..containerUID = 'containerUID'
         ..extention = 'extention'
         ..photoName = 1234
-        ..photoSize = const Size(1, 1)
+        ..photoSize = EmbeddedSize.fromSize(const Size(1, 1))
         ..thumbnailExtention = 'thumbnailExtention'
         ..thumbnailName = 'thumbnailName';
       String json = jsonEncode(photo);

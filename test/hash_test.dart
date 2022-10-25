@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'dart:math' as m;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
+import 'package:tswiri_database/embedded/embedded_color/embedded_color.dart';
+import 'package:tswiri_database/embedded/embedded_icon_data/embedded_icon_data.dart';
+import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
@@ -110,16 +115,16 @@ void main() {
         CatalogedCoordinate()
           ..id = 1
           ..barcodeUID = 'barcodeUID'
-          ..coordinate = vm.Vector3(0, 0, 0)
+          ..coordinate = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
           ..gridUID = 1
-          ..rotation = vm.Vector3(0, 0, 0)
+          ..rotation = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
           ..timestamp = 9999,
         CatalogedCoordinate()
           ..id = 2
           ..barcodeUID = 'barcodeUID1'
-          ..coordinate = vm.Vector3(10, 10, 10)
+          ..coordinate = EmbeddedVector3.fromVector(vm.Vector3(10, 10, 10))
           ..gridUID = 2
-          ..rotation = vm.Vector3(5, 5, 5)
+          ..rotation = EmbeddedVector3.fromVector(vm.Vector3(5, 5, 5))
           ..timestamp = 9999,
       ];
 
@@ -193,21 +198,23 @@ void main() {
         ContainerType()
           ..id = 1
           ..canContain = [1, 2]
-          ..containerColor = const Color.fromARGB(255, 190, 37, 26)
+          ..containerColor =
+              EmbeddedColor.fromColor(const Color.fromARGB(255, 190, 37, 26))
           ..containerDescription = ''
           ..containerTypeName = ''
           ..enclosing = false
-          ..iconData = Icons.dangerous
+          ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
           ..moveable = false
           ..preferredChildContainer = 1,
         ContainerType()
           ..id = 2
           ..canContain = [3, 4]
-          ..containerColor = const Color.fromARGB(255, 12, 12, 26)
+          ..containerColor =
+              EmbeddedColor.fromColor(const Color.fromARGB(255, 12, 12, 26))
           ..containerDescription = 'daszfw'
           ..containerTypeName = 'asfas'
           ..enclosing = true
-          ..iconData = Icons.dangerous
+          ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
           ..moveable = true
           ..preferredChildContainer = 2,
       ];
@@ -345,21 +352,21 @@ void main() {
       List<MLTextBlock> list = [
         MLTextBlock()
           ..id = 1
-          ..cornerPoints = [
+          ..cornerPoints = CornerPoints.fromCornerPoints([
             const m.Point(1, 2),
             const m.Point(2, 1),
             const m.Point(1, 5),
             const m.Point(6, 2),
-          ]
+          ])
           ..recognizedLanguages = ['aa', 'za'],
         MLTextBlock()
           ..id = 1
-          ..cornerPoints = [
+          ..cornerPoints = CornerPoints.fromCornerPoints([
             const m.Point(1, 5),
             const m.Point(2, 1),
             const m.Point(1, 3),
             const m.Point(6, 2),
-          ]
+          ])
           ..recognizedLanguages = ['aa', 'za'],
       ];
       // log(jsonEncode(list).hashCode.toString()); // 920060633
@@ -374,12 +381,12 @@ void main() {
       List<MLTextElement> list = [
         MLTextElement()
           ..id = 1
-          ..cornerPoints = [
+          ..cornerPoints = CornerPoints.fromCornerPoints([
             const m.Point(1, 2),
             const m.Point(2, 1),
             const m.Point(1, 5),
             const m.Point(6, 2),
-          ]
+          ])
           ..detectedElementTextID = 1
           ..lineID = 1
           ..lineIndex = 1
@@ -387,12 +394,12 @@ void main() {
           ..userFeedback = true,
         MLTextElement()
           ..id = 1
-          ..cornerPoints = [
+          ..cornerPoints = CornerPoints.fromCornerPoints([
             const m.Point(1, 2),
             const m.Point(2, 1),
             const m.Point(1, 5),
             const m.Point(6, 2),
-          ]
+          ])
           ..detectedElementTextID = 1
           ..lineID = 1
           ..lineIndex = 1
@@ -413,23 +420,23 @@ void main() {
           ..id = 1
           ..blockID = 1
           ..blockIndex = 1
-          ..cornerPoints = [
+          ..cornerPoints = CornerPoints.fromCornerPoints([
             const m.Point(1, 2),
             const m.Point(2, 1),
             const m.Point(1, 5),
             const m.Point(6, 2),
-          ]
+          ])
           ..recognizedLanguages = ['aa', 'za'],
         MLTextLine()
           ..id = 1
           ..blockID = 1
           ..blockIndex = 1
-          ..cornerPoints = [
+          ..cornerPoints = CornerPoints.fromCornerPoints([
             const m.Point(1, 2),
             const m.Point(2, 1),
             const m.Point(1, 5),
             const m.Point(6, 2),
-          ]
+          ])
           ..recognizedLanguages = ['aa', 'za'],
       ];
       // log(jsonEncode(list).hashCode.toString()); // 267911113
@@ -466,7 +473,7 @@ void main() {
           ..containerUID = 'containerUID'
           ..extention = 'extention'
           ..photoName = 1234
-          ..photoSize = const Size(1, 1)
+          ..photoSize = EmbeddedSize.fromSize(const Size(1, 1))
           ..thumbnailExtention = 'thumbnailExtention'
           ..thumbnailName = 'thumbnailName',
         Photo()
@@ -474,7 +481,7 @@ void main() {
           ..containerUID = 'containerUID'
           ..extention = 'extention'
           ..photoName = 1234
-          ..photoSize = const Size(1, 1)
+          ..photoSize = EmbeddedSize.fromSize(const Size(1, 1))
           ..thumbnailExtention = 'thumbnailExtention'
           ..thumbnailName = 'thumbnailName',
       ];

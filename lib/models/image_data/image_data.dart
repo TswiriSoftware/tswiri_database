@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image/image.dart' as img;
+import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
 import 'package:tswiri_database/export.dart';
 
 ///ImageData this is used to display an image with all its labels aswell as editing it.
@@ -56,7 +57,7 @@ class ImageData {
     if (mlDetectedLabelTextIDs.isNotEmpty) {
       mlDetectedLabelTexts = isar!.mLDetectedLabelTexts
           .filter()
-          .repeat(
+          .allOf(
               mlDetectedLabelTextIDs, (q, int element) => q.idEqualTo(element))
           .findAllSync();
     }
@@ -69,7 +70,7 @@ class ImageData {
     if (mLDetectedElementTextIDs.isNotEmpty) {
       mLDetectedElementTexts = isar!.mLDetectedElementTexts
           .filter()
-          .repeat(mLDetectedElementTextIDs,
+          .allOf(mLDetectedElementTextIDs,
               (q, int element) => q.idEqualTo(element))
           .findAllSync();
     }
@@ -83,7 +84,7 @@ class ImageData {
     if (mLDetectedElementTexts.isNotEmpty) {
       tagTexts = isar!.tagTexts
           .filter()
-          .repeat(tagTextIDs, (q, int element) => q.idEqualTo(element))
+          .allOf(tagTextIDs, (q, int element) => q.idEqualTo(element))
           .findAllSync();
     }
   }
@@ -168,17 +169,17 @@ class ImageData {
       ..photoName = photoName
       ..thumbnailExtention = extention
       ..thumbnailName = '${photoName}_thumbnail'
-      ..photoSize = size;
+      ..photoSize = EmbeddedSize.fromSize(size);
 
     int photoID = 0;
-    isar!.writeTxnSync((isar) {
-      photoID = isar.photos.putSync(newPhoto);
+    isar!.writeTxnSync(() {
+      photoID = isar!.photos.putSync(newPhoto);
     });
 
-    isar!.writeTxnSync((isar) {
+    isar!.writeTxnSync(() {
       ///Write Photo Labels to Isar.
       for (MLPhotoLabel mlPhotoLabel in mlPhotoLabels) {
-        isar.mLPhotoLabels.putSync(
+        isar!.mLPhotoLabels.putSync(
           MLPhotoLabel()
             ..confidence = mlPhotoLabel.confidence
             ..detectedLabelTextID = mlPhotoLabel.detectedLabelTextID
@@ -188,14 +189,14 @@ class ImageData {
       }
 
       for (PhotoLabel photoLabel in photoLabels) {
-        isar.photoLabels.putSync(PhotoLabel()
+        isar!.photoLabels.putSync(PhotoLabel()
           ..photoID = photoID
           ..tagTextID = photoLabel.tagTextID);
       }
 
       ///Write Objects to Isar.
       for (MLObject mlObject in mlObjects) {
-        int objectID = isar.mLObjects.putSync(
+        int objectID = isar!.mLObjects.putSync(
           MLObject()
             ..boundingBox = mlObject.boundingBox
             ..photoID = photoID,
@@ -204,7 +205,7 @@ class ImageData {
         ///Write Object Labels to Isar.
         for (MLObjectLabel mlObjectLabel in mlObjectLabels
             .where((element) => element.objectID == mlObject.id)) {
-          isar.mLObjectLabels.putSync(
+          isar!.mLObjectLabels.putSync(
             MLObjectLabel()
               ..confidence = mlObjectLabel.confidence
               ..detectedLabelTextID = mlObjectLabel.detectedLabelTextID
@@ -215,7 +216,7 @@ class ImageData {
 
         for (ObjectLabel objectLabel in objectLabels
             .where((element) => element.objectID == mlObject.id)) {
-          isar.objectLabels.putSync(ObjectLabel()
+          isar!.objectLabels.putSync(ObjectLabel()
             ..objectID = objectID
             ..tagTextID = objectLabel.tagTextID);
         }
@@ -223,7 +224,7 @@ class ImageData {
 
       ///Write Text Blocks to isar.
       for (MLTextBlock mlTextBlock in mlTextBlocks) {
-        int textBlockID = isar.mLTextBlocks.putSync(
+        int textBlockID = isar!.mLTextBlocks.putSync(
           MLTextBlock()
             ..cornerPoints = mlTextBlock.cornerPoints
             ..recognizedLanguages = mlTextBlock.recognizedLanguages,
@@ -232,7 +233,7 @@ class ImageData {
         ///Write Text Lines to isar.
         for (MLTextLine mlTextLine in mlTextLines
             .where((element) => element.blockID == mlTextBlock.id)) {
-          int lineID = isar.mLTextLines.putSync(
+          int lineID = isar!.mLTextLines.putSync(
             MLTextLine()
               ..blockID = textBlockID
               ..blockIndex = mlTextLine.blockIndex
@@ -243,7 +244,7 @@ class ImageData {
           ///Write Text Elements to isar.
           for (MLTextElement e in mlTextElements
               .where((element) => element.lineID == mlTextLine.id)) {
-            isar.mLTextElements.putSync(
+            isar!.mLTextElements.putSync(
               MLTextElement()
                 ..cornerPoints = e.cornerPoints
                 ..detectedElementTextID = e.detectedElementTextID
@@ -269,15 +270,13 @@ class ImageData {
     //2. Find all the mlObject labels.
     List<MLObjectLabel> mlObjectLabels = isar!.mLObjectLabels
         .filter()
-        .repeat(
-            mlObject, (q, MLObject element) => q.objectIDEqualTo(element.id))
+        .allOf(mlObject, (q, MLObject element) => q.objectIDEqualTo(element.id))
         .findAllSync();
 
     //3. Find all the object labels.
     List<ObjectLabel> objectLabels = isar!.objectLabels
         .filter()
-        .repeat(
-            mlObject, (q, MLObject element) => q.objectIDEqualTo(element.id))
+        .allOf(mlObject, (q, MLObject element) => q.objectIDEqualTo(element.id))
         .findAllSync();
 
     //4. Find all the mlTextElements.
@@ -293,7 +292,7 @@ class ImageData {
       //5. Find all the mlTextLines.
       mlTextLines = isar!.mLTextLines
           .filter()
-          .repeat(mlTextElements,
+          .allOf(mlTextElements,
               (q, MLTextElement element) => q.idEqualTo(element.lineID))
           .findAllSync();
 
@@ -303,7 +302,7 @@ class ImageData {
         //6. Find all the mlTextBlocks.
         mlTextBlocks = isar!.mLTextBlocks
             .filter()
-            .repeat(mlTextLines,
+            .allOf(mlTextLines,
                 (q, MLTextLine element) => q.idEqualTo(element.blockID))
             .findAllSync();
 
@@ -334,7 +333,7 @@ class ImageData {
 
     return ImageData(
       photoFile: photoFile,
-      size: photo.photoSize,
+      size: photo.photoSize.size,
       rotation: InputImageRotation.rotation0deg,
       photoLabels: photoLabels,
       mlPhotoLabels: mlPhotoLabels,

@@ -15,7 +15,7 @@ part 'tag_text.g.dart';
 @Name("TagText")
 class TagText {
   ///TagTextID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///Text.
   @Name("text")

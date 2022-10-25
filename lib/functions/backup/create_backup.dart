@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'package:archive/archive_io.dart';
 
+@pragma('vm:entry-point')
 Future<void> createBackupIsolate(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.
@@ -38,6 +39,7 @@ Future<void> createBackupIsolate(List init) async {
 /// - Isar Directory.
 /// - Photos (Excludes photoThumbnails as they can be re-generated on import).
 ///
+
 Future<File> createBackupZipFile({
   required String spacePath,
   required String temporaryDirectoryPath,

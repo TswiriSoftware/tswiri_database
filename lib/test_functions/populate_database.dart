@@ -7,7 +7,7 @@ import 'create_barcode_batch.dart';
 
 void populateDatabase() {
   //1. Clear the database.
-  isar!.writeTxnSync((isar) => isar.clearSync());
+  isar!.writeTxnSync(() => isar!.clearSync());
 
   //1. Create ContainerTypes.
   createBasicContainerTypes();

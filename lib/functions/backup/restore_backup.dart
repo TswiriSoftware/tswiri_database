@@ -6,6 +6,7 @@ import 'package:image/image.dart' as img;
 import 'package:tswiri_database/functions/general/recreate_directory.dart';
 
 ///Restores a backup zip file.
+@pragma('vm:entry-point')
 Future<void> restoreBackupIsolate(List init) async {
   //1. InitalMessage.
   SendPort sendPort = init[0]; //[0] SendPort.

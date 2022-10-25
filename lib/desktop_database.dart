@@ -28,7 +28,7 @@ import 'collections/tag_text/tag_text.dart';
 /// - Inspector.
 Isar initiateDesktopIsar({String? directory, bool? inspector}) {
   Isar isar = Isar.openSync(
-    schemas: [
+    [
       //Barcode Batch.
       BarcodeBatchSchema,
 
@@ -88,5 +88,6 @@ Isar initiateDesktopIsar({String? directory, bool? inspector}) {
     directory: directory ?? spaceDirectory!.path,
     inspector: inspector ?? true,
   );
+
   return isar;
 }

@@ -58,7 +58,7 @@ void main() {
       double directorySize = await calculateDirectorySize(
           Directory((await getApplicationSupportDirectory()).path));
 
-      expect(directorySize, 7.9e-8);
+      expect(directorySize, 0.0);
     });
   });
 }

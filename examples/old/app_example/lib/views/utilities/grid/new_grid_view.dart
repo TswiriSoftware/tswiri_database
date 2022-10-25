@@ -261,8 +261,8 @@ class _NewGridViewState extends State<NewGridView> {
         ..barcodeUID = originBarcodeUID!
         ..parentBarcodeUID = parentBarcodeUID;
 
-      isar!.writeTxnSync((isar) {
-        int gridID = isar.catalogedGrids.putSync(catalogedGrid);
+      isar!.writeTxnSync(() {
+        int gridID = isar!.catalogedGrids.putSync(catalogedGrid);
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

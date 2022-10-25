@@ -48,7 +48,7 @@ class _ContainerViewState extends State<ContainerView> {
   late final ContainerType _containerType =
       isar!.containerTypes.getSync(_catalogedContainer.containerTypeID)!;
 
-  late Color containerColor = _containerType.containerColor;
+  late Color containerColor = _containerType.containerColor.color;
 
   late List<Photo> _photos = isar!.photos
       .filter()
@@ -129,8 +129,7 @@ class _ContainerViewState extends State<ContainerView> {
           ..tagTextID = tagTextID;
 
         //Write to isar.
-        isar!.writeTxnSync(
-            (isar) => isar.containerTags.putSync(newContainerTag));
+        isar!.writeTxnSync(() => isar!.containerTags.putSync(newContainerTag));
 
         _updateAssignedTags();
       },
@@ -142,10 +141,9 @@ class _ContainerViewState extends State<ContainerView> {
       label: 'name',
       initialValue: _catalogedContainer.name,
       onSubmitted: (value) {
-        isar!.writeTxnSync((isar) {
+        isar!.writeTxnSync(() {
           _catalogedContainer.name = value;
-          isar.catalogedContainers
-              .putSync(_catalogedContainer, replaceOnConflict: true);
+          isar!.catalogedContainers.putSync(_catalogedContainer);
         });
 
         setState(() {
@@ -162,10 +160,9 @@ class _ContainerViewState extends State<ContainerView> {
       label: 'Description',
       initialValue: _catalogedContainer.description,
       onSubmitted: (value) {
-        isar!.writeTxnSync((isar) {
+        isar!.writeTxnSync(() {
           _catalogedContainer.description = value;
-          isar.catalogedContainers
-              .putSync(_catalogedContainer, replaceOnConflict: true);
+          isar!.catalogedContainers.putSync(_catalogedContainer);
         });
 
         setState(() {
@@ -204,13 +201,13 @@ class _ContainerViewState extends State<ContainerView> {
             );
 
             if (selectedParent != null) {
-              isar!.writeTxnSync((isar) {
-                isar.containerRelationships
+              isar!.writeTxnSync(() {
+                isar!.containerRelationships
                     .filter()
                     .containerUIDMatches(_catalogedContainer.containerUID)
                     .deleteFirstSync();
 
-                isar.containerRelationships.putSync(ContainerRelationship()
+                isar!.containerRelationships.putSync(ContainerRelationship()
                   ..containerUID = _catalogedContainer.containerUID
                   ..parentUID = selectedParent.containerUID);
               });
@@ -277,7 +274,7 @@ class _ContainerViewState extends State<ContainerView> {
       ),
       onDeleted: () {
         isar!.writeTxnSync(
-            (isar) => isar.containerTags.deleteSync(containerTag.id));
+            () => isar!.containerTags.deleteSync(containerTag.id));
 
         _updateAssignedTags();
 

@@ -17,7 +17,7 @@ part 'ml_object.g.dart';
 @Collection()
 @Name("MLObject")
 class MLObject {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///PhotoID.
   @Name("photoID")

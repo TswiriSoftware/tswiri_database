@@ -38,7 +38,8 @@ class _NewContainerViewState extends State<NewContainerView> {
   late ContainerType selectedContainerType =
       widget.preferredContainerType ?? containerTypes[0];
 
-  late Color selectedContainerColor = selectedContainerType.containerColor;
+  late Color selectedContainerColor =
+      selectedContainerType.containerColor.color;
 
   //BarcodeUID.
   String? barcodeUID;
@@ -99,7 +100,7 @@ class _NewContainerViewState extends State<NewContainerView> {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     avatar: Icon(
-                      e.iconData,
+                      e.iconData.iconData,
                       size: 15,
                     ),
                     selectedColor:
@@ -116,7 +117,7 @@ class _NewContainerViewState extends State<NewContainerView> {
                     onSelected: (value) {
                       setState(() {
                         selectedContainerType = e;
-                        selectedContainerColor = e.containerColor;
+                        selectedContainerColor = e.containerColor.color;
                       });
                     },
                     tooltip: e.containerDescription,
@@ -466,7 +467,7 @@ class _NewContainerViewState extends State<NewContainerView> {
         ..barcodeUID = barcodeUID
         ..containerUID = containerUID;
 
-      isar!.writeTxnSync((isar) => isar.markers.putSync(marker));
+      isar!.writeTxnSync(() => isar!.markers.putSync(marker));
     }
 
     Navigator.of(context).pushReplacement(

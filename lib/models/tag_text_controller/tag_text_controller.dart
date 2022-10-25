@@ -33,7 +33,7 @@ class TagTextController {
           .textContains(enteredKeyword, caseSensitive: false)
           .and()
           .not()
-          .group((q) => q.repeat(
+          .group((q) => q.allOf(
               assignedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
           .findAllSync()
           .take(15)
@@ -42,7 +42,7 @@ class TagTextController {
       displayTags = isar!.tagTexts
           .filter()
           .not()
-          .group((q) => q.repeat(
+          .group((q) => q.allOf(
               assignedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
           .findAllSync()
           .take(15)

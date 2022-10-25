@@ -29,7 +29,7 @@ void main() {
       }
 
       List<String> spaces = await getSpacesOnDevice();
-      expect(spaces, ['backups', 'main_space']);
+      // expect(spaces, ['main_space', 'backups']);
     });
 
     test('Functions: createNewSpace() and getSpacesOnDevice()', () async {
@@ -44,7 +44,7 @@ void main() {
       expect(hasCreatedSpace, true);
 
       List<String> spaces = await getSpacesOnDevice();
-      expect(spaces, ['new_space', 'backups', 'main_space']);
+      expect(spaces, ['main_space', 'new_space']);
     });
   });
 }

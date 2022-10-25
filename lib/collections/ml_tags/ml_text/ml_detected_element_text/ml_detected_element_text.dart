@@ -16,7 +16,7 @@ part 'ml_detected_element_text.g.dart';
 @Name("MLDetectedElementText")
 class MLDetectedElementText {
   ///DetectedElementTextID.
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///DetectedText.
   @Name("detectedText")

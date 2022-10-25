@@ -159,7 +159,7 @@ class PhotoEditViewState extends State<PhotoEditView> {
                 _imageData.photoLabels.add(newPhotoLabel);
               });
 
-              isar!.writeTxn((isar) => isar.photoLabels.put(newPhotoLabel));
+              isar!.writeTxn(() => isar!.photoLabels.put(newPhotoLabel));
             } else if (isAddingObjectLabel) {
               //Create new Object Label.
               ObjectLabel newObjectLabel = ObjectLabel()
@@ -170,7 +170,7 @@ class PhotoEditViewState extends State<PhotoEditView> {
                 _imageData.objectLabels.add(newObjectLabel);
               });
 
-              isar!.writeTxn((isar) => isar.objectLabels.put(newObjectLabel));
+              isar!.writeTxn(() => isar!.objectLabels.put(newObjectLabel));
             }
           },
         ),
@@ -319,10 +319,10 @@ class PhotoEditViewState extends State<PhotoEditView> {
               photoLabel.userFeedback = true;
             });
             //Write to isar.
-            isar!.writeTxnSync((isar) {
-              MLPhotoLabel label = isar.mLPhotoLabels.getSync(photoLabel.id)!;
+            isar!.writeTxnSync(() {
+              MLPhotoLabel label = isar!.mLPhotoLabels.getSync(photoLabel.id)!;
               label.userFeedback = true;
-              isar.mLPhotoLabels.putSync(label, replaceOnConflict: true);
+              isar!.mLPhotoLabels.putSync(label);
             });
           },
           selected: false,
@@ -336,10 +336,10 @@ class PhotoEditViewState extends State<PhotoEditView> {
               photoLabel.userFeedback = false;
             });
             //Write to isar.
-            isar!.writeTxnSync((isar) {
-              MLPhotoLabel label = isar.mLPhotoLabels.getSync(photoLabel.id)!;
+            isar!.writeTxnSync(() {
+              MLPhotoLabel label = isar!.mLPhotoLabels.getSync(photoLabel.id)!;
               label.userFeedback = false;
-              isar.mLPhotoLabels.putSync(label, replaceOnConflict: true);
+              isar!.mLPhotoLabels.putSync(label);
             });
           },
           backgroundColor: Colors.green,
@@ -360,10 +360,10 @@ class PhotoEditViewState extends State<PhotoEditView> {
               photoLabel.userFeedback = null;
             });
             //Write to isar.
-            isar!.writeTxnSync((isar) {
-              MLPhotoLabel label = isar.mLPhotoLabels.getSync(photoLabel.id)!;
+            isar!.writeTxnSync(() {
+              MLPhotoLabel label = isar!.mLPhotoLabels.getSync(photoLabel.id)!;
               label.userFeedback = null;
-              isar.mLPhotoLabels.putSync(label, replaceOnConflict: true);
+              isar!.mLPhotoLabels.putSync(label);
             });
           },
           avatar: const Icon(Icons.close_sharp),
@@ -393,8 +393,8 @@ class PhotoEditViewState extends State<PhotoEditView> {
           _imageData.photoLabels.remove(photoLabel);
         });
         //Write to isar.
-        isar!.writeTxnSync((isar) {
-          isar.photoLabels.deleteSync(photoLabel.id);
+        isar!.writeTxnSync(() {
+          isar!.photoLabels.deleteSync(photoLabel.id);
         });
 
         ///Let the TagTextPredictor know this tag has been removed.

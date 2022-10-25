@@ -1,3 +1,4 @@
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
@@ -11,8 +12,8 @@ void createGrid(List<CatalogedContainer> containers) {
   int y = 0;
 
   isar!.writeTxnSync(
-    (isar) {
-      int gridUID = isar.catalogedGrids.putSync(
+    () {
+      int gridUID = isar!.catalogedGrids.putSync(
         CatalogedGrid()
           ..barcodeUID = shelfContainer.barcodeUID!
           ..parentBarcodeUID = null,
@@ -20,21 +21,22 @@ void createGrid(List<CatalogedContainer> containers) {
 
       for (var element in containers) {
         if (element.containerTypeID == 1) {
-          isar.catalogedCoordinates.putSync(
+          isar!.catalogedCoordinates.putSync(
             CatalogedCoordinate()
               ..barcodeUID = element.barcodeUID!
-              ..coordinate = vm.Vector3(0, 0, 0)
+              ..coordinate = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
               ..gridUID = gridUID
-              ..rotation = vm.Vector3(0, 0, 0)
+              ..rotation = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
               ..timestamp = timestamp + x,
           );
         } else {
-          isar.catalogedCoordinates.putSync(
+          isar!.catalogedCoordinates.putSync(
             CatalogedCoordinate()
               ..barcodeUID = element.barcodeUID!
-              ..coordinate = vm.Vector3(x * 100, y * 100, 0)
+              ..coordinate =
+                  EmbeddedVector3.fromVector(vm.Vector3(x * 100, y * 100, 0))
               ..gridUID = gridUID
-              ..rotation = vm.Vector3(0, 0, 0)
+              ..rotation = EmbeddedVector3.fromVector(vm.Vector3(0, 0, 0))
               ..timestamp = timestamp + x,
           );
 

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:tswiri_database/export.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,6 +25,8 @@ Future<Directory> initiateSpaceDirectory() async {
   } else {
     spaceDirectory = Directory(storagePath);
   }
+
+  log(spaceDirectory!.path.toString());
 
   return spaceDirectory!;
 }

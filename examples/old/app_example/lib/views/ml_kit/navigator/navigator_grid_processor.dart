@@ -2,6 +2,7 @@
 
 import 'dart:isolate';
 
+import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/data/data_processing_isolates.dart';
 import 'package:tswiri_database/mobile_database.dart';
@@ -35,10 +36,10 @@ void gridProcessor(List init) {
   //5. Get all markers.
   List<Marker> markers = isar.markers.where().findAllSync();
 
-  //6. Get all fixed coordinates.
+  //6. Get all fixed coordinates. //TODO: allOf anyOF ?
   List<CatalogedCoordinate> currentFixedCoordinates = isar.catalogedCoordinates
       .filter()
-      .repeat(markers,
+      .allOf(markers,
           (q, Marker element) => q.barcodeUIDMatches(element.barcodeUID))
       .findAllSync();
 
@@ -98,15 +99,15 @@ void gridProcessor(List init) {
 
         //ii. Calculate the new coordinate.
         vm.Vector3 coordinate = vm.Vector3(
-          fixedCoordinate.coordinate!.x + interBarcodeVector.vector3.x,
-          fixedCoordinate.coordinate!.y + interBarcodeVector.vector3.y,
-          fixedCoordinate.coordinate!.z + interBarcodeVector.vector3.z,
+          fixedCoordinate.coordinate!.vector.x + interBarcodeVector.vector3.x,
+          fixedCoordinate.coordinate!.vector.y + interBarcodeVector.vector3.y,
+          fixedCoordinate.coordinate!.vector.z + interBarcodeVector.vector3.z,
         );
 
         //iii. Create the new CatalogedCoordinate.
         newFixedCoordinate = CatalogedCoordinate()
           ..barcodeUID = interBarcodeVector.endBarcodeUID
-          ..coordinate = coordinate
+          ..coordinate = EmbeddedVector3.fromVector(coordinate)
           ..gridUID = fixedCoordinate.gridUID
           ..rotation = null
           ..timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -129,14 +130,14 @@ void gridProcessor(List init) {
         );
         //ii. Calculate the new coordinate.
         vm.Vector3 coordinate = vm.Vector3(
-          fixedCoordinate.coordinate!.x - interBarcodeVector.vector3.x,
-          fixedCoordinate.coordinate!.y - interBarcodeVector.vector3.y,
-          fixedCoordinate.coordinate!.z - interBarcodeVector.vector3.z,
+          fixedCoordinate.coordinate!.vector.x - interBarcodeVector.vector3.x,
+          fixedCoordinate.coordinate!.vector.y - interBarcodeVector.vector3.y,
+          fixedCoordinate.coordinate!.vector.z - interBarcodeVector.vector3.z,
         );
         //iii. Create the new CatalogedCoordinate.
         newFixedCoordinate = CatalogedCoordinate()
           ..barcodeUID = interBarcodeVector.startBarcodeUID
-          ..coordinate = coordinate
+          ..coordinate = EmbeddedVector3.fromVector(coordinate)
           ..gridUID = fixedCoordinate.gridUID
           ..rotation = null
           ..timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -173,7 +174,7 @@ void gridProcessor(List init) {
             if (moved) {
               List message = newFixedCoordinate.toMessage();
               sendPort.send(message);
-              isar.writeTxnSync((isar) {
+              isar.writeTxnSync(() {
                 isar.catalogedCoordinates
                     .filter()
                     .barcodeUIDMatches(newFixedCoordinate!.barcodeUID)
@@ -192,7 +193,7 @@ void gridProcessor(List init) {
               //it is NOT a marker.
               List message = newFixedCoordinate.toMessage();
               sendPort.send(message);
-              isar.writeTxnSync((isar) {
+              isar.writeTxnSync(() {
                 isar.catalogedCoordinates
                     .filter()
                     .barcodeUIDMatches(newFixedCoordinate!.barcodeUID)

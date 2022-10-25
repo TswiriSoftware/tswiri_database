@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:isar/isar.dart';
-import 'package:tswiri_database/converters/corner_point_converter.dart';
+import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
 part 'ml_text_element.g.dart';
 
 ///TODO: finish commenting.
@@ -18,7 +18,7 @@ part 'ml_text_element.g.dart';
 @Collection()
 @Name("MLTextElement")
 class MLTextElement {
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   ///PhotoID.
   @Name("photoID")
@@ -38,8 +38,7 @@ class MLTextElement {
 
   ///CornerPoints.
   @Name("cornerPoints")
-  @CornerPointConverter()
-  late List<Point<int>> cornerPoints;
+  late CornerPoints cornerPoints;
 
   ///UserFeedback.
   @Name("userFeedback")
@@ -50,12 +49,6 @@ class MLTextElement {
     return 'ID: $id, LineID: $lineID, LineIndex: $lineIndex, DetectedElementTextID: $detectedElementTextID, CornerPoints: $cornerPoints';
   }
 
-  Rect getBoundingBox() {
-    return Rect.fromPoints(
-        Offset(cornerPoints[0].x.toDouble(), cornerPoints[0].y.toDouble()),
-        Offset(cornerPoints[2].x.toDouble(), cornerPoints[2].y.toDouble()));
-  }
-
   ///To json.
   Map toJson() => {
         'id': id,
@@ -64,21 +57,13 @@ class MLTextElement {
         'lineIndex': lineIndex,
         'detectedElementTextID': detectedElementTextID,
         'userFeedback': userFeedback,
-        'cornerPoints': [
-          cornerPoints[0].x,
-          cornerPoints[0].y,
-          cornerPoints[1].x,
-          cornerPoints[1].y,
-          cornerPoints[2].x,
-          cornerPoints[2].y,
-          cornerPoints[3].x,
-          cornerPoints[3].y,
-        ],
+        'cornerPoints': cornerPoints.data,
       };
 
   ///From json.
   MLTextElement fromJson(Map<String, dynamic> json) {
     List<int> cp = (json['cornerPoints'] as List<dynamic>).cast<int>();
+
     return MLTextElement()
       ..id = json['id']
       ..photoID = json['photoID']
@@ -86,11 +71,6 @@ class MLTextElement {
       ..lineIndex = json['lineIndex']
       ..detectedElementTextID = json['detectedElementTextID']
       ..userFeedback = json['userFeedback']
-      ..cornerPoints = [
-        Point(cp[0], cp[1]),
-        Point(cp[2], cp[3]),
-        Point(cp[4], cp[5]),
-        Point(cp[6], cp[7]),
-      ];
+      ..cornerPoints = CornerPoints.fromMessage(cp);
   }
 }

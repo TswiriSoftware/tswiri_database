@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tswiri_database/export.dart';
 
 //TODO: finish comments.
@@ -12,9 +11,9 @@ int getTagTextID(String text) {
       ?.id;
 
   if (tagTextID == null) {
-    isar!.writeTxnSync((isar) {
+    isar!.writeTxnSync(() {
       tagTextID =
-          isar.tagTexts.putSync(TagText()..text = text.toLowerCase().trim());
+          isar!.tagTexts.putSync(TagText()..text = text.toLowerCase().trim());
     });
   }
   return tagTextID!;
@@ -30,8 +29,8 @@ int getMLDetectedLabelTextID(String text) {
       ?.id;
 
   if (mlLabelTextID == null) {
-    isar!.writeTxnSync((isar) {
-      mlLabelTextID = isar.mLDetectedLabelTexts.putSync(MLDetectedLabelText()
+    isar!.writeTxnSync(() {
+      mlLabelTextID = isar!.mLDetectedLabelTexts.putSync(MLDetectedLabelText()
         ..detectedLabelText = text.toLowerCase().trim()
         ..hidden = false);
     });
@@ -56,9 +55,9 @@ int getMLDetectedElementTextID(String text) {
       ?.id;
 
   if (detectedElementText == null) {
-    isar!.writeTxnSync((isar) {
+    isar!.writeTxnSync(() {
       detectedElementText =
-          isar.mLDetectedElementTexts.putSync(MLDetectedElementText()
+          isar!.mLDetectedElementTexts.putSync(MLDetectedElementText()
             ..detectedText = text.toLowerCase().trim()
             ..tagTextID = null);
     });
@@ -74,7 +73,7 @@ String getMLDetectedElementText(int detectedLabelTextID) {
 }
 
 IconData getContainerTypeIcon(int containerTypeID) {
-  return isar!.containerTypes.getSync(containerTypeID)!.iconData;
+  return isar!.containerTypes.getSync(containerTypeID)!.iconData.iconData!;
 }
 
 bool canDeleteMarker(Marker marker) {
