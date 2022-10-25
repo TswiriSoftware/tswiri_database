@@ -25,6 +25,7 @@ Future<void> restoreBackupIsolate(List init) async {
   );
 }
 
+@pragma('vm:entry-point')
 Future<void> restoreBackupZipFile({
   required String spacePath,
   required String temporaryDirectoryPath,
@@ -57,24 +58,58 @@ Future<void> restoreBackupZipFile({
     File mdbxDAT = File('${destinationDir.path}/isar/mdbx.dat');
     File mdbxLCK = File('${destinationDir.path}/isar/mdbx.lck');
 
-    //Check if mdbx.dat and mdbx.lck exists.
+    File defaultIsar = File('${destinationDir.path}/isar/default.isar');
+    File defaultIsarLck = File('${destinationDir.path}/isar/default.isar.lock');
+
+    Directory isarCoreDirectory = Directory('$spacePath/isar');
+
     if (mdbxDAT.existsSync() && mdbxLCK.existsSync()) {
       eventCallback([
         'progress',
         'Restoring database',
       ]);
 
-      Directory isarCoreDirectory = Directory('$spacePath/isar');
-      Directory photoDirectory = Directory('$spacePath/photos');
-      Directory thumbnailDirectory = Directory('$spacePath/thumbnails');
-
       //Delete mdbx.dat and mdbx.lck.
       File('${isarCoreDirectory.path}/mdbx.dat').deleteSync();
       File('${isarCoreDirectory.path}/mdbx.lck').deleteSync();
 
       //Restore mdbx.dat and mdbx.lck.
-      mdbxDAT.copySync('${isarCoreDirectory.path}/mdbx.dat');
-      mdbxLCK.copySync('${isarCoreDirectory.path}/mdbx.lck');
+      mdbxDAT.copySync('${isarCoreDirectory.path}/default.isar');
+      mdbxLCK.copySync('${isarCoreDirectory.path}/default.isar.lock');
+    } else if (defaultIsar.existsSync() && defaultIsarLck.existsSync()) {
+      eventCallback([
+        'progress',
+        'Restoring database',
+      ]);
+      File('${isarCoreDirectory.path}/default.isar').deleteSync();
+      File('${isarCoreDirectory.path}/default.isar.lock').deleteSync();
+
+      //Restore mdbx.dat and mdbx.lck.
+      mdbxDAT.copySync('${isarCoreDirectory.path}/default.isar');
+      mdbxLCK.copySync('${isarCoreDirectory.path}/default.isar.lock');
+    }
+
+    //Unzipped Photos.
+    Directory unzippedPhotos = Directory('${destinationDir.path}/photos');
+
+    //Check if mdbx.dat and mdbx.lck exists.
+    if (unzippedPhotos.existsSync()) {
+      // eventCallback([
+      //   'progress',
+      //   'Restoring database',
+      // ]);
+
+      // Directory isarCoreDirectory = Directory('$spacePath/isar');
+      Directory photoDirectory = Directory('$spacePath/photos');
+      Directory thumbnailDirectory = Directory('$spacePath/thumbnails');
+
+      // //Delete mdbx.dat and mdbx.lck.
+      // File('${isarCoreDirectory.path}/mdbx.dat').deleteSync();
+      // File('${isarCoreDirectory.path}/mdbx.lck').deleteSync();
+
+      // //Restore mdbx.dat and mdbx.lck.
+      // mdbxDAT.copySync('${isarCoreDirectory.path}/mdbx.dat');
+      // mdbxLCK.copySync('${isarCoreDirectory.path}/mdbx.lck');
 
       //Delete all photo files.
       photoDirectory.deleteSync(recursive: true);

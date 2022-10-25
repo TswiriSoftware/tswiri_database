@@ -1,11 +1,3 @@
-import 'package:dekstop/views/barcodes/barcodes_view.dart';
-import 'package:dekstop/views/containers/containers_view.dart';
-import 'package:dekstop/views/devices/devices_view.dart';
-import 'package:dekstop/views/gallery/gallery_view.dart';
-import 'package:dekstop/views/grids/grids_view.dart';
-import 'package:dekstop/views/qr_code/qr_code_view.dart';
-import 'package:dekstop/views/search/search_view.dart';
-import 'package:dekstop/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tswiri_database/desktop_database.dart';
@@ -13,11 +5,6 @@ import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/isar/create_functions.dart';
 import 'package:tswiri_database/models/search/shopping_cart.dart';
 import 'package:tswiri_database/models/settings/desktop_settings.dart';
-import 'package:tswiri_network/scripts/get_device_ip.dart';
-import 'package:tswiri_network/server/shelf/shelf_manager.dart';
-import 'package:tswiri_network/server/websocket/ws_manager.dart';
-import 'package:tswiri_widgets/colors/colors.dart';
-import 'package:tswiri_widgets/theme/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
