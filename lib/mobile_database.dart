@@ -89,7 +89,7 @@ Isar initiateMobileIsar({String? directory, bool? inspector}) {
       //Tag Text.
       TagTextSchema,
     ],
-    directory: directory ?? spaceDirectory!.path,
+    directory: directory ?? isarDirectory!.path,
     inspector: inspector ?? true,
   );
 

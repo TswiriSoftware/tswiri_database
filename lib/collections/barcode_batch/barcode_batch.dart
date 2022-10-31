@@ -38,7 +38,7 @@ class BarcodeBatch {
 
   @override
   String toString() {
-    return '\ntimestamp: $timestamp, h: $height, w: $width';
+    return '\ntimestamp: $timestamp, h: $height, w: $width, rs: $rangeStart, re: $rangeEnd';
   }
 
   Map<String, dynamic> toJson() => {

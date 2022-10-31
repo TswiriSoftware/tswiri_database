@@ -49,6 +49,24 @@ Future<Directory> initiatePhotoStorage() async {
   return photoDirectory!;
 }
 
+///Sets the isarDirectory.
+///This is the directory where photo's from the isarDatabase is stored.
+Future<Directory> initiateIsarStorage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  //Get the latest storage path used.
+  String isarStoragePath = '${prefs.getString(isarDirectoryPref)!}/isar';
+
+  //Create photo directory if it doesnt exist.
+  if (!await Directory(isarStoragePath).exists()) {
+    isarDirectory = await Directory(isarStoragePath).create();
+  } else {
+    isarDirectory = Directory(isarStoragePath);
+  }
+
+  return isarDirectory!;
+}
+
 ///Sets the appPhotoDirectory.
 ///This is the directory where photo's from the isarDatabase is stored.
 Future<Directory> initiateThumnailStorage() async {
@@ -77,13 +95,15 @@ Future<void> swapSpace(Directory directory) async {
 
   //Update the isarDirectory.
   spaceDirectory = directory;
+  isarDirectory = Directory('${directory.path}/isar');
   photoDirectory = Directory('${directory.path}/photos');
   thumbnailDirectory = Directory('${directory.path}/thumbnails');
+
   //Wait a couple millis.
-  await Future.delayed(const Duration(milliseconds: 200));
+  await Future.delayed(const Duration(milliseconds: 250));
 
   //Initiate the isar connection again
-  isar = initiateMobileIsar(directory: spaceDirectory!.path, inspector: false);
+  isar = initiateMobileIsar(directory: isarDirectory!.path, inspector: true);
 }
 
 ///Create a new swap space.
@@ -118,7 +138,8 @@ Future<List<Directory>> getSpacesDirectories() async {
   List<Directory> existingSpaces = [];
   Directory directory = (await getApplicationSupportDirectory());
   for (var element in directory.listSync()) {
-    if (element is Directory) {
+    if (element is Directory &&
+        element.path.split('/').last.split('_').last == 'space') {
       existingSpaces.add(element);
     }
   }

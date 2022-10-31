@@ -7,6 +7,7 @@ import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:tswiri_database/functions/general/coordinate_translator.dart';
+import 'package:tswiri_database/functions/isar/get_functions.dart';
 import 'package:tswiri_database/models/image_data/image_data.dart';
 
 ///The painter used by ml_label_paint.
@@ -26,6 +27,8 @@ class MLLabePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Size absoluteSize = imageData.size;
     InputImageRotation rotation = imageData.rotation;
+
+    log(imageData.mlTextBlocks.toString());
 
     final Paint objectPaint = Paint()
       ..style = PaintingStyle.stroke
@@ -127,14 +130,10 @@ class MLLabePainter extends CustomPainter {
                 textLines.map((e) => e.id).toList().contains(element.lineID))
             .toList();
 
-        // log(textElements.toString());
-
-        log(imageData.mLDetectedElementTexts.length.toString());
+        //   // log(textElements.toString());
 
         List<String> blockText = textElements
-            .map((e) => imageData.mLDetectedElementTexts
-                .firstWhere((element) => element.id == e.detectedElementTextID)
-                .detectedText)
+            .map((e) => getMLDetectedElementText(e.detectedElementTextID))
             .toList();
 
         builder.addText(

@@ -17,17 +17,6 @@ void main() {
     File photoFile = File('photos/16089732478234.jpg');
     String photoName = '16089732478234';
 
-    test('Function: checkIfFileIsZip()', () {
-      expect(
-        checkIfFileIsZip(File('test/my_file.zip')),
-        true,
-      );
-      expect(
-        checkIfFileIsZip(File('test/my_file.z')),
-        false,
-      );
-    });
-
     test('Function: getUnZippedDirectoryPath()', () {
       expect(
         getUnzippedDirectory(

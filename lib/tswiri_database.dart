@@ -7,9 +7,8 @@ import 'package:isar/isar.dart';
 Directory? spaceDirectory;
 String isarDirectoryPref = 'isarDirectory';
 
-///Photo directory
+Directory? isarDirectory;
 Directory? photoDirectory;
-
 Directory? thumbnailDirectory;
 
 ///Isar.

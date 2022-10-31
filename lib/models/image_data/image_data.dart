@@ -57,7 +57,7 @@ class ImageData {
     if (mlDetectedLabelTextIDs.isNotEmpty) {
       mlDetectedLabelTexts = isar!.mLDetectedLabelTexts
           .filter()
-          .allOf(
+          .anyOf(
               mlDetectedLabelTextIDs, (q, int element) => q.idEqualTo(element))
           .findAllSync();
     }
@@ -292,7 +292,7 @@ class ImageData {
       //5. Find all the mlTextLines.
       mlTextLines = isar!.mLTextLines
           .filter()
-          .allOf(mlTextElements,
+          .anyOf(mlTextElements,
               (q, MLTextElement element) => q.idEqualTo(element.lineID))
           .findAllSync();
 
@@ -302,7 +302,7 @@ class ImageData {
         //6. Find all the mlTextBlocks.
         mlTextBlocks = isar!.mLTextBlocks
             .filter()
-            .allOf(mlTextLines,
+            .anyOf(mlTextLines,
                 (q, MLTextLine element) => q.idEqualTo(element.blockID))
             .findAllSync();
 

@@ -1,7 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -85,6 +82,8 @@ Future<bool?> restoreBackupFile({
     [
       _uiPort.sendPort,
       spaceDirectory!.path,
+      isarDirectory!.path,
+      photoDirectory!.path,
       temporaryDirectory.path,
       isarVersion.toString(),
       backupFile.path,
@@ -125,7 +124,7 @@ void killIsolate(FlutterIsolate? isolate) {
 ///Opens isar if it is closed.
 void openIsarIfClosed() {
   if (!isar!.isOpen) {
-    isar = initiateMobileIsar(inspector: true, directory: spaceDirectory!.path);
+    isar = initiateMobileIsar(inspector: true, directory: isarDirectory!.path);
   }
 }
 
