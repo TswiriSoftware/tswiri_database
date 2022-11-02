@@ -146,13 +146,9 @@ class ImageData {
     String photoFilePath = '${photoDirectory!.path}/$photoName.$extention';
     //4. Create image thumbnail path.
     String photoThumbnailPath =
-        '${photoDirectory!.path}/${photoName}_thumbnail.$extention';
+        '${thumbnailDirectory!.path}/${photoName}_thumbnail.$extention';
     //5. Load Image in memory.
     img.Image referenceImage = img.decodeJpg(photoFile.readAsBytesSync())!;
-
-    //TODO: resize image to 720p
-    // log(referenceImage.width.toString(), name: 'Image Width');
-
     //6. Create Thumbnail.
     img.Image thumbnailImage = img.copyResize(referenceImage, width: 120);
     //7. Save the Thumbnail.
@@ -160,7 +156,8 @@ class ImageData {
     //8. Save the Image.
     photoFile.copySync(photoFilePath);
 
-    // log('PhotoFilePath: $photoFilePath');
+    log(photoFilePath.toString(), name: 'Photo Path');
+    log(photoThumbnailPath.toString(), name: 'thumbnail Path');
 
     //9. Create Photo Entry
     Photo newPhoto = Photo()

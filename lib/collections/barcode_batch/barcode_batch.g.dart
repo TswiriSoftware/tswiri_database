@@ -32,23 +32,13 @@ const BarcodeBatchSchema = CollectionSchema(
       name: r'imported',
       type: IsarType.bool,
     ),
-    r'rangeEnd': PropertySchema(
-      id: 3,
-      name: r'rangeEnd',
-      type: IsarType.long,
-    ),
-    r'rangeStart': PropertySchema(
-      id: 4,
-      name: r'rangeStart',
-      type: IsarType.long,
-    ),
     r'timestamp': PropertySchema(
-      id: 5,
+      id: 3,
       name: r'timestamp',
       type: IsarType.long,
     ),
     r'width': PropertySchema(
-      id: 6,
+      id: 4,
       name: r'width',
       type: IsarType.double,
     )
@@ -85,10 +75,8 @@ void _barcodeBatchSerialize(
   writer.writeLong(offsets[0], object.hashCode);
   writer.writeDouble(offsets[1], object.height);
   writer.writeBool(offsets[2], object.imported);
-  writer.writeLong(offsets[3], object.rangeEnd);
-  writer.writeLong(offsets[4], object.rangeStart);
-  writer.writeLong(offsets[5], object.timestamp);
-  writer.writeDouble(offsets[6], object.width);
+  writer.writeLong(offsets[3], object.timestamp);
+  writer.writeDouble(offsets[4], object.width);
 }
 
 BarcodeBatch _barcodeBatchDeserialize(
@@ -101,10 +89,8 @@ BarcodeBatch _barcodeBatchDeserialize(
   object.height = reader.readDouble(offsets[1]);
   object.id = id;
   object.imported = reader.readBool(offsets[2]);
-  object.rangeEnd = reader.readLong(offsets[3]);
-  object.rangeStart = reader.readLong(offsets[4]);
-  object.timestamp = reader.readLong(offsets[5]);
-  object.width = reader.readDouble(offsets[6]);
+  object.timestamp = reader.readLong(offsets[3]);
+  object.width = reader.readDouble(offsets[4]);
   return object;
 }
 
@@ -124,10 +110,6 @@ P _barcodeBatchDeserializeProp<P>(
     case 3:
       return (reader.readLong(offset)) as P;
     case 4:
-      return (reader.readLong(offset)) as P;
-    case 5:
-      return (reader.readLong(offset)) as P;
-    case 6:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -412,118 +394,6 @@ extension BarcodeBatchQueryFilter
   }
 
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeEndEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'rangeEnd',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeEndGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'rangeEnd',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeEndLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'rangeEnd',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeEndBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'rangeEnd',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeStartEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'rangeStart',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeStartGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'rangeStart',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeStartLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'rangeStart',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      rangeStartBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'rangeStart',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
       timestampEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -687,31 +557,6 @@ extension BarcodeBatchQuerySortBy
     });
   }
 
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByRangeEnd() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeEnd', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByRangeEndDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeEnd', Sort.desc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByRangeStart() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeStart', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy>
-      sortByRangeStartDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeStart', Sort.desc);
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByTimestamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'timestamp', Sort.asc);
@@ -787,31 +632,6 @@ extension BarcodeBatchQuerySortThenBy
     });
   }
 
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByRangeEnd() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeEnd', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByRangeEndDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeEnd', Sort.desc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByRangeStart() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeStart', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy>
-      thenByRangeStartDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rangeStart', Sort.desc);
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByTimestamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'timestamp', Sort.asc);
@@ -857,18 +677,6 @@ extension BarcodeBatchQueryWhereDistinct
     });
   }
 
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> distinctByRangeEnd() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'rangeEnd');
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> distinctByRangeStart() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'rangeStart');
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> distinctByTimestamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'timestamp');
@@ -905,18 +713,6 @@ extension BarcodeBatchQueryProperty
   QueryBuilder<BarcodeBatch, bool, QQueryOperations> importedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'imported');
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, int, QQueryOperations> rangeEndProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'rangeEnd');
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, int, QQueryOperations> rangeStartProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'rangeStart');
     });
   }
 

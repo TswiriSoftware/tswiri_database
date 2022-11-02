@@ -18,8 +18,6 @@ void main() {
         ..height = 20
         ..width = 20
         ..imported = false
-        ..rangeEnd = 10
-        ..rangeStart = 1
         ..timestamp = 9999;
 
       String json = jsonEncode(barcodeBatch);

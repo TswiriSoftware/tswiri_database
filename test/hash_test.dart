@@ -19,16 +19,12 @@ void main() {
           ..height = 20
           ..width = 20
           ..imported = false
-          ..rangeEnd = 10
-          ..rangeStart = 1
           ..timestamp = 9999,
         BarcodeBatch()
           ..id = 2
           ..height = 25
           ..width = 25
           ..imported = true
-          ..rangeEnd = 15
-          ..rangeStart = 12
           ..timestamp = 999999,
       ];
 

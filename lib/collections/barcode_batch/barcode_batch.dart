@@ -24,21 +24,13 @@ class BarcodeBatch {
   @Name("height")
   late double height;
 
-  ///Barcode range start.
-  @Name("rangeStart")
-  late int rangeStart;
-
-  ///Barcode range end.
-  @Name("rangeEnd")
-  late int rangeEnd;
-
   ///Barcode Size.
   @Name("imported")
   late bool imported;
 
   @override
   String toString() {
-    return '\ntimestamp: $timestamp, h: $height, w: $width, rs: $rangeStart, re: $rangeEnd';
+    return '\ntimestamp: $timestamp, h: $height, w: $width';
   }
 
   Map<String, dynamic> toJson() => {
@@ -46,8 +38,6 @@ class BarcodeBatch {
         'timestamp': timestamp,
         'width': width,
         'height': height,
-        'rangeStart': rangeStart,
-        'rangeEnd': rangeEnd,
         'imported': imported,
       };
 
@@ -57,8 +47,6 @@ class BarcodeBatch {
       ..timestamp = json['timestamp'] as int
       ..width = json['width'] as double
       ..height = json['height'] as double
-      ..rangeStart = json['rangeStart'] as int
-      ..rangeEnd = json['rangeEnd'] as int
       ..imported = json['imported'] as bool;
   }
 

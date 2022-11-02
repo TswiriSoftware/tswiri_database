@@ -15,8 +15,6 @@ List<CatalogedBarcode> createBarcodeBatch() {
     int batchID = isar!.barcodeBatchs.putSync(
       BarcodeBatch()
         ..imported = false
-        ..rangeEnd = rangeEnd
-        ..rangeStart = rangeStart
         ..height = size
         ..width = size
         ..timestamp = timestamp,

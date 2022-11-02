@@ -31,10 +31,8 @@ class TagTextSearch extends StatefulWidget {
 class TagTextSearchState extends State<TagTextSearch> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-
-  late List<int> tagTextIDs = [];
-
   late List<int> excludedTags = widget.excludedTags;
+  List<int> tagTextIDs = [];
 
   @override
   void initState() {
@@ -84,6 +82,12 @@ class TagTextSearchState extends State<TagTextSearch> {
                       }
                       _filterTags();
                     },
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 0,
+                        horizontal: 10,
+                      ),
+                    ),
                   ),
                 ),
                 _controller.text.isEmpty ? _cancelButton() : _submitButton(),
@@ -133,7 +137,6 @@ class TagTextSearchState extends State<TagTextSearch> {
   Widget _tagChip(int tagTextID) {
     return ActionChip(
       label: Text(isar!.tagTexts.getSync(tagTextID)!.text),
-      // backgroundColor: sunbirdOrange,
       onPressed: () {
         widget.onTagAdd(tagTextID);
         setState(() {
@@ -144,6 +147,7 @@ class TagTextSearchState extends State<TagTextSearch> {
     );
   }
 
+  //Filter the displaytags by the enteredKeyWord
   void _filterTags({String? enteredKeyWord}) {
     if (enteredKeyWord != null && enteredKeyWord.isNotEmpty) {
       setState(() {
@@ -152,7 +156,7 @@ class TagTextSearchState extends State<TagTextSearch> {
             .textContains(enteredKeyWord, caseSensitive: false)
             .and()
             .not()
-            .group((q) => q.allOf(
+            .group((q) => q.anyOf(
                 excludedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
             .findAllSync()
             .take(15)
@@ -164,7 +168,7 @@ class TagTextSearchState extends State<TagTextSearch> {
         tagTextIDs = isar!.tagTexts
             .filter()
             .not()
-            .group((q) => q.allOf(
+            .group((q) => q.anyOf(
                 excludedTags, (q, int tagTextID) => q.idEqualTo(tagTextID)))
             .findAllSync()
             .take(15)
