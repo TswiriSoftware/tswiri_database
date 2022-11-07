@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tswiri_database/models/search/search_result_models.dart';
-import 'package:tswiri_database/models/search/shopping_cart.dart';
+import 'package:tswiri_database/models/find/find_result_models.dart';
+import 'package:tswiri_database/models/find/shopping_cart.dart';
 import 'package:tswiri_database/widgets/search/text_painter.dart';
 import 'dart:ui' as ui;
 import 'image_painter.dart';
@@ -13,36 +13,34 @@ class NameResultCard extends StatelessWidget {
   const NameResultCard({
     Key? key,
     required this.nameResult,
-    required this.backgroundColor,
-    required this.chipColor,
+    // required this.backgroundColor,
+    // required this.chipColor,
+    this.bottomRightButton,
   }) : super(key: key);
   final NameResult nameResult;
-  final Color chipColor;
-  final Color backgroundColor;
+  // final Color chipColor;
+  // final Color backgroundColor;
+  final Widget? bottomRightButton;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
           Chip(
-            backgroundColor: chipColor,
-            shape: StadiumBorder(
-              side: BorderSide(
-                color: chipColor,
-              ),
-            ),
             label: Text(
               nameResult.name,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          ShoppingCartIconButton(
-            containerUID: nameResult.containerUID,
-            item: nameResult,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: nameResult.containerUID,
+          //   item: nameResult,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -54,9 +52,11 @@ class ShoppingCartIconButton extends StatelessWidget {
     Key? key,
     required this.containerUID,
     required this.item,
+    this.bottomRightButton,
   }) : super(key: key);
   final String containerUID;
   final Result item;
+  final Widget? bottomRightButton;
 
   @override
   Widget build(BuildContext context) {
@@ -102,31 +102,35 @@ class DescriptionResultCard extends StatelessWidget {
   const DescriptionResultCard({
     Key? key,
     required this.descriptionResult,
-    required this.backgroundColor,
-    required this.chipColor,
+    // required this.backgroundColor,
+    // required this.chipColor,
+    this.bottomRightButton,
   }) : super(key: key);
   final DescriptionResult descriptionResult;
-  final Color chipColor;
-  final Color backgroundColor;
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
           Chip(
-            backgroundColor: chipColor,
+            // backgroundColor: chipColor,
             label: Text(
               descriptionResult.description,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          ShoppingCartIconButton(
-            containerUID: descriptionResult.containerUID,
-            item: descriptionResult,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: descriptionResult.containerUID,
+          //   item: descriptionResult,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -138,31 +142,34 @@ class ContainerTagResultCard extends StatelessWidget {
   const ContainerTagResultCard({
     Key? key,
     required this.containerTagResult,
-    required this.backgroundColor,
-    required this.chipColor,
+    this.bottomRightButton,
+    // required this.backgroundColor,
+    // required this.chipColor,
   }) : super(key: key);
   final ContainerTagResult containerTagResult;
-
-  final Color chipColor;
-  final Color backgroundColor;
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
           Chip(
-            backgroundColor: chipColor,
+            // backgroundColor: chipColor,
             label: Text(
               containerTagResult.tag,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          ShoppingCartIconButton(
-            containerUID: containerTagResult.containerUID,
-            item: containerTagResult,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: containerTagResult.containerUID,
+          //   item: containerTagResult,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -174,16 +181,19 @@ class PhotoLabelResultCard extends StatelessWidget {
   const PhotoLabelResultCard({
     Key? key,
     required this.photoLabelResult,
-    required this.backgroundColor,
-    required this.chipColor,
+    this.bottomRightButton,
+    // required this.backgroundColor,
+    // required this.chipColor,
   }) : super(key: key);
   final PhotoLabelResult photoLabelResult;
-  final Color chipColor;
-  final Color backgroundColor;
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.expand,
@@ -200,7 +210,7 @@ class PhotoLabelResultCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chip(
-                backgroundColor: chipColor,
+                // backgroundColor: chipColor,
                 label: Text(
                   photoLabelResult.photoLabel,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -208,10 +218,11 @@ class PhotoLabelResultCard extends StatelessWidget {
               ),
             ],
           ),
-          ShoppingCartIconButton(
-            containerUID: photoLabelResult.containerUID,
-            item: photoLabelResult,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: photoLabelResult.containerUID,
+          //   item: photoLabelResult,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -223,16 +234,20 @@ class ObjectLabelResultCard extends StatelessWidget {
   const ObjectLabelResultCard({
     Key? key,
     required this.result,
-    required this.backgroundColor,
-    required this.chipColor,
+    this.bottomRightButton,
+    // required this.backgroundColor,
+    // required this.chipColor,
   }) : super(key: key);
   final ObjectLabelResult result;
-  final Color chipColor;
-  final Color backgroundColor;
+
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.expand,
@@ -269,7 +284,7 @@ class ObjectLabelResultCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chip(
-                backgroundColor: chipColor,
+                // backgroundColor: chipColor,
                 label: Text(
                   result.objectLabel,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -277,10 +292,11 @@ class ObjectLabelResultCard extends StatelessWidget {
               ),
             ],
           ),
-          ShoppingCartIconButton(
-            containerUID: result.containerUID,
-            item: result,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: result.containerUID,
+          //   item: result,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -292,16 +308,19 @@ class MLPhotoLabelResultCard extends StatelessWidget {
   const MLPhotoLabelResultCard({
     Key? key,
     required this.mlphotoLabelResult,
-    required this.backgroundColor,
-    required this.chipColor,
+    this.bottomRightButton,
+    // required this.backgroundColor,
+    // required this.chipColor,
   }) : super(key: key);
   final MLPhotoLabelResult mlphotoLabelResult;
-  final Color chipColor;
-  final Color backgroundColor;
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.expand,
@@ -318,7 +337,7 @@ class MLPhotoLabelResultCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chip(
-                backgroundColor: chipColor,
+                // backgroundColor: chipColor,
                 label: Text(
                   mlphotoLabelResult.mlPhotoLabel,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -326,10 +345,11 @@ class MLPhotoLabelResultCard extends StatelessWidget {
               ),
             ],
           ),
-          ShoppingCartIconButton(
-            containerUID: mlphotoLabelResult.containerUID,
-            item: mlphotoLabelResult,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: mlphotoLabelResult.containerUID,
+          //   item: mlphotoLabelResult,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -341,16 +361,19 @@ class MLObjectLabelResultCard extends StatelessWidget {
   const MLObjectLabelResultCard({
     Key? key,
     required this.result,
-    required this.backgroundColor,
-    required this.chipColor,
+    this.bottomRightButton,
+    // required this.backgroundColor,
+    // required this.chipColor,
   }) : super(key: key);
   final MLObjectLabelResult result;
-  final Color chipColor;
-  final Color backgroundColor;
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.expand,
@@ -387,7 +410,7 @@ class MLObjectLabelResultCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chip(
-                backgroundColor: chipColor,
+                // backgroundColor: chipColor,
                 label: Text(
                   result.mlObjectLabel,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -395,10 +418,11 @@ class MLObjectLabelResultCard extends StatelessWidget {
               ),
             ],
           ),
-          ShoppingCartIconButton(
-            containerUID: result.containerUID,
-            item: result,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: result.containerUID,
+          //   item: result,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -410,16 +434,19 @@ class MLTextElementResultCard extends StatelessWidget {
   const MLTextElementResultCard({
     Key? key,
     required this.result,
-    required this.backgroundColor,
-    required this.chipColor,
+    this.bottomRightButton,
+    // required this.backgroundColor,
+    // required this.chipColor,
   }) : super(key: key);
   final MLTextResult result;
-  final Color chipColor;
-  final Color backgroundColor;
+  final Widget? bottomRightButton;
+  // final Color chipColor;
+  // final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: backgroundColor,
+      elevation: 5,
+      // color: backgroundColor,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.expand,
@@ -456,7 +483,7 @@ class MLTextElementResultCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chip(
-                backgroundColor: chipColor,
+                // backgroundColor: chipColor,
                 label: Text(
                   result.mlText,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -464,10 +491,11 @@ class MLTextElementResultCard extends StatelessWidget {
               ),
             ],
           ),
-          ShoppingCartIconButton(
-            containerUID: result.containerUID,
-            item: result,
-          ),
+          // ShoppingCartIconButton(
+          //   containerUID: result.containerUID,
+          //   item: result,
+          // ),
+          bottomRightButton ?? const SizedBox.shrink(),
         ],
       ),
     );

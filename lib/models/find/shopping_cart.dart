@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:tswiri_database/export.dart';
-import 'search_result_models.dart';
+import 'find_result_models.dart';
 
 class ShoppingCart extends ChangeNotifier {
   ///The list of selected items.

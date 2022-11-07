@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:tswiri_database/collections/tag_text/tag_text.dart';
 import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/models/search/search_result_models.dart';
+import 'package:tswiri_database/models/find/find_result_models.dart';
 
 ///This class finds what the user is looking for :D.
 class Find extends ChangeNotifier {
+  Find() {
+    search();
+  }
+
+  String? lastSearch;
+
   ///A list of enabled filters
   List<String> enabledFilters = [
     'Tags',
@@ -61,6 +67,7 @@ class Find extends ChangeNotifier {
 
   search({String? enteredKeyword}) {
     if (enteredKeyword != null && enteredKeyword.isNotEmpty) {
+      lastSearch = enteredKeyword;
       //Normilize the enteredKeyword.
       String normilizedEnteredKeyword = enteredKeyword.trim().toLowerCase();
 
@@ -139,6 +146,7 @@ class Find extends ChangeNotifier {
       searchResults.clear();
 
       searchResults.addAll(nameSearch(''));
+      lastSearch = null;
     }
     notifyListeners();
   }
