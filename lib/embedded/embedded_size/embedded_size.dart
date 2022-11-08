@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:isar/isar.dart';
 part 'embedded_size.g.dart';
 
@@ -8,8 +6,8 @@ class EmbeddedSize {
   List<double>? data;
 
   EmbeddedSize({this.data});
-  EmbeddedSize.fromSize(Size size) {
-    data = [size.width, size.height];
+  EmbeddedSize.fromSize(List<double> size) {
+    data = size;
   }
 
   EmbeddedSize.fromMessage(List<double> message) {

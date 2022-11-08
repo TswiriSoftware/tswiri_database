@@ -8,8 +8,8 @@ class EmbeddedColor {
   String? data;
 
   EmbeddedColor({this.data});
-  EmbeddedColor.fromColor(Color color) {
-    data = color.value.toString();
+  EmbeddedColor.fromColor(String color) {
+    data = color;
   }
 
   // @Ignore()

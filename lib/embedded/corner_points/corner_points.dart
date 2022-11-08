@@ -1,6 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
-
 import 'package:isar/isar.dart';
 part 'corner_points.g.dart';
 

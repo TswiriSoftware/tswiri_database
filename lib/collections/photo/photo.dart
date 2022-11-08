@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'dart:ui';
 import 'package:isar/isar.dart';
 import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
-import 'package:image/image.dart' as img;
 import 'package:tswiri_database/tswiri_database.dart';
 part 'photo.g.dart';
 
@@ -65,11 +62,11 @@ class Photo {
     }
   }
 
-  Size getPhotoSize() {
-    File imageFile = File(getPhotoPath());
-    img.Image image = img.decodeImage(imageFile.readAsBytesSync())!;
-    return Size(image.width.toDouble(), image.height.toDouble());
-  }
+  // Size getPhotoSize() {
+  //   File imageFile = File(getPhotoPath());
+  //   img.Image image = img.decodeImage(imageFile.readAsBytesSync())!;
+  //   return Size(image.width.toDouble(), image.height.toDouble());
+  // }
 
   Map toJson() => {
         'id': id,
