@@ -72,7 +72,7 @@ iconData: ${iconData.data}
         'moveable': moveable,
         'enclosing': enclosing,
         'canContain': canContain,
-        'containerColor': containerColor.color.value,
+        'containerColor': containerColor.data,
       };
 
   //From json.

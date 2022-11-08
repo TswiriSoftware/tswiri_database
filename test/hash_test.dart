@@ -19,16 +19,12 @@ void main() {
           ..height = 20
           ..width = 20
           ..imported = false
-          ..rangeEnd = 10
-          ..rangeStart = 1
           ..timestamp = 9999,
         BarcodeBatch()
           ..id = 2
           ..height = 25
           ..width = 25
           ..imported = true
-          ..rangeEnd = 15
-          ..rangeStart = 12
           ..timestamp = 999999,
       ];
 
@@ -203,7 +199,8 @@ void main() {
           ..containerDescription = ''
           ..containerTypeName = ''
           ..enclosing = false
-          ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
+          ..iconData =
+              EmbeddedIconData.fromIconData(iconDataToString(Icons.dangerous))
           ..moveable = false
           ..preferredChildContainer = 1,
         ContainerType()
@@ -214,7 +211,8 @@ void main() {
           ..containerDescription = 'daszfw'
           ..containerTypeName = 'asfas'
           ..enclosing = true
-          ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
+          ..iconData =
+              EmbeddedIconData.fromIconData(iconDataToString(Icons.dangerous))
           ..moveable = true
           ..preferredChildContainer = 2,
       ];
@@ -529,4 +527,8 @@ void main() {
       );
     });
   });
+}
+
+List<String> iconDataToString(IconData iconData) {
+  return [iconData.codePoint.toString(), iconData.fontFamily.toString()];
 }

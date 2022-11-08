@@ -26,13 +26,13 @@ class CornerPoints {
     data = message;
   }
 
-  @Ignore()
-  Rect get getBoundingBox {
-    return Rect.fromPoints(
-      Offset(data![0].toDouble(), data![1].toDouble()),
-      Offset(data![4].toDouble(), data![5].toDouble()),
-    );
-  }
+  // @Ignore()
+  // Rect get getBoundingBox {
+  //   return Rect.fromPoints(
+  //     Offset(data![0].toDouble(), data![1].toDouble()),
+  //     Offset(data![4].toDouble(), data![5].toDouble()),
+  //   );
+  // }
 
   @Ignore()
   List<Point<int>> get cp {

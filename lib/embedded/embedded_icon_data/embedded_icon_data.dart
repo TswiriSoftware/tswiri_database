@@ -10,15 +10,15 @@ class EmbeddedIconData {
   List<String>? data;
 
   EmbeddedIconData({this.data});
-  EmbeddedIconData.fromIconData(IconData iconData) {
-    data = [iconData.codePoint.toString(), iconData.fontFamily.toString()];
+  EmbeddedIconData.fromIconData(List<String> iconData) {
+    data = iconData;
   }
 
-  @Ignore()
-  IconData? get iconData {
-    return IconData(
-      int.parse(data![0]),
-      fontFamily: data![1],
-    );
-  }
+  // @Ignore()
+  // IconData? get iconData {
+  //   return IconData(
+  //     int.parse(data![0]),
+  //     fontFamily: data![1],
+  //   );
+  // }
 }
