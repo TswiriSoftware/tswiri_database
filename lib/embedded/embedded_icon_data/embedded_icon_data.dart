@@ -14,11 +14,11 @@ class EmbeddedIconData {
     data = [iconData.codePoint.toString(), iconData.fontFamily.toString()];
   }
 
-  @Ignore()
-  IconData? get iconData {
-    return IconData(
-      int.parse(data![0]),
-      fontFamily: data![1],
-    );
-  }
+  // @Ignore()
+  // IconData? get iconData {
+  //   return IconData(
+  //     int.parse(data![0]),
+  //     fontFamily: data![1],
+  //   );
+  // }
 }

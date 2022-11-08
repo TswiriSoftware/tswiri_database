@@ -12,8 +12,8 @@ class EmbeddedColor {
     data = color.value.toString();
   }
 
-  @Ignore()
-  Color get color {
-    return Color(int.parse(data!)).withOpacity(1);
-  }
+  // @Ignore()
+  // Color get color {
+  //   return Color(int.parse(data!)).withOpacity(1);
+  // }
 }

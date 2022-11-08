@@ -16,8 +16,8 @@ class EmbeddedSize {
     data = [message[0], message[1]];
   }
 
-  @Ignore()
-  Size get size {
-    return Size(data![0], data![1]);
-  }
+  // @Ignore()
+  // Size get size {
+  //   return Size(data![0], data![1]);
+  // }
 }
