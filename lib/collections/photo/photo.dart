@@ -3,9 +3,8 @@ import 'dart:ui';
 import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
 import 'package:tswiri_database/export.dart';
 import 'package:image/image.dart' as img;
+import 'package:tswiri_database/tswiri_database.dart';
 part 'photo.g.dart';
-
-///TODO: finish commenting.
 
 ///Stores details about a container (Created by user).
 ///
