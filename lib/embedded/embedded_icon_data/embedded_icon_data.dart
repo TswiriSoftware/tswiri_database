@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
 part 'embedded_icon_data.g.dart';
 

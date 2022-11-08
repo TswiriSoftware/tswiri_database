@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:isar/isar.dart';
 part 'embedded_color.g.dart';
 
