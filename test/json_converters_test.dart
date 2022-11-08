@@ -10,6 +10,8 @@ import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dar
 import 'package:tswiri_database/export.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
+import 'hash_test.dart';
+
 void main() {
   group('Json: ', () {
     test('BarcodeBatch', () async {
@@ -193,7 +195,8 @@ void main() {
         ..containerDescription = ''
         ..containerTypeName = ''
         ..enclosing = false
-        ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
+        ..iconData =
+            EmbeddedIconData.fromIconData(iconDataToString(Icons.dangerous))
         ..moveable = false
         ..preferredChildContainer = 1;
       String json = jsonEncode(containerType.toJson());

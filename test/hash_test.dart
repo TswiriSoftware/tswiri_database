@@ -199,7 +199,8 @@ void main() {
           ..containerDescription = ''
           ..containerTypeName = ''
           ..enclosing = false
-          ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
+          ..iconData =
+              EmbeddedIconData.fromIconData(iconDataToString(Icons.dangerous))
           ..moveable = false
           ..preferredChildContainer = 1,
         ContainerType()
@@ -210,7 +211,8 @@ void main() {
           ..containerDescription = 'daszfw'
           ..containerTypeName = 'asfas'
           ..enclosing = true
-          ..iconData = EmbeddedIconData.fromIconData(Icons.dangerous)
+          ..iconData =
+              EmbeddedIconData.fromIconData(iconDataToString(Icons.dangerous))
           ..moveable = true
           ..preferredChildContainer = 2,
       ];
@@ -525,4 +527,8 @@ void main() {
       );
     });
   });
+}
+
+List<String> iconDataToString(IconData iconData) {
+  return [iconData.codePoint.toString(), iconData.fontFamily.toString()];
 }
