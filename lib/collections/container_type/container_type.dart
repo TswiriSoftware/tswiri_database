@@ -84,8 +84,7 @@ iconData: ${iconData.data}
       ..enclosing = json['enclosing']
       ..canContain = (json['canContain'] as List<dynamic>).cast<int>()
       ..moveable = json['moveable']
-      ..containerColor =
-          EmbeddedColor.fromColor(Color(json['containerColor'] as int));
+      ..containerColor = EmbeddedColor().data = json['containerColor'];
   }
 }
 
