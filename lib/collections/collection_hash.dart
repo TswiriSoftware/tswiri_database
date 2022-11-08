@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:tswiri_database/export.dart';
 
 ///Generate a hash of the BarcodeBatch Collection.

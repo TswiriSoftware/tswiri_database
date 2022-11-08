@@ -1,3 +1,4 @@
+export 'src/tswiri_database_base.dart';
 export 'package:isar/isar.dart';
 export 'collections/barcode_batch/barcode_batch.dart';
 export 'collections/camera_calibration/camera_calibration_entry.dart';
