@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:isar/isar.dart';
 import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
 part 'ml_text_element.g.dart';
