@@ -12,7 +12,7 @@ Directory? photoDirectory;
 Directory? thumbnailDirectory;
 
 ///Isar.
-Isar? isar;
+Isar? isar; //TODO , get rid of this. '_'
 
 
 
