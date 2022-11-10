@@ -1,16 +1,30 @@
 part of tswiri_database;
 
-///Returns a list of all cataloged barcodes. (sync)
-/// Optional.
-/// - Container Type ID.
+///default: Returns a list of all [CatalogedContainer].
 ///
-List<CatalogedContainer> getCatalogedContainers({
+///containerTypeID: Returns a list of [CatalogedContainer] matching the containerTypeID.
+List<CatalogedContainer> getCatalogedContainersSync({
   int? containerTypeID,
 }) {
+  if (containerTypeID != null) {
+    return _isar!.catalogedContainers
+        .filter()
+        .containerTypeIDEqualTo(containerTypeID)
+        .findAllSync();
+  }
   return _isar!.catalogedContainers.where().findAllSync();
 }
 
-CatalogedContainer? getCatalogedContainer({
+///default: Returns null
+///
+///id: [CatalogedContainer] mathcing the ID.
+///
+///barcodeUID: [CatalogedContainer] matching the BarcodeUID.
+///
+///containerUID: [CatalogedContainer] matching the containerUID.
+///
+///containerTypeID: [CatalogedContainer] matching the containerTypeID.
+CatalogedContainer? getCatalogedContainerSync({
   int? id,
   String? barcodeUID,
   String? containerUID,

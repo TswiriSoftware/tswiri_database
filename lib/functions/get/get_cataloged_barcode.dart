@@ -1,12 +1,27 @@
 part of tswiri_database;
 
-///Returns a list of all cataloged barcodes. (sync)
+///default: Returns a list of all [CatalogedBarcode].
+///
+///batchID: Returns a list of [CatalogedBarcode] matching batchID.
+///
 List<CatalogedBarcode> getCatalogedBarcodesSync({
   int? batchID,
 }) {
+  if (batchID != null) {
+    return _isar!.catalogedBarcodes
+        .filter()
+        .batchIDEqualTo(batchID)
+        .findAllSync();
+  }
   return _isar!.catalogedBarcodes.where().findAllSync();
 }
 
+///default: Returns null
+///
+///id: [CatalogedBarcode] mathcing the ID
+///
+///barcodeUID: [CatalogedBarcode] matching the BarcodeUID
+///
 CatalogedBarcode? getCatalogedBarcodeSync({
   int? id,
   String? barcodeUID,
@@ -20,6 +35,5 @@ CatalogedBarcode? getCatalogedBarcodeSync({
         .barcodeUIDEqualTo(barcodeUID)
         .findFirstSync();
   }
-
   return null;
 }

@@ -33,7 +33,17 @@ part 'functions/get/get_photo.dart';
 part 'functions/get/get_photo_label.dart';
 part 'functions/get/get_tag_text.dart';
 
+// part 'functions/put';
 part 'functions/put/put_marker.dart';
+part 'functions/put/put_barcode_batch.dart';
+part 'functions/put/put_new_barcode_batch.dart';
+part 'functions/put/put_cataloged_container.dart';
+part 'functions/put/put_container_type.dart';
+part 'functions/put/put_container_tag.dart';
+
+// part 'functions/delete';
+part 'functions/delete/delete_barcode_batch.dart';
+part 'functions/delete/delete_container_tag.dart';
 
 ///The folder where isar and photo files are stored.
 Directory? spaceDirectory;
