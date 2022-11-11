@@ -1,9 +1,11 @@
 part of tswiri_database;
 
-putCatalogedContainer({required CatalogedContainer container}) {
-  //  isar!.writeTxnSync(() {
-  //     isar!.containerTypes.putSync(
-  //       _containerType,
-  //     );
-  //   });
+int putCatalogedContainer({required CatalogedContainer container}) {
+  int id = 0;
+  _isar!.writeTxnSync(() {
+    id = _isar!.catalogedContainers.putSync(
+      container,
+    );
+  });
+  return id;
 }

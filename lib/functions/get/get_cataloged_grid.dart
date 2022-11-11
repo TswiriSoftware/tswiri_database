@@ -10,10 +10,10 @@ List<CatalogedGrid> getCatalogedGridsSync() {
 ///id: Returns a [CatalogedGrid] matching id.
 ///
 CatalogedGrid? getCatalogedGridSync({
-  int? id,
+  int? gridUID,
 }) {
-  if (id != null) {
-    return _isar!.catalogedGrids.filter().idEqualTo(id).findFirstSync();
+  if (gridUID != null) {
+    return _isar!.catalogedGrids.getSync(gridUID);
   }
 
   return null;

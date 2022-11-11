@@ -12,6 +12,7 @@ List<CatalogedContainer> getCatalogedContainersSync({
         .containerTypeIDEqualTo(containerTypeID)
         .findAllSync();
   }
+
   return _isar!.catalogedContainers.where().findAllSync();
 }
 
@@ -31,7 +32,7 @@ CatalogedContainer? getCatalogedContainerSync({
   int? containerTypeID,
 }) {
   if (id != null) {
-    return _isar!.catalogedContainers.filter().idEqualTo(id).findFirstSync();
+    return _isar!.catalogedContainers.getSync(id);
   }
 
   if (barcodeUID != null) {

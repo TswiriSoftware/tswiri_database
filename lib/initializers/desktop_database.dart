@@ -1,11 +1,12 @@
-import 'package:tswiri_database/export.dart';
-import 'package:tswiri_database/tswiri_database.dart';
+part of tswiri_database;
+// import 'package:tswiri_database/export.dart';
+// import 'package:tswiri_database/tswiri_database.dart';
 
 ///Initiate a isar connection
 /// - Optional Directory.
 /// - Inspector.
-Isar initiateDesktopIsar({String? directory, bool? inspector}) {
-  Isar isar = Isar.openSync(
+void initiateDesktopIsar({String? directory, bool? inspector}) {
+  _isar = Isar.openSync(
     [
       //Barcode Batch.
       BarcodeBatchSchema,
@@ -66,6 +67,4 @@ Isar initiateDesktopIsar({String? directory, bool? inspector}) {
     directory: directory ?? spaceDirectory!.path,
     inspector: inspector ?? true,
   );
-
-  return isar;
 }
