@@ -6,9 +6,17 @@ part of tswiri_database;
 ///
 List<MLTextElement> getMLTextElements({
   int? photoID,
+  int? mlDetectedElementTextID,
 }) {
   if (photoID != null) {
     return _isar!.mLTextElements.filter().photoIDEqualTo(photoID).findAllSync();
   }
+  if (mlDetectedElementTextID != null) {
+    return _isar!.mLTextElements
+        .filter()
+        .detectedElementTextIDEqualTo(mlDetectedElementTextID)
+        .findAllSync();
+  }
+
   return _isar!.mLTextElements.where().findAllSync();
 }

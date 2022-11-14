@@ -17,3 +17,13 @@ MLDetectedElementText? getMlDetectedElementTextSync({
 
   return null;
 }
+
+///Returns a list of [MLDetectedElementText] where the text contains the enteredKeyword
+List<MLDetectedElementText> getMLDetectedElementTextsThatContain({
+  required String enteredKeyword,
+}) {
+  return _isar!.mLDetectedElementTexts
+      .filter()
+      .detectedTextContains(enteredKeyword, caseSensitive: false)
+      .findAllSync();
+}

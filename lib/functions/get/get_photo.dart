@@ -15,3 +15,13 @@ List<Photo> getPhotosSync({
 
   return _isar!.photos.where().findAllSync();
 }
+
+///Returns a [Photo] matching on ID.
+Photo? getPhotoSync({
+  int? id,
+}) {
+  if (id != null) {
+    return _isar!.photos.getSync(id);
+  }
+  return null;
+}

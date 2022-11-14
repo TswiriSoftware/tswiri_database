@@ -1,7 +1,7 @@
 part of tswiri_database;
 
 ///Returns all [MLDetectedLabelText] matching on the list of mlDetectedLabelTextIDs.
-List<MLDetectedLabelText> getAllMlDetectedLabelTexts({
+List<MLDetectedLabelText> getMlDetectedLabelTextsOnMlDetectedLabelTextIDs({
   required Set<int> mlDetectedLabelTextIDs,
 }) {
   return _isar!.mLDetectedLabelTexts

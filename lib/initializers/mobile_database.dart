@@ -6,7 +6,7 @@ part of tswiri_database;
 /// - Optional Directory.
 /// - Inspector.
 void initiateMobileIsar({String? directory, bool? inspector}) {
-  if (_isar!.isOpen) return;
+  // if (_isar != null && _isar!.isOpen) return;
 
   _isar = Isar.openSync(
     [

@@ -20,3 +20,13 @@ TagText? getTagTextSync({
 
   return null;
 }
+
+///Returns a list of [TagText] where the text contains the enteredKeyword
+List<TagText> getTagTextsThatContain({
+  required String enteredKeyword,
+}) {
+  return _isar!.tagTexts
+      .filter()
+      .textContains(enteredKeyword, caseSensitive: false)
+      .findAllSync();
+}

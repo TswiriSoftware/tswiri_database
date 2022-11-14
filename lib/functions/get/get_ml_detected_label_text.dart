@@ -20,3 +20,13 @@ MLDetectedLabelText? getMlDetectedLabelText({
 
   return null;
 }
+
+///Returns a list of [MLDetectedLabelText] where the text contains the enteredKeyword
+List<MLDetectedLabelText> getMLDetectedLabelTextsTagContain({
+  required String enteredKeyword,
+}) {
+  return _isar!.mLDetectedLabelTexts
+      .filter()
+      .detectedLabelTextContains(enteredKeyword, caseSensitive: false)
+      .findAllSync();
+}

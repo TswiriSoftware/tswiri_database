@@ -58,3 +58,21 @@ CatalogedContainer? getCatalogedContainerSync({
 
   return null;
 }
+
+List<CatalogedContainer> getCatalogedContainersNameContains({
+  required String enteredKeyword,
+}) {
+  return _isar!.catalogedContainers
+      .filter()
+      .nameContains(enteredKeyword, caseSensitive: false)
+      .findAllSync();
+}
+
+List<CatalogedContainer> getCatalogedContainersDescriptionContains({
+  required String enteredKeyword,
+}) {
+  return _isar!.catalogedContainers
+      .filter()
+      .descriptionContains(enteredKeyword, caseSensitive: false)
+      .findAllSync();
+}

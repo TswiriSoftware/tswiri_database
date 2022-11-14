@@ -6,9 +6,16 @@ part of tswiri_database;
 ///
 List<MLPhotoLabel> getMLPhotoLabels({
   int? photoID,
+  int? mlDetectedLabelID,
 }) {
   if (photoID != null) {
     return _isar!.mLPhotoLabels.filter().photoIDEqualTo(photoID).findAllSync();
+  }
+  if (mlDetectedLabelID != null) {
+    return _isar!.mLPhotoLabels
+        .filter()
+        .detectedLabelTextIDEqualTo(mlDetectedLabelID)
+        .findAllSync();
   }
   return _isar!.mLPhotoLabels.where().findAllSync();
 }

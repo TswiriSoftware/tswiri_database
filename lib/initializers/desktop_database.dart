@@ -6,6 +6,7 @@ part of tswiri_database;
 /// - Optional Directory.
 /// - Inspector.
 void initiateDesktopIsar({String? directory, bool? inspector}) {
+  if (_isar != null && _isar!.isOpen) return;
   _isar = Isar.openSync(
     [
       //Barcode Batch.

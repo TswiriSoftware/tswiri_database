@@ -8,3 +8,12 @@ List<MLObject> getMlObjects({
   }
   return _isar!.mLObjects.where().findAllSync();
 }
+
+MLObject? getMLObject({
+  int? id,
+}) {
+  if (id != null) {
+    return _isar!.mLObjects.getSync(id);
+  }
+  return null;
+}
