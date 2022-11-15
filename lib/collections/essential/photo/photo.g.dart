@@ -35,8 +35,7 @@ const PhotoSchema = CollectionSchema(
     r'photoSize': PropertySchema(
       id: 3,
       name: r'photoSize',
-      type: IsarType.object,
-      target: r'EmbeddedSize',
+      type: IsarType.doubleList,
     ),
     r'thumbnailExtention': PropertySchema(
       id: 4,
@@ -56,7 +55,7 @@ const PhotoSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {r'EmbeddedSize': EmbeddedSizeSchema},
+  embeddedSchemas: {},
   getId: _photoGetId,
   getLinks: _photoGetLinks,
   attach: _photoAttach,
@@ -76,9 +75,7 @@ int _photoEstimateSize(
     }
   }
   bytesCount += 3 + object.extention.length * 3;
-  bytesCount += 3 +
-      EmbeddedSizeSchema.estimateSize(
-          object.photoSize, allOffsets[EmbeddedSize]!, allOffsets);
+  bytesCount += 3 + object.photoSize.length * 8;
   bytesCount += 3 + object.thumbnailExtention.length * 3;
   bytesCount += 3 + object.thumbnailName.length * 3;
   return bytesCount;
@@ -93,12 +90,7 @@ void _photoSerialize(
   writer.writeString(offsets[0], object.containerUID);
   writer.writeString(offsets[1], object.extention);
   writer.writeLong(offsets[2], object.photoName);
-  writer.writeObject<EmbeddedSize>(
-    offsets[3],
-    allOffsets,
-    EmbeddedSizeSchema.serialize,
-    object.photoSize,
-  );
+  writer.writeDoubleList(offsets[3], object.photoSize);
   writer.writeString(offsets[4], object.thumbnailExtention);
   writer.writeString(offsets[5], object.thumbnailName);
 }
@@ -114,12 +106,7 @@ Photo _photoDeserialize(
   object.extention = reader.readString(offsets[1]);
   object.id = id;
   object.photoName = reader.readLong(offsets[2]);
-  object.photoSize = reader.readObjectOrNull<EmbeddedSize>(
-        offsets[3],
-        EmbeddedSizeSchema.deserialize,
-        allOffsets,
-      ) ??
-      EmbeddedSize();
+  object.photoSize = reader.readDoubleList(offsets[3]) ?? [];
   object.thumbnailExtention = reader.readString(offsets[4]);
   object.thumbnailName = reader.readString(offsets[5]);
   return object;
@@ -139,12 +126,7 @@ P _photoDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readObjectOrNull<EmbeddedSize>(
-            offset,
-            EmbeddedSizeSchema.deserialize,
-            allOffsets,
-          ) ??
-          EmbeddedSize()) as P;
+      return (reader.readDoubleList(offset) ?? []) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
@@ -623,6 +605,152 @@ extension PhotoQueryFilter on QueryBuilder<Photo, Photo, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeElementEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoSize',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeElementGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'photoSize',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeElementLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'photoSize',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeElementBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'photoSize',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'photoSize',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'photoSize',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'photoSize',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'photoSize',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'photoSize',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSizeLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'photoSize',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<Photo, Photo, QAfterFilterCondition> thumbnailExtentionEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -888,14 +1016,7 @@ extension PhotoQueryFilter on QueryBuilder<Photo, Photo, QFilterCondition> {
   }
 }
 
-extension PhotoQueryObject on QueryBuilder<Photo, Photo, QFilterCondition> {
-  QueryBuilder<Photo, Photo, QAfterFilterCondition> photoSize(
-      FilterQuery<EmbeddedSize> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'photoSize');
-    });
-  }
-}
+extension PhotoQueryObject on QueryBuilder<Photo, Photo, QFilterCondition> {}
 
 extension PhotoQueryLinks on QueryBuilder<Photo, Photo, QFilterCondition> {}
 
@@ -1056,6 +1177,12 @@ extension PhotoQueryWhereDistinct on QueryBuilder<Photo, Photo, QDistinct> {
     });
   }
 
+  QueryBuilder<Photo, Photo, QDistinct> distinctByPhotoSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'photoSize');
+    });
+  }
+
   QueryBuilder<Photo, Photo, QDistinct> distinctByThumbnailExtention(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1098,7 +1225,7 @@ extension PhotoQueryProperty on QueryBuilder<Photo, Photo, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Photo, EmbeddedSize, QQueryOperations> photoSizeProperty() {
+  QueryBuilder<Photo, List<double>, QQueryOperations> photoSizeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'photoSize');
     });

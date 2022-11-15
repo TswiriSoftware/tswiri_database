@@ -1,15 +1,13 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/photo/photo.dart';
+import 'package:tswiri_database/collections/essential/tag_text/tag_text.dart';
 part 'photo_label.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[PhotoLabel]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `photoID` The [Photo]'s ID `this` is linked to.
+///  - `tagTextID` The [TagText]'s ID `this` is linked to.
 ///
 @Collection()
 @Name("PhotoLabel")

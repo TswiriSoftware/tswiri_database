@@ -30,3 +30,13 @@ List<TagText> getTagTextsThatContain({
       .textContains(enteredKeyword, caseSensitive: false)
       .findAllSync();
 }
+
+///Returns all [TagText] matching on the list of TagTextIDs
+List<TagText> getAllTagTexts({
+  required Set<int> tagTextIDs,
+}) {
+  return _isar!.tagTexts
+      .filter()
+      .allOf(tagTextIDs, (q, int element) => q.idEqualTo(element))
+      .findAllSync();
+}

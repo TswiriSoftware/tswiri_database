@@ -1,32 +1,31 @@
 import 'package:isar/isar.dart';
-import 'package:tswiri_database/embedded/embedded_color/embedded_color.dart';
-import 'package:tswiri_database/embedded/embedded_icon_data/embedded_icon_data.dart';
 part 'container_type.g.dart';
 
-///Specifies details for a specific container type.
+///[ContainerType]
 ///
-/// - ```containerTypeName```
-/// - ```containerDescription```
-/// - ```moveable```
-/// - ```enclosing```
-/// - ```canContain```
-/// - ```preferredChildContainer```
-/// - ```containerColor```
-/// - ```iconData```
+///  - `id` the id of `this`.
+/// - `name` The name of `this`.
+/// - `description` The description of `this`.
+/// - `moveable` Can `this` be moved.
+/// - `enclosing` Is `this`'s barcode a marker by defaut.
+/// - `canContain` List of containers that `this` can contain.
+/// - `preferredChildContainer` ID of the preferred child `this`.
+/// - `containerColor` The color of `this`.
+/// - `iconData` The IconData of `this`.
 ///
 @Collection()
 @Name("ContainerType")
 class ContainerType {
-  ///containerTypeID.
+  ///ContainerTypeID
   Id id = Isar.autoIncrement;
 
-  ///ContainerUID.
-  @Name("containerTypeName")
-  late String containerTypeName;
+  ///The name of this [ContainerType].
+  @Name("name")
+  late String name;
 
-  ///Container Description.
-  @Name("containerDescription")
-  late String containerDescription;
+  ///The description of this [ContainerType].
+  @Name("description")
+  late String description;
 
   ///Can this container be moved.
   @Name("moveable")
@@ -34,7 +33,7 @@ class ContainerType {
 
   ///Is this container's barcode a marker by defaut.
   @Name("enclosing")
-  late bool enclosing; //Rename enclosing
+  late bool enclosing;
 
   ///List of containers that this container can contain.
   @Name("canContain")
@@ -45,78 +44,44 @@ class ContainerType {
   late int preferredChildContainer;
 
   ///Container color.
-  @Name("containerColor")
-  late EmbeddedColor containerColor;
+  @Name("color")
+  late String color;
 
-  ///Container Icon.
+  ///Container IconData.
   @Name("iconData")
-  late EmbeddedIconData iconData;
+  late List<String> iconData;
 
   @override
   String toString() {
     return '''-------------------------------------
-containerType: $containerTypeName,
-containerDescription: $containerDescription,
+containerType: $name,
+containerDescription: $description,
 moveable: $moveable, canContain: $canContain
-color: $containerColor
-iconData: ${iconData.data}
+color: $color
+iconData: $iconData
 -------------------------------------\n''';
   }
 
   //To json.
   Map toJson() => {
         'id': id,
-        'containerType': containerTypeName,
-        'containerDescription': containerDescription,
+        'containerType': name,
+        'containerDescription': description,
         'moveable': moveable,
         'enclosing': enclosing,
         'canContain': canContain,
-        'containerColor': containerColor.data,
+        'containerColor': color,
       };
 
   //From json.
   ContainerType fromJson(Map<String, dynamic> json) {
     return ContainerType()
       ..id = json['id']
-      ..containerTypeName = json['containerType']
-      ..containerDescription = json['containerDescription']
+      ..name = json['containerType']
+      ..description = json['containerDescription']
       ..enclosing = json['enclosing']
       ..canContain = (json['canContain'] as List<dynamic>).cast<int>()
       ..moveable = json['moveable']
-      ..containerColor = EmbeddedColor().data = json['containerColor'];
+      ..color = json['containerColor'];
   }
 }
-
-// class IconConverter extends TypeConverter<IconData, List<String>> {
-//   const IconConverter(); // Converters need to have an empty const constructor
-
-//   @override
-//   IconData fromIsar(List<String> object) {
-//     return IconData(
-//       int.parse(object[0]),
-//       fontFamily: object[1],
-//     );
-//   }
-
-//   @override
-//   List<String> toIsar(IconData object) {
-//     return [
-//       object.codePoint.toString(),
-//       object.fontFamily.toString(),
-//     ];
-//   }
-// }
-
-// class ColorConverter extends TypeConverter<Color, String> {
-//   const ColorConverter(); // Converters need to have an empty const constructor
-
-//   @override
-//   Color fromIsar(String object) {
-//     return Color(int.parse(object)).withOpacity(1);
-//   }
-
-//   @override
-//   String toIsar(Color object) {
-//     return object.value.toString();
-//   }
-// }

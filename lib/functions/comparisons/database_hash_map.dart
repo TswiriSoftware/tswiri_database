@@ -56,3 +56,7 @@ Map<String, int> get databaseHashes {
     'tagTexts': hashTagTexts(),
   };
 }
+
+int hashSomething() {
+  return 1;
+}

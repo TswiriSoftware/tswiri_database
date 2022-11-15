@@ -27,3 +27,13 @@ List<MLDetectedElementText> getMLDetectedElementTextsThatContain({
       .detectedTextContains(enteredKeyword, caseSensitive: false)
       .findAllSync();
 }
+
+///Returns all [MLDetectedElementText] matching on the list of mLDetectedElementTextIDs.
+List<MLDetectedElementText> getAllMlDetectedLElementTexts({
+  required Set<int> mLDetectedElementTextIDs,
+}) {
+  return _isar!.mLDetectedElementTexts
+      .filter()
+      .anyOf(mLDetectedElementTextIDs, (q, int element) => q.idEqualTo(element))
+      .findAllSync();
+}

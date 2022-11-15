@@ -17,28 +17,18 @@ const BarcodeBatchSchema = CollectionSchema(
   name: r'BarcodeBatch',
   id: 3512858331771163168,
   properties: {
-    r'hashCode': PropertySchema(
-      id: 0,
-      name: r'hashCode',
-      type: IsarType.long,
-    ),
     r'height': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'height',
       type: IsarType.double,
     ),
-    r'imported': PropertySchema(
-      id: 2,
-      name: r'imported',
-      type: IsarType.bool,
-    ),
     r'timestamp': PropertySchema(
-      id: 3,
+      id: 1,
       name: r'timestamp',
       type: IsarType.long,
     ),
     r'width': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'width',
       type: IsarType.double,
     )
@@ -72,11 +62,9 @@ void _barcodeBatchSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.hashCode);
-  writer.writeDouble(offsets[1], object.height);
-  writer.writeBool(offsets[2], object.imported);
-  writer.writeLong(offsets[3], object.timestamp);
-  writer.writeDouble(offsets[4], object.width);
+  writer.writeDouble(offsets[0], object.height);
+  writer.writeLong(offsets[1], object.timestamp);
+  writer.writeDouble(offsets[2], object.width);
 }
 
 BarcodeBatch _barcodeBatchDeserialize(
@@ -86,11 +74,10 @@ BarcodeBatch _barcodeBatchDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = BarcodeBatch();
-  object.height = reader.readDouble(offsets[1]);
+  object.height = reader.readDouble(offsets[0]);
   object.id = id;
-  object.imported = reader.readBool(offsets[2]);
-  object.timestamp = reader.readLong(offsets[3]);
-  object.width = reader.readDouble(offsets[4]);
+  object.timestamp = reader.readLong(offsets[1]);
+  object.width = reader.readDouble(offsets[2]);
   return object;
 }
 
@@ -102,14 +89,10 @@ P _barcodeBatchDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
-    case 1:
       return (reader.readDouble(offset)) as P;
-    case 2:
-      return (reader.readBool(offset)) as P;
-    case 3:
+    case 1:
       return (reader.readLong(offset)) as P;
-    case 4:
+    case 2:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -210,62 +193,6 @@ extension BarcodeBatchQueryWhere
 
 extension BarcodeBatchQueryFilter
     on QueryBuilder<BarcodeBatch, BarcodeBatch, QFilterCondition> {
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      hashCodeEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'hashCode',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      hashCodeGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'hashCode',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      hashCodeLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'hashCode',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      hashCodeBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'hashCode',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition> heightEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -379,16 +306,6 @@ extension BarcodeBatchQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterFilterCondition>
-      importedEqualTo(bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'imported',
-        value: value,
       ));
     });
   }
@@ -521,18 +438,6 @@ extension BarcodeBatchQueryLinks
 
 extension BarcodeBatchQuerySortBy
     on QueryBuilder<BarcodeBatch, BarcodeBatch, QSortBy> {
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByHashCode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByHashCodeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.desc);
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.asc);
@@ -542,18 +447,6 @@ extension BarcodeBatchQuerySortBy
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByHeightDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.desc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByImported() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imported', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> sortByImportedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imported', Sort.desc);
     });
   }
 
@@ -584,18 +477,6 @@ extension BarcodeBatchQuerySortBy
 
 extension BarcodeBatchQuerySortThenBy
     on QueryBuilder<BarcodeBatch, BarcodeBatch, QSortThenBy> {
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByHashCode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByHashCodeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.desc);
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.asc);
@@ -617,18 +498,6 @@ extension BarcodeBatchQuerySortThenBy
   QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByImported() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imported', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QAfterSortBy> thenByImportedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imported', Sort.desc);
     });
   }
 
@@ -659,21 +528,9 @@ extension BarcodeBatchQuerySortThenBy
 
 extension BarcodeBatchQueryWhereDistinct
     on QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> {
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> distinctByHashCode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'hashCode');
-    });
-  }
-
   QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> distinctByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'height');
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, BarcodeBatch, QDistinct> distinctByImported() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'imported');
     });
   }
 
@@ -698,21 +555,9 @@ extension BarcodeBatchQueryProperty
     });
   }
 
-  QueryBuilder<BarcodeBatch, int, QQueryOperations> hashCodeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'hashCode');
-    });
-  }
-
   QueryBuilder<BarcodeBatch, double, QQueryOperations> heightProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'height');
-    });
-  }
-
-  QueryBuilder<BarcodeBatch, bool, QQueryOperations> importedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'imported');
     });
   }
 

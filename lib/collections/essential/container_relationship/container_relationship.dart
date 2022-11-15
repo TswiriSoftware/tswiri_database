@@ -1,17 +1,12 @@
 import 'package:isar/isar.dart';
 part 'container_relationship.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[ContainerRelationship]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `containerUID` The Child's containerUID of `this`.
+///  - `parentUID` The Parent's containerUID of `this`.
 ///
-
 @Collection()
 @Name("ContainerRelationship")
 class ContainerRelationship {

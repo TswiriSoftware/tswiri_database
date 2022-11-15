@@ -1,32 +1,35 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/container_type/container_type.dart';
 part 'cataloged_container.g.dart';
 
-///Stores details about a container (Created by user).
+///[CatalogedContainer]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `containerUID` Unique identifier of `this`.
+///  - `containerTypeID` The [ContainerType] ID of `this`.
+///  - `name` Name of the [CatalogedContainer].
+///  - `description` Description of `this`.
+///  - `barcodeUID` Barcode linked to `this`.
+///
 @Collection()
 @Name("CatalogedContainer")
 class CatalogedContainer {
   Id id = Isar.autoIncrement;
 
-  ///UID.
+  ///Unique identifier.
   @Name("containerUID")
   @Index(unique: true)
   late String containerUID;
 
-  ///Container Type.
+  ///The ID of [ContainerType].
   @Name("containerTypeID")
   late int containerTypeID;
 
-  ///Container Name.
+  ///Name of the [CatalogedContainer].
   @Name("name")
   late String? name;
 
-  ///Description.
+  ///Description of the [CatalogedContainer].
   @Name("description")
   late String? description;
 

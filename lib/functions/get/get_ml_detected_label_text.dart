@@ -30,3 +30,13 @@ List<MLDetectedLabelText> getMLDetectedLabelTextsTagContain({
       .detectedLabelTextContains(enteredKeyword, caseSensitive: false)
       .findAllSync();
 }
+
+///Returns all [MLDetectedLabelText] matching on the list of mlDetectedLabelTextIDs.
+List<MLDetectedLabelText> getMlDetectedLabelTextsOnMlDetectedLabelTextIDs({
+  required Set<int> mlDetectedLabelTextIDs,
+}) {
+  return _isar!.mLDetectedLabelTexts
+      .filter()
+      .anyOf(mlDetectedLabelTextIDs, (q, int element) => q.idEqualTo(element))
+      .findAllSync();
+}

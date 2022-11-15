@@ -15,3 +15,15 @@ List<CatalogedCoordinate> getCatalogedCoordinatesSync({
   }
   return _isar!.catalogedCoordinates.where().findAllSync();
 }
+
+CatalogedCoordinate? getCatalogedCoordinate({
+  String? barcodeUID,
+}) {
+  if (barcodeUID != null) {
+    return _isar!.catalogedCoordinates
+        .filter()
+        .barcodeUIDMatches(barcodeUID)
+        .findFirstSync();
+  }
+  return null;
+}

@@ -3,29 +3,32 @@ import 'dart:math';
 import 'package:isar/isar.dart';
 part 'cataloged_barcode.g.dart';
 
-///This stores details about a specific barcode.
+///[CatalogedBarcode]
 ///
-/// - ```barcodeUID``` (num_timestamp).
-/// - ```size``` (mm).
-/// - ```batchID``` The batch this barcode is part of.
+///  - `id` the id of `this`.
+/// - `barcodeUID` Barcode's UID.
+/// - `width` Width of `this`. (mm)
+/// - `height` Height of `this`. (mm)
+/// - `batchID` The batch's UID `this` is part of.
+///
 @Collection()
 @Name("CatalogedBarcode")
 class CatalogedBarcode {
   Id id = Isar.autoIncrement;
 
-  ///UID (num_timestamp)
+  ///Barcode's UID.
   @Name("barcodeUID")
   late String barcodeUID;
 
-  ///Width (mm)
+  ///Width (mm).
   @Name("width")
   late double width;
 
-  ///Height (mm)
+  ///Height (mm).
   @Name("height")
   late double height;
 
-  ///Side length (mm)
+  ///The batch's UID this [CatalogedBarcode] is part of.
   @Name("batchID")
   late int batchID;
 

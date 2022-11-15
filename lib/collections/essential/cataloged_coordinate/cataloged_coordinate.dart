@@ -1,28 +1,27 @@
 import 'package:isar/isar.dart';
 import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
 // ignore: depend_on_referenced_packages
-import 'package:vector_math/vector_math_64.dart' as vm;
 part 'cataloged_coordinate.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[CatalogedCoordinate]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `barcodeUID` BarcodeUID of `this`.
+///  - `gridUID` The GridUID of `this`.
+///  - `timestamp` Time of `this` creation.
+///  - `coordinate` The vector3 coordinate of `this`.
+///  - `rotation` The rotation of `this`.
 ///
 @Collection()
 @Name("CatalogedCoordinate")
 class CatalogedCoordinate {
   Id id = Isar.autoIncrement;
 
+  ///BarcodeUID linked to this coordinate.
   @Name("barcodeUID")
   late String barcodeUID;
 
-  ///The gridUID that this coordinate is a part of.
+  ///The grid that this coordinate is a part of.
   @Name("gridUID")
   late int gridUID;
 
@@ -68,7 +67,7 @@ class CatalogedCoordinate {
     List<double?> rotations =
         (json['coordinate'] as List<dynamic>).cast<double?>();
 
-    EmbeddedVector3? decodedRotation = null;
+    EmbeddedVector3? decodedRotation;
     if (rotations[0] != null && rotations[1] != null && rotations[2] != null) {
       decodedRotation = EmbeddedVector3.fromMessage(
           [rotations[0]!, rotations[1]!, rotations[2]!]);

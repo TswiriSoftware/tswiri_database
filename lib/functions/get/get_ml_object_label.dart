@@ -13,3 +13,13 @@ List<MLObjectLabel> getMLObjectLabels({
 
   return _isar!.mLObjectLabels.where().findAllSync();
 }
+
+///Returns all [MLObjectLabel] related to the list of mlObjects.
+List<MLObjectLabel> getRelatedMLObjectLabels({
+  required List<MLObject> mlObjects,
+}) {
+  return _isar!.mLObjectLabels
+      .filter()
+      .allOf(mlObjects, (q, MLObject element) => q.objectIDEqualTo(element.id))
+      .findAllSync();
+}

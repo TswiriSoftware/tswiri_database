@@ -1,14 +1,13 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/ml_tags/ml_object/ml_object/ml_object.dart';
+import 'package:tswiri_database/collections/essential/tag_text/tag_text.dart';
 part 'object_label.g.dart';
-//TODO: finish comments.
 
-///Stores details about a container (Created by user).
+///[ObjectLabel]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `objectID` The [MLObject]'s ID `this` is linked to.
+///  - `tagTextID` The [TagText]'s id `this` is linked to.
 ///
 @Collection()
 @Name("ObjectLabel")

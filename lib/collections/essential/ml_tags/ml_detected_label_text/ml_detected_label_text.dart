@@ -1,17 +1,12 @@
 import 'package:isar/isar.dart';
 part 'ml_detected_label_text.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[MLDetectedLabelText]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `detectedLabelText` The string value of `this`.
+///  - `hidden` Is `this` hidden.
 ///
-
 @Collection()
 @Name("MLDetectedLabelText")
 class MLDetectedLabelText {

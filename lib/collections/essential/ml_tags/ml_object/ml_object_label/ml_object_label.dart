@@ -1,15 +1,15 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/photo/photo.dart';
+import 'package:tswiri_database/collections/essential/ml_tags/ml_detected_label_text/ml_detected_label_text.dart';
 part 'ml_object_label.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[MLObjectLabel]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `photoID` The [Photo] id `this` is linked to.
+///  - `detectedLabelTextID` The [MLDetectedLabelText]'s ID `this` is linked to.
+///  - `confidence` The confidence that `this` is a valid label.
+///  - `userFeedback` The userfeedback of `this`.
 ///
 
 @Collection()

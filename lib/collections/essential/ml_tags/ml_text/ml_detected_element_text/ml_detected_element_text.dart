@@ -1,17 +1,13 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/tag_text/tag_text.dart';
 part 'ml_detected_element_text.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[MLDetectedElementText]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `detectedText` The detected text of `this`.
+///  - `tagTextID` The [TagText]'s ID `this` is linked to.
 ///
-
 @Collection()
 @Name("MLDetectedElementText")
 class MLDetectedElementText {

@@ -1,7 +1,13 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/cataloged_container/cataloged_container.dart';
 part 'marker.g.dart';
 
-//TODO: finish comments.
+///[Marker]
+///
+///  - `id` the id of `this`.
+///  - `containerUID` The [CatalogedContainer]'s UID of `this`.
+///  - `barcodeUID` The barcodeUID of `this`.
+///
 @Collection()
 @Name("Marker")
 class Marker {

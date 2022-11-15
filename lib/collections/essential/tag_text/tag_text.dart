@@ -1,15 +1,10 @@
 import 'package:isar/isar.dart';
 part 'tag_text.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[TagText]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `text` The text stored by `this`.
 ///
 @Collection()
 @Name("TagText")

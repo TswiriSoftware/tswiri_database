@@ -1,15 +1,17 @@
 import 'package:isar/isar.dart';
-import 'package:tswiri_database/embedded/embedded_size/embedded_size.dart';
 import 'package:tswiri_database/tswiri_database.dart';
+import 'package:tswiri_database/collections/essential/cataloged_container/cataloged_container.dart';
 part 'photo.g.dart';
 
-///Stores details about a container (Created by user).
+///[Photo]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `containerUID` The [CatalogedContainer]'s UID `this` is linked to.
+///  - `photoName` The photoName of `this`.
+///  - `extention` The photoExtention of `this`.
+///  - `thumbnailName` The thumbnailName of `this`.
+///  - `thumbnailExtention` The thumbnailExtention of `this`.
+///  - `photoSize` The photoSize of `this`.
 ///
 @Collection()
 @Name("Photo")
@@ -38,8 +40,9 @@ class Photo {
   late String thumbnailExtention;
 
   ///Photo Size.
+  ///[width, height]
   @Name("photoSize")
-  late EmbeddedSize photoSize;
+  late List<double> photoSize;
 
   @override
   String toString() {
@@ -75,7 +78,7 @@ class Photo {
         'extention': extention,
         'thumbnailName': thumbnailName,
         'thumbnailExtention': thumbnailExtention,
-        'photoSize': photoSize.data,
+        'photoSize': photoSize,
       };
 
   Photo fromJson(Map<String, dynamic> json) {
@@ -87,6 +90,6 @@ class Photo {
       ..extention = json['extention']
       ..thumbnailName = json['thumbnailName']
       ..thumbnailExtention = json['thumbnailExtention']
-      ..photoSize = EmbeddedSize.fromMessage(size);
+      ..photoSize = size;
   }
 }

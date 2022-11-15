@@ -1,26 +1,24 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/cataloged_container/cataloged_container.dart';
+import 'package:tswiri_database/collections/essential/tag_text/tag_text.dart';
 part 'container_tag.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[ContainerTag]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `containerUID` The [CatalogedContainer]'s UID of `this`.
+///  - `tagTextID` The [TagText]' ID `this` is linked to.
 ///
 @Collection()
 @Name("ContainerTag")
 class ContainerTag {
   Id id = Isar.autoIncrement;
 
-  //ContainerUID
+  ///The [CatalogedContainer]'s UID.
   @Name("containerUID")
   late String containerUID;
 
-  //Tag
+  ///The TagTextID of this [ContainerTag].
   @Name("tagTextID")
   late int tagTextID;
 

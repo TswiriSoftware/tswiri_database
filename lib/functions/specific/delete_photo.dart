@@ -1,7 +1,7 @@
 part of tswiri_database;
 
 ///Deletes a photo and all references.
-void deletePhoto(Photo photo) {
+deletePhoto(Photo photo) {
   _isar!.writeTxnSync(() {
     //1. Delete PhotoLabel (s).
     _isar!.photoLabels.filter().photoIDEqualTo(photo.id).deleteAllSync();
@@ -58,17 +58,8 @@ void deletePhoto(Photo photo) {
     //9. Delete Photo.
     _isar!.photos.deleteSync(photo.id);
 
-    // log('Photos: ${isar!.photos.where().findAllSync().length}');
-    // log('PhotoLabels: ${isar!.photoLabels.where().findAllSync().length}');
-    // log('MLPhotoLabels: ${isar!.mLPhotoLabels.where().findAllSync().length}');
-    // log('MLObjects: ${isar!.mLObjects.where().findAllSync().length}');
-    // log('MLObjectLabel: ${isar!.mLObjectLabels.where().findAllSync().length}');
-    // log('ObjectLabels: ${isar!.objectLabels.where().findAllSync().length}');
-    // log('MLTextElements: ${isar!.mLTextElements.where().findAllSync().length}');
-    // log('MLTextLines: ${isar!.mLTextLines.where().findAllSync().length}');
-    // log('MLTextBlock: ${isar!.mLTextBlocks.where().findAllSync().length}');
+    //Delete files.
+    File(photo.getPhotoPath()).deleteSync();
+    File(photo.getPhotoThumbnailPath()).deleteSync();
   });
-
-  File(photo.getPhotoPath()).deleteSync();
-  File(photo.getPhotoThumbnailPath()).deleteSync();
 }

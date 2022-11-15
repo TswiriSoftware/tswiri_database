@@ -1,38 +1,8 @@
 part of tswiri_database;
 
-///Returns all [MLDetectedLabelText] matching on the list of mlDetectedLabelTextIDs.
-List<MLDetectedLabelText> getMlDetectedLabelTextsOnMlDetectedLabelTextIDs({
-  required Set<int> mlDetectedLabelTextIDs,
-}) {
-  return _isar!.mLDetectedLabelTexts
-      .filter()
-      .anyOf(mlDetectedLabelTextIDs, (q, int element) => q.idEqualTo(element))
-      .findAllSync();
-}
-
-///Returns all [MLDetectedElementText] matching on the list of mLDetectedElementTextIDs.
-List<MLDetectedElementText> getAllMlDetectedLElementTexts({
-  required Set<int> mLDetectedElementTextIDs,
-}) {
-  return _isar!.mLDetectedElementTexts
-      .filter()
-      .anyOf(mLDetectedElementTextIDs, (q, int element) => q.idEqualTo(element))
-      .findAllSync();
-}
-
-///Returns all [TagText] matching on the list of TagTextIDs
-List<TagText> getAllTagTexts({
-  required Set<int> tagTextIDs,
-}) {
-  return _isar!.tagTexts
-      .filter()
-      .allOf(tagTextIDs, (q, int element) => q.idEqualTo(element))
-      .findAllSync();
-}
-
-///Puts all the photo labels in the db.
-putPhotoLabels({
-  required int photoID,
+///used to create a new [Photo].
+createPhoto({
+  required Photo photo,
   required List<MLPhotoLabel> mlPhotoLabels,
   required List<PhotoLabel> photoLabels,
   required List<MLObject> mlObjects,
@@ -43,6 +13,8 @@ putPhotoLabels({
   required List<MLTextElement> mlTextElements,
 }) {
   _isar!.writeTxnSync(() {
+    int photoID = _isar!.photos.putSync(photo);
+
     ///Write Photo Labels to Isar.
     for (MLPhotoLabel mlPhotoLabel in mlPhotoLabels) {
       _isar!.mLPhotoLabels.putSync(
@@ -123,46 +95,4 @@ putPhotoLabels({
       }
     }
   });
-}
-
-///Returns all [MLObjectLabel] related to the list of mlObjects.
-List<MLObjectLabel> getRelatedMLObjectLabels({
-  required List<MLObject> mlObjects,
-}) {
-  return _isar!.mLObjectLabels
-      .filter()
-      .allOf(mlObjects, (q, MLObject element) => q.objectIDEqualTo(element.id))
-      .findAllSync();
-}
-
-///Returns all [ObjectLabel] related to the list of mlObjects.
-List<ObjectLabel> getRelatedObjectLabels({
-  required List<MLObject> mlObjects,
-}) {
-  return _isar!.objectLabels
-      .filter()
-      .allOf(mlObjects, (q, MLObject element) => q.objectIDEqualTo(element.id))
-      .findAllSync();
-}
-
-///Returns all [MLTextLine] related to the list of mlTextElements.
-List<MLTextLine> getRelatedMLTextLines({
-  required List<MLTextElement> mlTextElements,
-}) {
-  return _isar!.mLTextLines
-      .filter()
-      .anyOf(mlTextElements,
-          (q, MLTextElement element) => q.idEqualTo(element.lineID))
-      .findAllSync();
-}
-
-///Returns all [MLTextBlock] related to the list of mlTextLines.
-List<MLTextBlock> getRelatedTextBlocks({
-  required List<MLTextLine> mlTextLines,
-}) {
-  return _isar!.mLTextBlocks
-      .filter()
-      .anyOf(
-          mlTextLines, (q, MLTextLine element) => q.idEqualTo(element.blockID))
-      .findAllSync();
 }

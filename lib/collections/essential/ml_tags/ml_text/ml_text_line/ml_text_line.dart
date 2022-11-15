@@ -1,16 +1,15 @@
 import 'package:isar/isar.dart';
 import 'package:tswiri_database/embedded/corner_points/corner_points.dart';
+import 'package:tswiri_database/collections/essential/ml_tags/ml_text/ml_text_block/ml_text_block.dart';
 part 'ml_text_line.g.dart';
 
-///TODO: finish commenting.
-
-///Stores details about a container (Created by user).
+///[MLTextLine]
 ///
-///  - ```containerUID``` Unique identifier.
-///  - ```containerTypeID``` Type of container [ContainerType].
-///  - ```name``` Name of the container.
-///  - ```description``` Description of the container.
-///  - ```barcodeUID``` Barcode linked to this container.
+///  - `id` the id of `this`.
+///  - `blockID` The [MLTextBlock]'s ID `this` is linked to.
+///  - `blockIndex` The [MLTextLine]'s id `this` is linked to.
+///  - `recognizedLanguages` The recognized Languages of `this`.
+///  - `cornerPoints` The cornerPoints of `this`.
 ///
 @Collection()
 @Name("MLTextLine")
