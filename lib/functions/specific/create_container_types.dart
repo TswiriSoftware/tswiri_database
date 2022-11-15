@@ -1,7 +1,7 @@
 part of tswiri_database;
 
-///Creates the default container types.
-void createDefaultContainerTypes() {
+///Creates the default [ContainerType]s.
+createDefaultContainerTypes() {
   if (_isar!.containerTypes.where().findAllSync().isEmpty) {
     _isar!.writeTxnSync(
       () {

@@ -1,6 +1,6 @@
 part of tswiri_database;
 
-///used to create a new [Photo].
+///Creates a new [Photo].
 createPhoto({
   required Photo photo,
   required List<MLPhotoLabel> mlPhotoLabels,

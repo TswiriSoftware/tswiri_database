@@ -1,6 +1,6 @@
 part of tswiri_database;
 
-///Updates/Creates a grid's [CatalogedCoordinate].
+///Updates/Creates [CatalogedCoordinate]'s.
 updateCoordinates({
   required int gridUID,
   required List<CatalogedCoordinate> coordinates,

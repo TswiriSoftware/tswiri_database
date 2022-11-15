@@ -49,10 +49,10 @@ part 'functions/specific/create_photo.dart';
 part 'functions/specific/update_coordinates.dart';
 part 'functions/specific/create_cataloged_container.dart';
 part 'functions/specific/create_barcode_batch.dart';
-part 'functions/specific/import_barcode_batch.dart';
 part 'functions/specific/delete_barcode_batch.dart';
 part 'functions/specific/create_new_grid.dart';
 part 'functions/specific/delete_grid.dart';
+part 'functions/specific/update_barcode_batch.dart';
 
 part 'initializers/desktop_database.dart';
 part 'initializers/mobile_database.dart';

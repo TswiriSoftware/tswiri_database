@@ -1,6 +1,6 @@
 part of tswiri_database;
 
-///Deletes a photo and all references.
+///Deletes a [Photo] and all references.
 deletePhoto(Photo photo) {
   _isar!.writeTxnSync(() {
     //1. Delete PhotoLabel (s).
