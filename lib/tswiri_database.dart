@@ -3,6 +3,8 @@ library tswiri_database;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:tswiri_database/variables.dart';
+
 import 'export.dart';
 
 part 'functions/specific/create_container_types.dart';
@@ -58,9 +60,9 @@ part 'initializers/desktop_database.dart';
 part 'initializers/mobile_database.dart';
 
 ///The folder where isar and photo files are stored.
-Directory? spaceDirectory;
 
 String isarDirectoryPref = 'isarDirectory';
+Directory? spaceDirectory;
 Directory? isarDirectory;
 Directory? photoDirectory;
 Directory? thumbnailDirectory;

@@ -4,60 +4,44 @@ part 'cataloged_container.g.dart';
 
 ///[CatalogedContainer]
 ///
+///  - `uid` uid of `this`.
 ///  - `id` the id of `this`.
-///  - `containerUID` Unique identifier of `this`.
-///  - `containerTypeID` The [ContainerType] ID of `this`.
 ///  - `name` Name of the [CatalogedContainer].
 ///  - `description` Description of `this`.
 ///  - `barcodeUID` Barcode linked to `this`.
+///  - `containerTypeID` The [ContainerType] ID of `this`.
 ///
 @Collection()
 @Name("CatalogedContainer")
 class CatalogedContainer {
   Id id = Isar.autoIncrement;
 
-  ///Unique identifier.
-  @Name("containerUID")
+  @Name('uid')
   @Index(unique: true)
-  late String containerUID;
+  late String uid;
 
-  ///The ID of [ContainerType].
-  @Name("containerTypeID")
-  late int containerTypeID;
-
-  ///Name of the [CatalogedContainer].
   @Name("name")
   late String? name;
 
-  ///Description of the [CatalogedContainer].
   @Name("description")
   late String? description;
 
-  ///Linked BarcodeUID
   @Name("barcodeUID")
-  late String? barcodeUID;
+  late String barcodeUID;
 
-  // @override
-  // bool operator ==(Object other) {
-  //   return other is CatalogedContainer &&
-  //       id == other.id &&
-  //       containerType == other.containerType &&
-  //       containerUID == other.containerUID &&
-  //       name == other.name &&
-  //       description == other.description &&
-  //       barcodeUID == other.barcodeUID;
-  // }
+  @Name("containerTypeUID")
+  late String containerTypeUID;
 
   @override
   String toString() {
-    return '\nUID: $containerUID, Type: $containerTypeID, Name: $name, Description: $description, BarcodeUID $barcodeUID';
+    return '\nUID: $uid, Type: $containerTypeUID, Name: $name, Description: $description, BarcodeUID $barcodeUID';
   }
 
   //To json.
   Map toJson() => {
         'id': id,
-        'containerUID': containerUID,
-        'containerTypeID': containerTypeID,
+        'uid': uid,
+        'containerTypeID': containerTypeUID,
         'name': name,
         'description': description,
         'barcodeUID': barcodeUID,
@@ -67,8 +51,8 @@ class CatalogedContainer {
   CatalogedContainer fromJson(Map<String, dynamic> json) {
     return CatalogedContainer()
       ..id = json['id']
-      ..containerUID = json['containerUID']
-      ..containerTypeID = json['containerTypeID']
+      ..uid = json['uid']
+      ..containerTypeUID = json['containerTypeID']
       ..name = json['name']
       ..description = json['description']
       ..barcodeUID = json['barcodeUID'];

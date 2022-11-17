@@ -19,28 +19,25 @@ class Photo {
   ///ID.
   Id id = Isar.autoIncrement;
 
-  ///ContainerUID.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("containerUID")
-  late String? containerUID;
+  late String containerUID;
 
-  ///Photo Name.
   @Name("photoName")
-  late int photoName;
+  late String photoName;
 
-  ///Photo Extention.
-  @Name("extention")
-  late String extention;
+  @Name("photoExtention")
+  late String photoExtention;
 
-  ///Thumbnail Name.
   @Name("thumbnailName")
   late String thumbnailName;
 
-  ///Thumbnail Extention.
   @Name("thumbnailExtention")
   late String thumbnailExtention;
 
-  ///Photo Size.
-  ///[width, height]
   @Name("photoSize")
   late List<double> photoSize;
 
@@ -51,31 +48,26 @@ class Photo {
 
   String getPhotoPath({String? directoryPath}) {
     if (directoryPath != null) {
-      return '$directoryPath/$photoName.$extention';
+      return '$directoryPath/$photoName.$photoExtention';
     } else {
-      return '${photoDirectory!.path}/$photoName.$extention';
+      return '${photoDirectory!.path}/$photoName.$photoExtention';
     }
   }
 
   String getPhotoThumbnailPath({String? directoryPath}) {
     if (directoryPath != null) {
-      return '$directoryPath/thumbnails/${photoName}__thumbnail.$extention';
+      return '$directoryPath/thumbnails/${photoName}__thumbnail.$photoExtention';
     } else {
-      return '${thumbnailDirectory!.path}/${photoName}_thumbnail.$extention';
+      return '${thumbnailDirectory!.path}/${photoName}_thumbnail.$photoExtention';
     }
   }
 
-  // Size getPhotoSize() {
-  //   File imageFile = File(getPhotoPath());
-  //   img.Image image = img.decodeImage(imageFile.readAsBytesSync())!;
-  //   return Size(image.width.toDouble(), image.height.toDouble());
-  // }
-
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'containerUID': containerUID,
         'photoName': photoName,
-        'extention': extention,
+        'extention': photoExtention,
         'thumbnailName': thumbnailName,
         'thumbnailExtention': thumbnailExtention,
         'photoSize': photoSize,
@@ -85,9 +77,10 @@ class Photo {
     List<double> size = (json['photoSize'] as List<dynamic>).cast<double>();
     return Photo()
       ..id = json['id']
+      ..uid = json['uid']
       ..containerUID = json['containerUID']
-      ..photoName = json['photoName'] as int
-      ..extention = json['extention']
+      ..photoName = json['photoName'] as String
+      ..photoExtention = json['extention']
       ..thumbnailName = json['thumbnailName']
       ..thumbnailExtention = json['thumbnailExtention']
       ..photoSize = size;

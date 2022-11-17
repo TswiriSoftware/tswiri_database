@@ -9,10 +9,12 @@ part 'tag_text.g.dart';
 @Collection()
 @Name("TagText")
 class TagText {
-  ///TagTextID.
   Id id = Isar.autoIncrement;
 
-  ///Text.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("text")
   @Index(unique: true)
   late String text;
@@ -24,12 +26,14 @@ class TagText {
 
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'tag': text,
       };
 
   TagText fromJson(Map<String, dynamic> json) {
     return TagText()
       ..id = json['id']
+      ..uid = json['uid']
       ..text = json['tag'];
   }
 

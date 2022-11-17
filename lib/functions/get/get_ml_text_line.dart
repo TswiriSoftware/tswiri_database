@@ -7,6 +7,6 @@ List<MLTextLine> getRelatedMLTextLines({
   return _isar!.mLTextLines
       .filter()
       .anyOf(mlTextElements,
-          (q, MLTextElement element) => q.idEqualTo(element.lineID))
+          (q, MLTextElement element) => q.idEqualTo(element.lineUID))
       .findAllSync();
 }

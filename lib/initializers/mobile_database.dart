@@ -5,9 +5,10 @@ part of tswiri_database;
 ///Initiate a isar connection
 /// - Optional Directory.
 /// - Inspector.
-void initiateMobileIsar({String? directory, bool? inspector}) {
-  // if (_isar != null && _isar!.isOpen) return;
+void initiateMobileIsar({String? directory, bool? inspector, int? deviceID}) {
+  if (_isar != null && _isar!.isOpen) return;
 
+  isarDeviceID = deviceID ?? 0;
   _isar = Isar.openSync(
     [
       //Barcode Batch.

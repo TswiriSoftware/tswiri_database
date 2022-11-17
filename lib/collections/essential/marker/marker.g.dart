@@ -26,6 +26,11 @@ const MarkerSchema = CollectionSchema(
       id: 1,
       name: r'containerUID',
       type: IsarType.string,
+    ),
+    r'uid': PropertySchema(
+      id: 2,
+      name: r'uid',
+      type: IsarType.string,
     )
   },
   estimateSize: _markerEstimateSize,
@@ -33,7 +38,21 @@ const MarkerSchema = CollectionSchema(
   deserialize: _markerDeserialize,
   deserializeProp: _markerDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _markerGetId,
@@ -55,6 +74,7 @@ int _markerEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -66,6 +86,7 @@ void _markerSerialize(
 ) {
   writer.writeString(offsets[0], object.barcodeUID);
   writer.writeString(offsets[1], object.containerUID);
+  writer.writeString(offsets[2], object.uid);
 }
 
 Marker _markerDeserialize(
@@ -78,6 +99,7 @@ Marker _markerDeserialize(
   object.barcodeUID = reader.readString(offsets[0]);
   object.containerUID = reader.readStringOrNull(offsets[1]);
   object.id = id;
+  object.uid = reader.readString(offsets[2]);
   return object;
 }
 
@@ -92,6 +114,8 @@ P _markerDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -107,6 +131,60 @@ List<IsarLinkBase<dynamic>> _markerGetLinks(Marker object) {
 
 void _markerAttach(IsarCollection<dynamic> col, Id id, Marker object) {
   object.id = id;
+}
+
+extension MarkerByIndex on IsarCollection<Marker> {
+  Future<Marker?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  Marker? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<Marker?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<Marker?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(Marker object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(Marker object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<Marker> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<Marker> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
 }
 
 extension MarkerQueryWhereSort on QueryBuilder<Marker, Marker, QWhere> {
@@ -180,6 +258,49 @@ extension MarkerQueryWhere on QueryBuilder<Marker, Marker, QWhereClause> {
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterWhereClause> uidEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uid',
+        value: [uid],
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterWhereClause> uidNotEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -512,6 +633,134 @@ extension MarkerQueryFilter on QueryBuilder<Marker, Marker, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterFilterCondition> uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension MarkerQueryObject on QueryBuilder<Marker, Marker, QFilterCondition> {}
@@ -540,6 +789,18 @@ extension MarkerQuerySortBy on QueryBuilder<Marker, Marker, QSortBy> {
   QueryBuilder<Marker, Marker, QAfterSortBy> sortByContainerUIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'containerUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterSortBy> sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterSortBy> sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -580,6 +841,18 @@ extension MarkerQuerySortThenBy on QueryBuilder<Marker, Marker, QSortThenBy> {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<Marker, Marker, QAfterSortBy> thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QAfterSortBy> thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
+    });
+  }
 }
 
 extension MarkerQueryWhereDistinct on QueryBuilder<Marker, Marker, QDistinct> {
@@ -594,6 +867,13 @@ extension MarkerQueryWhereDistinct on QueryBuilder<Marker, Marker, QDistinct> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'containerUID', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Marker, Marker, QDistinct> distinctByUid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 }
@@ -614,6 +894,12 @@ extension MarkerQueryProperty on QueryBuilder<Marker, Marker, QQueryProperty> {
   QueryBuilder<Marker, String?, QQueryOperations> containerUIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'containerUID');
+    });
+  }
+
+  QueryBuilder<Marker, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 }

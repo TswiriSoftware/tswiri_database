@@ -5,8 +5,13 @@ part of tswiri_database;
 ///Initiate a isar connection
 /// - Optional Directory.
 /// - Inspector.
-void initiateDesktopIsar({String? directory, bool? inspector}) {
+void initiateDesktopIsar({
+  String? directory,
+  bool? inspector,
+  int? deviceID,
+}) {
   if (_isar != null && _isar!.isOpen) return;
+  isarDeviceID = 1;
   _isar = Isar.openSync(
     [
       //Barcode Batch.
@@ -64,8 +69,14 @@ void initiateDesktopIsar({String? directory, bool? inspector}) {
 
       //Tag Text.
       TagTextSchema,
+
+      //TODO: Devices
+
+      //TODO: Changes
     ],
     directory: directory ?? spaceDirectory!.path,
     inspector: inspector ?? true,
   );
+
+  ///TODO: Register server as device '1'.
 }

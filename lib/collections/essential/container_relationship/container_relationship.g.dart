@@ -32,6 +32,11 @@ const ContainerRelationshipSchema = CollectionSchema(
       id: 2,
       name: r'parentUID',
       type: IsarType.string,
+    ),
+    r'uid': PropertySchema(
+      id: 3,
+      name: r'uid',
+      type: IsarType.string,
     )
   },
   estimateSize: _containerRelationshipEstimateSize,
@@ -39,7 +44,21 @@ const ContainerRelationshipSchema = CollectionSchema(
   deserialize: _containerRelationshipDeserialize,
   deserializeProp: _containerRelationshipDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _containerRelationshipGetId,
@@ -61,6 +80,7 @@ int _containerRelationshipEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -73,6 +93,7 @@ void _containerRelationshipSerialize(
   writer.writeString(offsets[0], object.containerUID);
   writer.writeLong(offsets[1], object.hashCode);
   writer.writeString(offsets[2], object.parentUID);
+  writer.writeString(offsets[3], object.uid);
 }
 
 ContainerRelationship _containerRelationshipDeserialize(
@@ -85,6 +106,7 @@ ContainerRelationship _containerRelationshipDeserialize(
   object.containerUID = reader.readString(offsets[0]);
   object.id = id;
   object.parentUID = reader.readStringOrNull(offsets[2]);
+  object.uid = reader.readString(offsets[3]);
   return object;
 }
 
@@ -101,6 +123,8 @@ P _containerRelationshipDeserializeProp<P>(
       return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -118,6 +142,62 @@ List<IsarLinkBase<dynamic>> _containerRelationshipGetLinks(
 void _containerRelationshipAttach(
     IsarCollection<dynamic> col, Id id, ContainerRelationship object) {
   object.id = id;
+}
+
+extension ContainerRelationshipByIndex
+    on IsarCollection<ContainerRelationship> {
+  Future<ContainerRelationship?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  ContainerRelationship? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<ContainerRelationship?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<ContainerRelationship?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(ContainerRelationship object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(ContainerRelationship object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<ContainerRelationship> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<ContainerRelationship> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
 }
 
 extension ContainerRelationshipQueryWhereSort
@@ -197,6 +277,51 @@ extension ContainerRelationshipQueryWhere on QueryBuilder<ContainerRelationship,
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QAfterWhereClause>
+      uidEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uid',
+        value: [uid],
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QAfterWhereClause>
+      uidNotEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -608,6 +733,144 @@ extension ContainerRelationshipQueryFilter on QueryBuilder<
       ));
     });
   }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+          QAfterFilterCondition>
+      uidContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+          QAfterFilterCondition>
+      uidMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship,
+      QAfterFilterCondition> uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension ContainerRelationshipQueryObject on QueryBuilder<
@@ -657,6 +920,20 @@ extension ContainerRelationshipQuerySortBy
       sortByParentUIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QAfterSortBy>
+      sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QAfterSortBy>
+      sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -718,6 +995,20 @@ extension ContainerRelationshipQuerySortThenBy
       return query.addSortBy(r'parentUID', Sort.desc);
     });
   }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QAfterSortBy>
+      thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QAfterSortBy>
+      thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
+    });
+  }
 }
 
 extension ContainerRelationshipQueryWhereDistinct
@@ -740,6 +1031,13 @@ extension ContainerRelationshipQueryWhereDistinct
       distinctByParentUID({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'parentUID', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, ContainerRelationship, QDistinct>
+      distinctByUid({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 }
@@ -770,6 +1068,12 @@ extension ContainerRelationshipQueryProperty on QueryBuilder<
       parentUIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'parentUID');
+    });
+  }
+
+  QueryBuilder<ContainerRelationship, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 }

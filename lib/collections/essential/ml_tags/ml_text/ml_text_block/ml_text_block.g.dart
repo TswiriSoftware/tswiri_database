@@ -27,6 +27,11 @@ const MLTextBlockSchema = CollectionSchema(
       id: 1,
       name: r'recognizedLanguages',
       type: IsarType.stringList,
+    ),
+    r'uid': PropertySchema(
+      id: 2,
+      name: r'uid',
+      type: IsarType.string,
     )
   },
   estimateSize: _mLTextBlockEstimateSize,
@@ -34,7 +39,21 @@ const MLTextBlockSchema = CollectionSchema(
   deserialize: _mLTextBlockDeserialize,
   deserializeProp: _mLTextBlockDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {r'CornerPoints': CornerPointsSchema},
   getId: _mLTextBlockGetId,
@@ -59,6 +78,7 @@ int _mLTextBlockEstimateSize(
       bytesCount += value.length * 3;
     }
   }
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -75,6 +95,7 @@ void _mLTextBlockSerialize(
     object.cornerPoints,
   );
   writer.writeStringList(offsets[1], object.recognizedLanguages);
+  writer.writeString(offsets[2], object.uid);
 }
 
 MLTextBlock _mLTextBlockDeserialize(
@@ -92,6 +113,7 @@ MLTextBlock _mLTextBlockDeserialize(
       CornerPoints();
   object.id = id;
   object.recognizedLanguages = reader.readStringList(offsets[1]) ?? [];
+  object.uid = reader.readString(offsets[2]);
   return object;
 }
 
@@ -111,6 +133,8 @@ P _mLTextBlockDeserializeProp<P>(
           CornerPoints()) as P;
     case 1:
       return (reader.readStringList(offset) ?? []) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -127,6 +151,60 @@ List<IsarLinkBase<dynamic>> _mLTextBlockGetLinks(MLTextBlock object) {
 void _mLTextBlockAttach(
     IsarCollection<dynamic> col, Id id, MLTextBlock object) {
   object.id = id;
+}
+
+extension MLTextBlockByIndex on IsarCollection<MLTextBlock> {
+  Future<MLTextBlock?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  MLTextBlock? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<MLTextBlock?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<MLTextBlock?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(MLTextBlock object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(MLTextBlock object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<MLTextBlock> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<MLTextBlock> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
 }
 
 extension MLTextBlockQueryWhereSort
@@ -203,6 +281,51 @@ extension MLTextBlockQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterWhereClause> uidEqualTo(
+      String uid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uid',
+        value: [uid],
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterWhereClause> uidNotEqualTo(
+      String uid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -488,6 +611,137 @@ extension MLTextBlockQueryFilter
       );
     });
   }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition> uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterFilterCondition>
+      uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension MLTextBlockQueryObject
@@ -504,7 +758,19 @@ extension MLTextBlockQueryLinks
     on QueryBuilder<MLTextBlock, MLTextBlock, QFilterCondition> {}
 
 extension MLTextBlockQuerySortBy
-    on QueryBuilder<MLTextBlock, MLTextBlock, QSortBy> {}
+    on QueryBuilder<MLTextBlock, MLTextBlock, QSortBy> {
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterSortBy> sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterSortBy> sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
+    });
+  }
+}
 
 extension MLTextBlockQuerySortThenBy
     on QueryBuilder<MLTextBlock, MLTextBlock, QSortThenBy> {
@@ -519,6 +785,18 @@ extension MLTextBlockQuerySortThenBy
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterSortBy> thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QAfterSortBy> thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
+    });
+  }
 }
 
 extension MLTextBlockQueryWhereDistinct
@@ -527,6 +805,13 @@ extension MLTextBlockQueryWhereDistinct
       distinctByRecognizedLanguages() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'recognizedLanguages');
+    });
+  }
+
+  QueryBuilder<MLTextBlock, MLTextBlock, QDistinct> distinctByUid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 }
@@ -550,6 +835,12 @@ extension MLTextBlockQueryProperty
       recognizedLanguagesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'recognizedLanguages');
+    });
+  }
+
+  QueryBuilder<MLTextBlock, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 }

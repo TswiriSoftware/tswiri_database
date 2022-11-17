@@ -12,6 +12,11 @@ part 'cataloged_grid.g.dart';
 class CatalogedGrid {
   Id id = Isar.autoIncrement;
 
+  ///uid of `this`.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   ///BarcodeUID of the origin barcode.
   @Name("barcodeUID")
   late String barcodeUID;
@@ -28,6 +33,7 @@ class CatalogedGrid {
   //To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'barcodeUID': barcodeUID,
         'parentBarcodeUID': parentBarcodeUID,
       };
@@ -36,6 +42,7 @@ class CatalogedGrid {
   CatalogedGrid fromJson(Map<String, dynamic> json) {
     return CatalogedGrid()
       ..id = json['id']
+      ..uid = json['uid']
       ..barcodeUID = json['barcodeUID']
       ..parentBarcodeUID = json['parentBarcodeUID'];
   }

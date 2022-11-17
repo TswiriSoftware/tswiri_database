@@ -13,11 +13,13 @@ part 'marker.g.dart';
 class Marker {
   Id id = Isar.autoIncrement;
 
-  //Generation Time.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("containerUID")
   late String? containerUID;
 
-  ///Range Start.
   @Name("barcodeUID")
   late String barcodeUID;
 
@@ -29,6 +31,7 @@ class Marker {
   ///To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'containerUID': containerUID,
         'barcodeUID': barcodeUID,
       };
@@ -37,6 +40,7 @@ class Marker {
   Marker fromJson(Map<String, dynamic> json) {
     return Marker()
       ..id = json['id']
+      ..uid = json['uid']
       ..containerUID = json['containerUID']
       ..barcodeUID = json['barcodeUID'];
   }

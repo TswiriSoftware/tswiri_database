@@ -2,6 +2,7 @@ part of tswiri_database;
 
 ///Creates a new [Photo].
 createPhoto({
+  required Isar isar,
   required Photo photo,
   required List<MLPhotoLabel> mlPhotoLabels,
   required List<PhotoLabel> photoLabels,
@@ -14,22 +15,23 @@ createPhoto({
 }) {
   _isar!.writeTxnSync(() {
     int photoID = _isar!.photos.putSync(photo);
+    Photo p = _isar!.photos.getSync(photoID)!;
 
     ///Write Photo Labels to Isar.
     for (MLPhotoLabel mlPhotoLabel in mlPhotoLabels) {
       _isar!.mLPhotoLabels.putSync(
         MLPhotoLabel()
           ..confidence = mlPhotoLabel.confidence
-          ..detectedLabelTextID = mlPhotoLabel.detectedLabelTextID
-          ..photoID = photoID
+          ..detectedLabelTextUID = mlPhotoLabel.detectedLabelTextUID
+          ..photoUID = p.uid
           ..userFeedback = mlPhotoLabel.userFeedback,
       );
     }
 
     for (PhotoLabel photoLabel in photoLabels) {
       _isar!.photoLabels.putSync(PhotoLabel()
-        ..photoID = photoID
-        ..tagTextID = photoLabel.tagTextID);
+        ..photoUID = p.uid
+        ..tagTextUID = photoLabel.tagTextUID);
     }
 
     ///Write Objects to Isar.
@@ -37,26 +39,26 @@ createPhoto({
       int objectID = _isar!.mLObjects.putSync(
         MLObject()
           ..boundingBox = mlObject.boundingBox
-          ..photoID = photoID,
+          ..photoUID = p.uid,
       );
 
       ///Write Object Labels to Isar.
       for (MLObjectLabel mlObjectLabel in mlObjectLabels
-          .where((element) => element.objectID == mlObject.id)) {
+          .where((element) => element.objectUID == mlObject.id)) {
         _isar!.mLObjectLabels.putSync(
           MLObjectLabel()
             ..confidence = mlObjectLabel.confidence
-            ..detectedLabelTextID = mlObjectLabel.detectedLabelTextID
-            ..objectID = objectID
+            ..detectedLabelTextUID = mlObjectLabel.detectedLabelTextUID
+            ..objectUID = objectID
             ..userFeedback = mlObjectLabel.userFeedback,
         );
       }
 
-      for (ObjectLabel objectLabel
-          in objectLabels.where((element) => element.objectID == mlObject.id)) {
+      for (ObjectLabel objectLabel in objectLabels
+          .where((element) => element.objectUID == mlObject.id)) {
         _isar!.objectLabels.putSync(ObjectLabel()
-          ..objectID = objectID
-          ..tagTextID = objectLabel.tagTextID);
+          ..objectUID = objectID
+          ..tagTextUID = objectLabel.tagTextUID);
       }
     }
 
@@ -70,10 +72,10 @@ createPhoto({
 
       ///Write Text Lines to isar.
       for (MLTextLine mlTextLine in mlTextLines
-          .where((element) => element.blockID == mlTextBlock.id)) {
+          .where((element) => element.blockUID == mlTextBlock.id)) {
         int lineID = _isar!.mLTextLines.putSync(
           MLTextLine()
-            ..blockID = textBlockID
+            ..blockUID = textBlockID
             ..blockIndex = mlTextLine.blockIndex
             ..cornerPoints = mlTextLine.cornerPoints
             ..recognizedLanguages = mlTextLine.recognizedLanguages,
@@ -81,14 +83,14 @@ createPhoto({
 
         ///Write Text Elements to isar.
         for (MLTextElement e in mlTextElements
-            .where((element) => element.lineID == mlTextLine.id)) {
+            .where((element) => element.lineUID == mlTextLine.id)) {
           _isar!.mLTextElements.putSync(
             MLTextElement()
               ..cornerPoints = e.cornerPoints
-              ..detectedElementTextID = e.detectedElementTextID
-              ..lineID = lineID
+              ..mlDetectedElementTextUID = e.mlDetectedElementTextUID
+              ..lineUID = lineID
               ..lineIndex = e.lineIndex
-              ..photoID = photoID
+              ..photoUID = photoID
               ..userFeedback = e.userFeedback,
           );
         }

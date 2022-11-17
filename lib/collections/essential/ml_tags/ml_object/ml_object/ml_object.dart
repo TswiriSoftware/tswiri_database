@@ -14,9 +14,12 @@ part 'ml_object.g.dart';
 class MLObject {
   Id id = Isar.autoIncrement;
 
-  ///PhotoID.
-  @Name("photoID")
-  late int photoID;
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
+  @Name("photoUID")
+  late String photoUID;
 
   ///Bounding Box.
   ///The boundingBox. use rect.fromLTRB
@@ -25,21 +28,22 @@ class MLObject {
 
   @override
   String toString() {
-    return '\nObjectID: $id, PhotoID: $photoID, BoundingBox: $boundingBox';
+    return '\nObjectID: $id, PhotoID: $photoUID, BoundingBox: $boundingBox';
   }
 
   @override
   bool operator ==(Object other) {
     return other is MLObject &&
         id == other.id &&
-        photoID == other.photoID &&
+        photoUID == other.photoUID &&
         boundingBox == other.boundingBox;
   }
 
   ///To json.
   Map toJson() => {
         'id': id,
-        'photoID': photoID,
+        'uid': uid,
+        'photoID': photoUID,
         'blackListed': boundingBox,
       };
 
@@ -47,7 +51,8 @@ class MLObject {
   MLObject fromJson(Map<String, dynamic> json) {
     return MLObject()
       ..id = json['id']
-      ..photoID = json['photoID']
+      ..uid = json['uid']
+      ..photoUID = json['photoID']
       ..boundingBox = (json['blackListed'] as List<dynamic>).cast<double>();
   }
 

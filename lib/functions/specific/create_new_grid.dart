@@ -2,6 +2,7 @@ part of tswiri_database;
 
 ///Creates a [CatalogedGrid] with [CatalogedCoordinate]s.
 createNewGrid({
+  required Isar isar,
   required CatalogedGrid catalogedGrid,
   required CatalogedCoordinate catalogedCoordinate,
 }) {

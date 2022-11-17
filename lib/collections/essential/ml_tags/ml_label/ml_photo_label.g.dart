@@ -22,23 +22,28 @@ const MLPhotoLabelSchema = CollectionSchema(
       name: r'confidence',
       type: IsarType.double,
     ),
-    r'detectedLabelTextID': PropertySchema(
+    r'detectedLabelTextUID': PropertySchema(
       id: 1,
-      name: r'detectedLabelTextID',
-      type: IsarType.long,
+      name: r'detectedLabelTextUID',
+      type: IsarType.string,
     ),
     r'hashCode': PropertySchema(
       id: 2,
       name: r'hashCode',
       type: IsarType.long,
     ),
-    r'photoID': PropertySchema(
+    r'photoUID': PropertySchema(
       id: 3,
-      name: r'photoID',
-      type: IsarType.long,
+      name: r'photoUID',
+      type: IsarType.string,
+    ),
+    r'uid': PropertySchema(
+      id: 4,
+      name: r'uid',
+      type: IsarType.string,
     ),
     r'userFeedback': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'userFeedback',
       type: IsarType.bool,
     )
@@ -49,34 +54,16 @@ const MLPhotoLabelSchema = CollectionSchema(
   deserializeProp: _mLPhotoLabelDeserializeProp,
   idName: r'id',
   indexes: {
-    r'detectedLabelTextID_userFeedback': IndexSchema(
-      id: 8578679752870373633,
-      name: r'detectedLabelTextID_userFeedback',
-      unique: false,
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'detectedLabelTextID',
-          type: IndexType.value,
-          caseSensitive: false,
-        ),
-        IndexPropertySchema(
-          name: r'userFeedback',
-          type: IndexType.value,
-          caseSensitive: false,
-        )
-      ],
-    ),
-    r'userFeedback': IndexSchema(
-      id: 3507649478022456025,
-      name: r'userFeedback',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'userFeedback',
-          type: IndexType.value,
-          caseSensitive: false,
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
         )
       ],
     )
@@ -95,6 +82,9 @@ int _mLPhotoLabelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.detectedLabelTextUID.length * 3;
+  bytesCount += 3 + object.photoUID.length * 3;
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -105,10 +95,11 @@ void _mLPhotoLabelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDouble(offsets[0], object.confidence);
-  writer.writeLong(offsets[1], object.detectedLabelTextID);
+  writer.writeString(offsets[1], object.detectedLabelTextUID);
   writer.writeLong(offsets[2], object.hashCode);
-  writer.writeLong(offsets[3], object.photoID);
-  writer.writeBool(offsets[4], object.userFeedback);
+  writer.writeString(offsets[3], object.photoUID);
+  writer.writeString(offsets[4], object.uid);
+  writer.writeBool(offsets[5], object.userFeedback);
 }
 
 MLPhotoLabel _mLPhotoLabelDeserialize(
@@ -119,10 +110,11 @@ MLPhotoLabel _mLPhotoLabelDeserialize(
 ) {
   final object = MLPhotoLabel();
   object.confidence = reader.readDouble(offsets[0]);
-  object.detectedLabelTextID = reader.readLong(offsets[1]);
+  object.detectedLabelTextUID = reader.readString(offsets[1]);
   object.id = id;
-  object.photoID = reader.readLongOrNull(offsets[3]);
-  object.userFeedback = reader.readBoolOrNull(offsets[4]);
+  object.photoUID = reader.readString(offsets[3]);
+  object.uid = reader.readString(offsets[4]);
+  object.userFeedback = reader.readBoolOrNull(offsets[5]);
   return object;
 }
 
@@ -136,12 +128,14 @@ P _mLPhotoLabelDeserializeProp<P>(
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (reader.readBoolOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -161,29 +155,66 @@ void _mLPhotoLabelAttach(
   object.id = id;
 }
 
+extension MLPhotoLabelByIndex on IsarCollection<MLPhotoLabel> {
+  Future<MLPhotoLabel?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  MLPhotoLabel? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<MLPhotoLabel?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<MLPhotoLabel?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(MLPhotoLabel object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(MLPhotoLabel object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<MLPhotoLabel> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<MLPhotoLabel> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
+}
+
 extension MLPhotoLabelQueryWhereSort
     on QueryBuilder<MLPhotoLabel, MLPhotoLabel, QWhere> {
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhere>
-      anyDetectedLabelTextIDUserFeedback() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(
-            indexName: r'detectedLabelTextID_userFeedback'),
-      );
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhere> anyUserFeedback() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'userFeedback'),
-      );
     });
   }
 }
@@ -257,231 +288,45 @@ extension MLPhotoLabelQueryWhere
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDEqualToAnyUserFeedback(int detectedLabelTextID) {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause> uidEqualTo(
+      String uid) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'detectedLabelTextID_userFeedback',
-        value: [detectedLabelTextID],
+        indexName: r'uid',
+        value: [uid],
       ));
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDNotEqualToAnyUserFeedback(int detectedLabelTextID) {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause> uidNotEqualTo(
+      String uid) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
+              indexName: r'uid',
               lower: [],
-              upper: [detectedLabelTextID],
+              upper: [uid],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
-              lower: [detectedLabelTextID],
+              indexName: r'uid',
+              lower: [uid],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
-              lower: [detectedLabelTextID],
+              indexName: r'uid',
+              lower: [uid],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
+              indexName: r'uid',
               lower: [],
-              upper: [detectedLabelTextID],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDGreaterThanAnyUserFeedback(
-    int detectedLabelTextID, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'detectedLabelTextID_userFeedback',
-        lower: [detectedLabelTextID],
-        includeLower: include,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDLessThanAnyUserFeedback(
-    int detectedLabelTextID, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'detectedLabelTextID_userFeedback',
-        lower: [],
-        upper: [detectedLabelTextID],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDBetweenAnyUserFeedback(
-    int lowerDetectedLabelTextID,
-    int upperDetectedLabelTextID, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'detectedLabelTextID_userFeedback',
-        lower: [lowerDetectedLabelTextID],
-        includeLower: includeLower,
-        upper: [upperDetectedLabelTextID],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDEqualToUserFeedbackIsNull(int detectedLabelTextID) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'detectedLabelTextID_userFeedback',
-        value: [detectedLabelTextID, null],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDEqualToUserFeedbackIsNotNull(int detectedLabelTextID) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'detectedLabelTextID_userFeedback',
-        lower: [detectedLabelTextID, null],
-        includeLower: false,
-        upper: [
-          detectedLabelTextID,
-        ],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDUserFeedbackEqualTo(
-          int detectedLabelTextID, bool? userFeedback) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'detectedLabelTextID_userFeedback',
-        value: [detectedLabelTextID, userFeedback],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      detectedLabelTextIDEqualToUserFeedbackNotEqualTo(
-          int detectedLabelTextID, bool? userFeedback) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
-              lower: [detectedLabelTextID],
-              upper: [detectedLabelTextID, userFeedback],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
-              lower: [detectedLabelTextID, userFeedback],
-              includeLower: false,
-              upper: [detectedLabelTextID],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
-              lower: [detectedLabelTextID, userFeedback],
-              includeLower: false,
-              upper: [detectedLabelTextID],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'detectedLabelTextID_userFeedback',
-              lower: [detectedLabelTextID],
-              upper: [detectedLabelTextID, userFeedback],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      userFeedbackIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'userFeedback',
-        value: [null],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      userFeedbackIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'userFeedback',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      userFeedbackEqualTo(bool? userFeedback) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'userFeedback',
-        value: [userFeedback],
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterWhereClause>
-      userFeedbackNotEqualTo(bool? userFeedback) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userFeedback',
-              lower: [],
-              upper: [userFeedback],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userFeedback',
-              lower: [userFeedback],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userFeedback',
-              lower: [userFeedback],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userFeedback',
-              lower: [],
-              upper: [userFeedback],
+              upper: [uid],
               includeUpper: false,
             ));
       }
@@ -558,57 +403,137 @@ extension MLPhotoLabelQueryFilter
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      detectedLabelTextIDEqualTo(int value) {
+      detectedLabelTextUIDEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'detectedLabelTextID',
+        property: r'detectedLabelTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      detectedLabelTextIDGreaterThan(
-    int value, {
+      detectedLabelTextUIDGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'detectedLabelTextID',
+        property: r'detectedLabelTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      detectedLabelTextIDLessThan(
-    int value, {
+      detectedLabelTextUIDLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'detectedLabelTextID',
+        property: r'detectedLabelTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      detectedLabelTextIDBetween(
-    int lower,
-    int upper, {
+      detectedLabelTextUIDBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'detectedLabelTextID',
+        property: r'detectedLabelTextUID',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      detectedLabelTextUIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'detectedLabelTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      detectedLabelTextUIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'detectedLabelTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      detectedLabelTextUIDContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'detectedLabelTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      detectedLabelTextUIDMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'detectedLabelTextUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      detectedLabelTextUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'detectedLabelTextUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      detectedLabelTextUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'detectedLabelTextUID',
+        value: '',
       ));
     });
   }
@@ -723,75 +648,269 @@ extension MLPhotoLabelQueryFilter
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      photoIDIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'photoID',
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      photoIDIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'photoID',
-      ));
-    });
-  }
-
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      photoIDEqualTo(int? value) {
+      photoUIDEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'photoID',
+        property: r'photoUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      photoIDGreaterThan(
-    int? value, {
+      photoUIDGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'photoID',
+        property: r'photoUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      photoIDLessThan(
-    int? value, {
+      photoUIDLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'photoID',
+        property: r'photoUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
-      photoIDBetween(
-    int? lower,
-    int? upper, {
+      photoUIDBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'photoID',
+        property: r'photoUID',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      photoUIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'photoUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      photoUIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'photoUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      photoUIDContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'photoUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      photoUIDMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'photoUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      photoUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      photoUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'photoUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition> uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterFilterCondition>
+      uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
       ));
     });
   }
@@ -847,16 +966,16 @@ extension MLPhotoLabelQuerySortBy
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy>
-      sortByDetectedLabelTextID() {
+      sortByDetectedLabelTextUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'detectedLabelTextID', Sort.asc);
+      return query.addSortBy(r'detectedLabelTextUID', Sort.asc);
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy>
-      sortByDetectedLabelTextIDDesc() {
+      sortByDetectedLabelTextUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'detectedLabelTextID', Sort.desc);
+      return query.addSortBy(r'detectedLabelTextUID', Sort.desc);
     });
   }
 
@@ -872,15 +991,27 @@ extension MLPhotoLabelQuerySortBy
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> sortByPhotoID() {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> sortByPhotoUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.asc);
+      return query.addSortBy(r'photoUID', Sort.asc);
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> sortByPhotoIDDesc() {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> sortByPhotoUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.desc);
+      return query.addSortBy(r'photoUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 
@@ -914,16 +1045,16 @@ extension MLPhotoLabelQuerySortThenBy
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy>
-      thenByDetectedLabelTextID() {
+      thenByDetectedLabelTextUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'detectedLabelTextID', Sort.asc);
+      return query.addSortBy(r'detectedLabelTextUID', Sort.asc);
     });
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy>
-      thenByDetectedLabelTextIDDesc() {
+      thenByDetectedLabelTextUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'detectedLabelTextID', Sort.desc);
+      return query.addSortBy(r'detectedLabelTextUID', Sort.desc);
     });
   }
 
@@ -951,15 +1082,27 @@ extension MLPhotoLabelQuerySortThenBy
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> thenByPhotoID() {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> thenByPhotoUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.asc);
+      return query.addSortBy(r'photoUID', Sort.asc);
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> thenByPhotoIDDesc() {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> thenByPhotoUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.desc);
+      return query.addSortBy(r'photoUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QAfterSortBy> thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 
@@ -986,9 +1129,10 @@ extension MLPhotoLabelQueryWhereDistinct
   }
 
   QueryBuilder<MLPhotoLabel, MLPhotoLabel, QDistinct>
-      distinctByDetectedLabelTextID() {
+      distinctByDetectedLabelTextUID({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'detectedLabelTextID');
+      return query.addDistinctBy(r'detectedLabelTextUID',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -998,9 +1142,17 @@ extension MLPhotoLabelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QDistinct> distinctByPhotoID() {
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QDistinct> distinctByPhotoUID(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'photoID');
+      return query.addDistinctBy(r'photoUID', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, MLPhotoLabel, QDistinct> distinctByUid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 
@@ -1025,10 +1177,10 @@ extension MLPhotoLabelQueryProperty
     });
   }
 
-  QueryBuilder<MLPhotoLabel, int, QQueryOperations>
-      detectedLabelTextIDProperty() {
+  QueryBuilder<MLPhotoLabel, String, QQueryOperations>
+      detectedLabelTextUIDProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'detectedLabelTextID');
+      return query.addPropertyName(r'detectedLabelTextUID');
     });
   }
 
@@ -1038,9 +1190,15 @@ extension MLPhotoLabelQueryProperty
     });
   }
 
-  QueryBuilder<MLPhotoLabel, int?, QQueryOperations> photoIDProperty() {
+  QueryBuilder<MLPhotoLabel, String, QQueryOperations> photoUIDProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'photoID');
+      return query.addPropertyName(r'photoUID');
+    });
+  }
+
+  QueryBuilder<MLPhotoLabel, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 

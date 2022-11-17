@@ -1,36 +1,37 @@
 import 'dart:math';
-
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/collections/essential/barcode_batch/barcode_batch.dart';
 part 'cataloged_barcode.g.dart';
 
 ///[CatalogedBarcode]
 ///
-///  - `id` the id of `this`.
-/// - `barcodeUID` Barcode's UID.
+/// - `uid` uid of `this`.
+/// - `id` the id of `this`.
+/// - `barcodeUID` [CatalogedBarcode]'s UID `this` is linked to.
 /// - `width` Width of `this`. (mm)
 /// - `height` Height of `this`. (mm)
-/// - `batchID` The batch's UID `this` is part of.
+/// - `batchID` The [BarcodeBatch]'s UID `this` is linked to.
 ///
 @Collection()
 @Name("CatalogedBarcode")
 class CatalogedBarcode {
   Id id = Isar.autoIncrement;
 
-  ///Barcode's UID.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
+  @Name("batchUID")
+  late String batchUID;
+
   @Name("barcodeUID")
   late String barcodeUID;
 
-  ///Width (mm).
   @Name("width")
   late double width;
 
-  ///Height (mm).
   @Name("height")
   late double height;
-
-  ///The batch's UID this [CatalogedBarcode] is part of.
-  @Name("batchID")
-  late int batchID;
 
   @override
   bool operator ==(Object other) {
@@ -49,6 +50,7 @@ class CatalogedBarcode {
   ///To json
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'barcodeUID': barcodeUID,
         'height': height,
         'width': width,
@@ -58,6 +60,7 @@ class CatalogedBarcode {
   CatalogedBarcode fromJson(Map<String, dynamic> json) {
     return CatalogedBarcode()
       ..id = json['id']
+      ..uid = json['uid']
       ..barcodeUID = json['barcodeUID']
       ..height = json['height'] as double
       ..width = json['width'] as double;

@@ -22,15 +22,20 @@ const PhotoLabelSchema = CollectionSchema(
       name: r'hashCode',
       type: IsarType.long,
     ),
-    r'photoID': PropertySchema(
+    r'photoUID': PropertySchema(
       id: 1,
-      name: r'photoID',
-      type: IsarType.long,
+      name: r'photoUID',
+      type: IsarType.string,
     ),
-    r'tagTextID': PropertySchema(
+    r'tagTextUID': PropertySchema(
       id: 2,
-      name: r'tagTextID',
-      type: IsarType.long,
+      name: r'tagTextUID',
+      type: IsarType.string,
+    ),
+    r'uid': PropertySchema(
+      id: 3,
+      name: r'uid',
+      type: IsarType.string,
     )
   },
   estimateSize: _photoLabelEstimateSize,
@@ -39,16 +44,29 @@ const PhotoLabelSchema = CollectionSchema(
   deserializeProp: _photoLabelDeserializeProp,
   idName: r'id',
   indexes: {
-    r'tagTextID': IndexSchema(
-      id: -5214036049182336314,
-      name: r'tagTextID',
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'tagTextUID': IndexSchema(
+      id: 7302415373537970869,
+      name: r'tagTextUID',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'tagTextID',
-          type: IndexType.value,
-          caseSensitive: false,
+          name: r'tagTextUID',
+          type: IndexType.hash,
+          caseSensitive: true,
         )
       ],
     )
@@ -67,6 +85,9 @@ int _photoLabelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.photoUID.length * 3;
+  bytesCount += 3 + object.tagTextUID.length * 3;
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -77,8 +98,9 @@ void _photoLabelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.hashCode);
-  writer.writeLong(offsets[1], object.photoID);
-  writer.writeLong(offsets[2], object.tagTextID);
+  writer.writeString(offsets[1], object.photoUID);
+  writer.writeString(offsets[2], object.tagTextUID);
+  writer.writeString(offsets[3], object.uid);
 }
 
 PhotoLabel _photoLabelDeserialize(
@@ -89,8 +111,9 @@ PhotoLabel _photoLabelDeserialize(
 ) {
   final object = PhotoLabel();
   object.id = id;
-  object.photoID = reader.readLong(offsets[1]);
-  object.tagTextID = reader.readLong(offsets[2]);
+  object.photoUID = reader.readString(offsets[1]);
+  object.tagTextUID = reader.readString(offsets[2]);
+  object.uid = reader.readString(offsets[3]);
   return object;
 }
 
@@ -104,9 +127,11 @@ P _photoLabelDeserializeProp<P>(
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -124,19 +149,65 @@ void _photoLabelAttach(IsarCollection<dynamic> col, Id id, PhotoLabel object) {
   object.id = id;
 }
 
+extension PhotoLabelByIndex on IsarCollection<PhotoLabel> {
+  Future<PhotoLabel?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  PhotoLabel? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<PhotoLabel?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<PhotoLabel?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(PhotoLabel object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(PhotoLabel object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<PhotoLabel> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<PhotoLabel> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
+}
+
 extension PhotoLabelQueryWhereSort
     on QueryBuilder<PhotoLabel, PhotoLabel, QWhere> {
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
-    });
-  }
-
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhere> anyTagTextID() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'tagTextID'),
-      );
     });
   }
 }
@@ -208,93 +279,93 @@ extension PhotoLabelQueryWhere
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDEqualTo(
-      int tagTextID) {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> uidEqualTo(
+      String uid) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'tagTextID',
-        value: [tagTextID],
+        indexName: r'uid',
+        value: [uid],
       ));
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDNotEqualTo(
-      int tagTextID) {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> uidNotEqualTo(
+      String uid) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'tagTextID',
+              indexName: r'uid',
               lower: [],
-              upper: [tagTextID],
+              upper: [uid],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'tagTextID',
-              lower: [tagTextID],
+              indexName: r'uid',
+              lower: [uid],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'tagTextID',
-              lower: [tagTextID],
+              indexName: r'uid',
+              lower: [uid],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'tagTextID',
+              indexName: r'uid',
               lower: [],
-              upper: [tagTextID],
+              upper: [uid],
               includeUpper: false,
             ));
       }
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDGreaterThan(
-    int tagTextID, {
-    bool include = false,
-  }) {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextUIDEqualTo(
+      String tagTextUID) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'tagTextID',
-        lower: [tagTextID],
-        includeLower: include,
-        upper: [],
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'tagTextUID',
+        value: [tagTextUID],
       ));
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDLessThan(
-    int tagTextID, {
-    bool include = false,
-  }) {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextUIDNotEqualTo(
+      String tagTextUID) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'tagTextID',
-        lower: [],
-        upper: [tagTextID],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterWhereClause> tagTextIDBetween(
-    int lowerTagTextID,
-    int upperTagTextID, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'tagTextID',
-        lower: [lowerTagTextID],
-        includeLower: includeLower,
-        upper: [upperTagTextID],
-        includeUpper: includeUpper,
-      ));
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextUID',
+              lower: [],
+              upper: [tagTextUID],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextUID',
+              lower: [tagTextUID],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextUID',
+              lower: [tagTextUID],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'tagTextUID',
+              lower: [],
+              upper: [tagTextUID],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -408,110 +479,401 @@ extension PhotoLabelQueryFilter
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoIDEqualTo(
-      int value) {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoUIDEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'photoID',
+        property: r'photoUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
-      photoIDGreaterThan(
-    int value, {
+      photoUIDGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'photoID',
+        property: r'photoUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoIDLessThan(
-    int value, {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoUIDLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'photoID',
+        property: r'photoUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoIDBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoUIDBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'photoID',
+        property: r'photoUID',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextIDEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tagTextID',
-        value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
-      tagTextIDGreaterThan(
-    int value, {
+      photoUIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'photoUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoUIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'photoUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoUIDContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'photoUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> photoUIDMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'photoUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      photoUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      photoUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'photoUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextUIDEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'tagTextID',
+        property: r'tagTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextIDLessThan(
-    int value, {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'tagTextID',
+        property: r'tagTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextIDBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextUIDBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'tagTextID',
+        property: r'tagTextUID',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> tagTextUIDMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'tagTextUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tagTextUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition>
+      tagTextUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'tagTextUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterFilterCondition> uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
       ));
     });
   }
@@ -537,27 +899,39 @@ extension PhotoLabelQuerySortBy
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByPhotoID() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByPhotoUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.asc);
+      return query.addSortBy(r'photoUID', Sort.asc);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByPhotoIDDesc() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByPhotoUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.desc);
+      return query.addSortBy(r'photoUID', Sort.desc);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByTagTextID() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByTagTextUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.asc);
+      return query.addSortBy(r'tagTextUID', Sort.asc);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByTagTextIDDesc() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByTagTextUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.desc);
+      return query.addSortBy(r'tagTextUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -588,27 +962,39 @@ extension PhotoLabelQuerySortThenBy
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByPhotoID() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByPhotoUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.asc);
+      return query.addSortBy(r'photoUID', Sort.asc);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByPhotoIDDesc() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByPhotoUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'photoID', Sort.desc);
+      return query.addSortBy(r'photoUID', Sort.desc);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByTagTextID() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByTagTextUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.asc);
+      return query.addSortBy(r'tagTextUID', Sort.asc);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByTagTextIDDesc() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByTagTextUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.desc);
+      return query.addSortBy(r'tagTextUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QAfterSortBy> thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -621,15 +1007,24 @@ extension PhotoLabelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByPhotoID() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByPhotoUID(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'photoID');
+      return query.addDistinctBy(r'photoUID', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByTagTextID() {
+  QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByTagTextUID(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'tagTextID');
+      return query.addDistinctBy(r'tagTextUID', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PhotoLabel, PhotoLabel, QDistinct> distinctByUid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 }
@@ -648,15 +1043,21 @@ extension PhotoLabelQueryProperty
     });
   }
 
-  QueryBuilder<PhotoLabel, int, QQueryOperations> photoIDProperty() {
+  QueryBuilder<PhotoLabel, String, QQueryOperations> photoUIDProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'photoID');
+      return query.addPropertyName(r'photoUID');
     });
   }
 
-  QueryBuilder<PhotoLabel, int, QQueryOperations> tagTextIDProperty() {
+  QueryBuilder<PhotoLabel, String, QQueryOperations> tagTextUIDProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'tagTextID');
+      return query.addPropertyName(r'tagTextUID');
+    });
+  }
+
+  QueryBuilder<PhotoLabel, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 }

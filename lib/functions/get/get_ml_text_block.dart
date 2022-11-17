@@ -7,6 +7,6 @@ List<MLTextBlock> getRelatedTextBlocks({
   return _isar!.mLTextBlocks
       .filter()
       .anyOf(
-          mlTextLines, (q, MLTextLine element) => q.idEqualTo(element.blockID))
+          mlTextLines, (q, MLTextLine element) => q.idEqualTo(element.blockUID))
       .findAllSync();
 }

@@ -14,38 +14,42 @@ part 'container_tag.g.dart';
 class ContainerTag {
   Id id = Isar.autoIncrement;
 
-  ///The [CatalogedContainer]'s UID.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("containerUID")
   late String containerUID;
 
-  ///The TagTextID of this [ContainerTag].
-  @Name("tagTextID")
-  late int tagTextID;
+  @Name("tagTextUID")
+  late String tagTextUID;
 
   @override
   bool operator ==(Object other) {
     return other is ContainerTag &&
         id == other.id &&
         containerUID == other.containerUID &&
-        tagTextID == other.tagTextID;
+        tagTextUID == other.tagTextUID;
   }
 
   @override
   String toString() {
-    return 'UID: $containerUID: Tag: $tagTextID';
+    return 'UID: $containerUID: Tag: $tagTextUID';
   }
 
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'containerUID': containerUID,
-        'tagTextID': tagTextID,
+        'tagTextUID': tagTextUID,
       };
 
   ContainerTag fromJson(Map<String, dynamic> json) {
     return ContainerTag()
       ..id = json['id']
+      ..uid = json['uid']
       ..containerUID = json['containerUID']
-      ..tagTextID = json['tagTextID'] as int;
+      ..tagTextUID = json['tagTextUID'] as String;
   }
 
   @override

@@ -16,44 +16,43 @@ part 'ml_photo_label.g.dart';
 class MLPhotoLabel {
   Id id = Isar.autoIncrement;
 
-  ///PhotoID.
-  @Name("photoID")
-  late int? photoID;
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
 
-  ///DetectedLabelTextID.
-  @Name("detectedLabelTextID")
-  @Index(composite: [CompositeIndex('userFeedback')])
-  late int detectedLabelTextID;
+  @Name("photoUID")
+  late String photoUID;
 
-  ///Tag Confidence.
+  @Name("detectedLabelTextUID")
+  late String detectedLabelTextUID;
+
   @Name("confidence")
   late double confidence;
 
-  ///Blacklisted.
   @Name("userFeedback")
-  @Index()
   late bool? userFeedback;
 
   @override
   bool operator ==(Object other) {
     return other is MLPhotoLabel &&
         id == other.id &&
-        photoID == other.photoID &&
-        detectedLabelTextID == other.detectedLabelTextID &&
+        photoUID == other.photoUID &&
+        detectedLabelTextUID == other.detectedLabelTextUID &&
         confidence == other.confidence &&
         userFeedback == other.userFeedback;
   }
 
   @override
   String toString() {
-    return '\nPhotoID: $photoID, DetectedLabelTextID: $detectedLabelTextID, Confidence: $confidence, UserFeedback: $userFeedback';
+    return '\nPhotoID: $photoUID, DetectedLabelTextID: $detectedLabelTextUID, Confidence: $confidence, UserFeedback: $userFeedback';
   }
 
   ///To json.
   Map toJson() => {
         'id': id,
-        'photoID': photoID,
-        'textID': detectedLabelTextID,
+        'uid': uid,
+        'photoID': photoUID,
+        'textID': detectedLabelTextUID,
         'confidence': confidence,
         'blackListed': userFeedback,
       };
@@ -62,8 +61,9 @@ class MLPhotoLabel {
   MLPhotoLabel fromJson(Map<String, dynamic> json) {
     return MLPhotoLabel()
       ..id = json['id']
-      ..photoID = json['photoID']
-      ..detectedLabelTextID = json['textID']
+      ..uid = json['uid']
+      ..photoUID = json['photoID']
+      ..detectedLabelTextUID = json['textID']
       ..confidence = json['confidence']
       ..userFeedback = json['blackListed'];
   }

@@ -14,35 +14,43 @@ part 'photo_label.g.dart';
 class PhotoLabel {
   Id id = Isar.autoIncrement;
 
-  ///Photo ID.
-  @Name("photoID")
-  late int photoID;
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
 
-  ///The text tag.
-  @Name("tagTextID")
+  @Name("photoUID")
+  late String photoUID;
+
+  @Name("tagTextUID")
   @Index()
-  late int tagTextID;
+  late String tagTextUID;
 
   @override
   bool operator ==(Object other) {
     return other is PhotoLabel &&
         id == other.id &&
-        photoID == other.photoID &&
-        tagTextID == other.tagTextID;
+        photoUID == other.photoUID &&
+        tagTextUID == other.tagTextUID;
   }
 
   @override
   String toString() {
-    return 'photoID: $photoID, textID: $tagTextID';
+    return 'photoID: $photoUID, textID: $tagTextUID';
   }
 
-  Map toJson() => {'id': id, 'tagID': photoID, 'textID': tagTextID};
+  Map toJson() => {
+        'id': id,
+        'uid': uid,
+        'tagID': photoUID,
+        'textID': tagTextUID,
+      };
 
   PhotoLabel fromJson(Map<String, dynamic> json) {
     return PhotoLabel()
       ..id = json['id']
-      ..photoID = json['tagID']
-      ..tagTextID = json['textID'];
+      ..uid = json['uid']
+      ..photoUID = json['tagID']
+      ..tagTextUID = json['textID'];
   }
 
   @override

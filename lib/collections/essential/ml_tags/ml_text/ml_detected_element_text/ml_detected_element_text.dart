@@ -11,29 +11,30 @@ part 'ml_detected_element_text.g.dart';
 @Collection()
 @Name("MLDetectedElementText")
 class MLDetectedElementText {
-  ///DetectedElementTextID.
   Id id = Isar.autoIncrement;
 
-  ///DetectedText.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("detectedText")
   @Index(unique: true)
   late String detectedText;
 
-  ///TagTextID.
   @Name("tagTextID")
-  late int? tagTextID;
+  late String? tagTextID;
 
-  ///To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'detectedText': detectedText,
         'tagTextID': tagTextID,
       };
 
-  ///From json.
   MLDetectedElementText fromJson(Map<String, dynamic> json) {
     return MLDetectedElementText()
       ..id = json['id']
+      ..uid = json['uid']
       ..detectedText = json['detectedText']
       ..tagTextID = json['tagTextID'];
   }

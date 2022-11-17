@@ -1,9 +1,11 @@
 import 'package:isar/isar.dart';
+import 'package:tswiri_database/variables.dart';
 part 'barcode_batch.g.dart';
 
 ///[BarcodeBatch]
 ///
-///  - `id` the id of `this`.
+/// - `uid` uid of `this`.
+/// - `id` the id of `this`.
 /// - `timestamp` Time of `this`creation.
 /// - `width`  Width of `this`. (mm)
 /// - `height` Height of `this`. (mm)
@@ -13,15 +15,20 @@ part 'barcode_batch.g.dart';
 class BarcodeBatch {
   Id id = Isar.autoIncrement;
 
-  //Generation Time.
+  ///uid of `this`.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid = '${isarDeviceID}_$id';
+
+  ///Time of `this`creation.
   @Name("timestamp")
   late int timestamp;
 
-  ///Width (mm).
+  ///Width of `this`. (mm)
   @Name("width")
   late double width;
 
-  ///Height (mm).
+  ///Height of `this`. (mm)
   @Name("height")
   late double height;
 
@@ -32,6 +39,7 @@ class BarcodeBatch {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'uid': uid,
         'timestamp': timestamp,
         'width': width,
         'height': height,
@@ -40,6 +48,7 @@ class BarcodeBatch {
   BarcodeBatch fromJson(Map<String, dynamic> json) {
     return BarcodeBatch()
       ..id = json['id']
+      ..uid = json['uid']
       ..timestamp = json['timestamp'] as int
       ..width = json['width'] as double
       ..height = json['height'] as double;

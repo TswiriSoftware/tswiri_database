@@ -27,6 +27,11 @@ const MLDetectedLabelTextSchema = CollectionSchema(
       id: 1,
       name: r'hidden',
       type: IsarType.bool,
+    ),
+    r'uid': PropertySchema(
+      id: 2,
+      name: r'uid',
+      type: IsarType.string,
     )
   },
   estimateSize: _mLDetectedLabelTextEstimateSize,
@@ -35,6 +40,19 @@ const MLDetectedLabelTextSchema = CollectionSchema(
   deserializeProp: _mLDetectedLabelTextDeserializeProp,
   idName: r'id',
   indexes: {
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
     r'detectedLabelText': IndexSchema(
       id: -6625307223829943034,
       name: r'detectedLabelText',
@@ -64,6 +82,7 @@ int _mLDetectedLabelTextEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.detectedLabelText.length * 3;
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -75,6 +94,7 @@ void _mLDetectedLabelTextSerialize(
 ) {
   writer.writeString(offsets[0], object.detectedLabelText);
   writer.writeBool(offsets[1], object.hidden);
+  writer.writeString(offsets[2], object.uid);
 }
 
 MLDetectedLabelText _mLDetectedLabelTextDeserialize(
@@ -87,6 +107,7 @@ MLDetectedLabelText _mLDetectedLabelTextDeserialize(
   object.detectedLabelText = reader.readString(offsets[0]);
   object.hidden = reader.readBool(offsets[1]);
   object.id = id;
+  object.uid = reader.readString(offsets[2]);
   return object;
 }
 
@@ -101,6 +122,8 @@ P _mLDetectedLabelTextDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readBool(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -121,6 +144,59 @@ void _mLDetectedLabelTextAttach(
 }
 
 extension MLDetectedLabelTextByIndex on IsarCollection<MLDetectedLabelText> {
+  Future<MLDetectedLabelText?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  MLDetectedLabelText? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<MLDetectedLabelText?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<MLDetectedLabelText?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(MLDetectedLabelText object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(MLDetectedLabelText object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<MLDetectedLabelText> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<MLDetectedLabelText> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
+
   Future<MLDetectedLabelText?> getByDetectedLabelText(
       String detectedLabelText) {
     return getByIndex(r'detectedLabelText', [detectedLabelText]);
@@ -258,6 +334,51 @@ extension MLDetectedLabelTextQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
+      uidEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uid',
+        value: [uid],
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterWhereClause>
+      uidNotEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ));
+      }
     });
   }
 
@@ -510,6 +631,142 @@ extension MLDetectedLabelTextQueryFilter on QueryBuilder<MLDetectedLabelText,
       ));
     });
   }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterFilterCondition>
+      uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension MLDetectedLabelTextQueryObject on QueryBuilder<MLDetectedLabelText,
@@ -545,6 +802,20 @@ extension MLDetectedLabelTextQuerySortBy
       sortByHiddenDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hidden', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
+      sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
+      sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -592,6 +863,20 @@ extension MLDetectedLabelTextQuerySortThenBy
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
+      thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QAfterSortBy>
+      thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
+    });
+  }
 }
 
 extension MLDetectedLabelTextQueryWhereDistinct
@@ -608,6 +893,13 @@ extension MLDetectedLabelTextQueryWhereDistinct
       distinctByHidden() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hidden');
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, MLDetectedLabelText, QDistinct>
+      distinctByUid({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 }
@@ -630,6 +922,12 @@ extension MLDetectedLabelTextQueryProperty
   QueryBuilder<MLDetectedLabelText, bool, QQueryOperations> hiddenProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hidden');
+    });
+  }
+
+  QueryBuilder<MLDetectedLabelText, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 }

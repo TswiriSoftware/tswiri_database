@@ -1,6 +1,5 @@
 import 'package:isar/isar.dart';
 import 'package:tswiri_database/embedded/embedded_vector_3/embedded_vector_3.dart';
-// ignore: depend_on_referenced_packages
 part 'cataloged_coordinate.g.dart';
 
 ///[CatalogedCoordinate]
@@ -17,23 +16,22 @@ part 'cataloged_coordinate.g.dart';
 class CatalogedCoordinate {
   Id id = Isar.autoIncrement;
 
-  ///BarcodeUID linked to this coordinate.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("barcodeUID")
   late String barcodeUID;
 
-  ///The grid that this coordinate is a part of.
   @Name("gridUID")
-  late int gridUID;
+  late String gridUID;
 
-  ///Creation timestamp.
   @Name("timestamp")
   late int timestamp;
 
-  ///The vector3 coordinate.
   @Name("coordinate")
   late EmbeddedVector3? coordinate;
 
-  ///The rotation of this barcode.
   @Name("rotation")
   late EmbeddedVector3? rotation;
 
@@ -45,6 +43,7 @@ class CatalogedCoordinate {
   ///To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'barcodeUID': barcodeUID,
         'gridUID': gridUID,
         'timestamp': timestamp,
@@ -75,6 +74,7 @@ class CatalogedCoordinate {
 
     return CatalogedCoordinate()
       ..id = json['id']
+      ..uid = json['uid']
       ..barcodeUID = json['barcodeUID']
       ..gridUID = json['gridUID']
       ..timestamp = json['timestamp']
@@ -98,31 +98,7 @@ CatalogedCoordinate catalogedCoordinateFromMessage(List<dynamic> message) {
   return CatalogedCoordinate()
     ..barcodeUID = message[1]
     ..coordinate = coordinate
-    ..gridUID = message[2] as int
+    ..gridUID = message[2] as String
     ..timestamp = message[3] as int
     ..rotation = null;
 }
-
-// class Vector3Converter extends TypeConverter<vm.Vector3?, List<double>?> {
-//   const Vector3Converter(); // Converters need to have an empty const constructor
-
-//   @override
-//   vm.Vector3? fromIsar(List<double>? object) {
-//     if (object != null) {
-//       return vm.Vector3(object[0], object[1], object[2]);
-//     }
-//     return null;
-//   }
-
-//   @override
-//   List<double>? toIsar(vm.Vector3? object) {
-//     if (object != null) {
-//       return [
-//         object.x,
-//         object.y,
-//         object.z,
-//       ];
-//     }
-//     return null;
-//   }
-// }

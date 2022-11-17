@@ -11,14 +11,15 @@ part 'ml_text_block.g.dart';
 @Collection()
 @Name("MLTextBlock")
 class MLTextBlock {
-  ///BlockID.
   Id id = Isar.autoIncrement;
 
-  ///RecognizedLanguages.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("recognizedLanguages")
   late List<String> recognizedLanguages;
 
-  ///CornerPoints.
   @Name("cornerPoints")
   late CornerPoints cornerPoints;
 
@@ -30,6 +31,7 @@ class MLTextBlock {
   ///To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'recognizedLanguages': recognizedLanguages,
         'cornerPoints': cornerPoints.data,
       };
@@ -40,6 +42,7 @@ class MLTextBlock {
 
     return MLTextBlock()
       ..id = json['id']
+      ..uid = json['uid']
       ..recognizedLanguages =
           (json['recognizedLanguages'] as List<dynamic>).cast<String>()
       ..cornerPoints = CornerPoints.fromMessage(cp);

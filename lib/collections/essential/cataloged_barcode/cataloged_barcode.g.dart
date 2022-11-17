@@ -22,10 +22,10 @@ const CatalogedBarcodeSchema = CollectionSchema(
       name: r'barcodeUID',
       type: IsarType.string,
     ),
-    r'batchID': PropertySchema(
+    r'batchUID': PropertySchema(
       id: 1,
-      name: r'batchID',
-      type: IsarType.long,
+      name: r'batchUID',
+      type: IsarType.string,
     ),
     r'hashCode': PropertySchema(
       id: 2,
@@ -37,8 +37,13 @@ const CatalogedBarcodeSchema = CollectionSchema(
       name: r'height',
       type: IsarType.double,
     ),
-    r'width': PropertySchema(
+    r'uid': PropertySchema(
       id: 4,
+      name: r'uid',
+      type: IsarType.string,
+    ),
+    r'width': PropertySchema(
+      id: 5,
       name: r'width',
       type: IsarType.double,
     )
@@ -48,7 +53,21 @@ const CatalogedBarcodeSchema = CollectionSchema(
   deserialize: _catalogedBarcodeDeserialize,
   deserializeProp: _catalogedBarcodeDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _catalogedBarcodeGetId,
@@ -64,6 +83,8 @@ int _catalogedBarcodeEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.barcodeUID.length * 3;
+  bytesCount += 3 + object.batchUID.length * 3;
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -74,10 +95,11 @@ void _catalogedBarcodeSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.barcodeUID);
-  writer.writeLong(offsets[1], object.batchID);
+  writer.writeString(offsets[1], object.batchUID);
   writer.writeLong(offsets[2], object.hashCode);
   writer.writeDouble(offsets[3], object.height);
-  writer.writeDouble(offsets[4], object.width);
+  writer.writeString(offsets[4], object.uid);
+  writer.writeDouble(offsets[5], object.width);
 }
 
 CatalogedBarcode _catalogedBarcodeDeserialize(
@@ -88,10 +110,11 @@ CatalogedBarcode _catalogedBarcodeDeserialize(
 ) {
   final object = CatalogedBarcode();
   object.barcodeUID = reader.readString(offsets[0]);
-  object.batchID = reader.readLong(offsets[1]);
+  object.batchUID = reader.readString(offsets[1]);
   object.height = reader.readDouble(offsets[3]);
   object.id = id;
-  object.width = reader.readDouble(offsets[4]);
+  object.uid = reader.readString(offsets[4]);
+  object.width = reader.readDouble(offsets[5]);
   return object;
 }
 
@@ -105,12 +128,14 @@ P _catalogedBarcodeDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
       return (reader.readDouble(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -128,6 +153,61 @@ List<IsarLinkBase<dynamic>> _catalogedBarcodeGetLinks(CatalogedBarcode object) {
 void _catalogedBarcodeAttach(
     IsarCollection<dynamic> col, Id id, CatalogedBarcode object) {
   object.id = id;
+}
+
+extension CatalogedBarcodeByIndex on IsarCollection<CatalogedBarcode> {
+  Future<CatalogedBarcode?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  CatalogedBarcode? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<CatalogedBarcode?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<CatalogedBarcode?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(CatalogedBarcode object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(CatalogedBarcode object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<CatalogedBarcode> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<CatalogedBarcode> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
 }
 
 extension CatalogedBarcodeQueryWhereSort
@@ -205,6 +285,51 @@ extension CatalogedBarcodeQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterWhereClause>
+      uidEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uid',
+        value: [uid],
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterWhereClause>
+      uidNotEqualTo(String uid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -348,57 +473,137 @@ extension CatalogedBarcodeQueryFilter
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
-      batchIDEqualTo(int value) {
+      batchUIDEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'batchID',
+        property: r'batchUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
-      batchIDGreaterThan(
-    int value, {
+      batchUIDGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'batchID',
+        property: r'batchUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
-      batchIDLessThan(
-    int value, {
+      batchUIDLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'batchID',
+        property: r'batchUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
-      batchIDBetween(
-    int lower,
-    int upper, {
+      batchUIDBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'batchID',
+        property: r'batchUID',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      batchUIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'batchUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      batchUIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'batchUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      batchUIDContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'batchUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      batchUIDMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'batchUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      batchUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'batchUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      batchUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'batchUID',
+        value: '',
       ));
     });
   }
@@ -582,6 +787,142 @@ extension CatalogedBarcodeQueryFilter
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
+      uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterFilterCondition>
       widthEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -671,16 +1012,16 @@ extension CatalogedBarcodeQuerySortBy
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy>
-      sortByBatchID() {
+      sortByBatchUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'batchID', Sort.asc);
+      return query.addSortBy(r'batchUID', Sort.asc);
     });
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy>
-      sortByBatchIDDesc() {
+      sortByBatchUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'batchID', Sort.desc);
+      return query.addSortBy(r'batchUID', Sort.desc);
     });
   }
 
@@ -709,6 +1050,19 @@ extension CatalogedBarcodeQuerySortBy
       sortByHeightDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.desc);
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy> sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy>
+      sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 
@@ -743,16 +1097,16 @@ extension CatalogedBarcodeQuerySortThenBy
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy>
-      thenByBatchID() {
+      thenByBatchUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'batchID', Sort.asc);
+      return query.addSortBy(r'batchUID', Sort.asc);
     });
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy>
-      thenByBatchIDDesc() {
+      thenByBatchUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'batchID', Sort.desc);
+      return query.addSortBy(r'batchUID', Sort.desc);
     });
   }
 
@@ -797,6 +1151,19 @@ extension CatalogedBarcodeQuerySortThenBy
     });
   }
 
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy> thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy>
+      thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
+    });
+  }
+
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QAfterSortBy> thenByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.asc);
@@ -821,9 +1188,9 @@ extension CatalogedBarcodeQueryWhereDistinct
   }
 
   QueryBuilder<CatalogedBarcode, CatalogedBarcode, QDistinct>
-      distinctByBatchID() {
+      distinctByBatchUID({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'batchID');
+      return query.addDistinctBy(r'batchUID', caseSensitive: caseSensitive);
     });
   }
 
@@ -838,6 +1205,13 @@ extension CatalogedBarcodeQueryWhereDistinct
       distinctByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'height');
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, CatalogedBarcode, QDistinct> distinctByUid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 
@@ -864,9 +1238,9 @@ extension CatalogedBarcodeQueryProperty
     });
   }
 
-  QueryBuilder<CatalogedBarcode, int, QQueryOperations> batchIDProperty() {
+  QueryBuilder<CatalogedBarcode, String, QQueryOperations> batchUIDProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'batchID');
+      return query.addPropertyName(r'batchUID');
     });
   }
 
@@ -879,6 +1253,12 @@ extension CatalogedBarcodeQueryProperty
   QueryBuilder<CatalogedBarcode, double, QQueryOperations> heightProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'height');
+    });
+  }
+
+  QueryBuilder<CatalogedBarcode, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 

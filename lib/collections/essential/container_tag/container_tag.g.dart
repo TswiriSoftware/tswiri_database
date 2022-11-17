@@ -27,10 +27,15 @@ const ContainerTagSchema = CollectionSchema(
       name: r'hashCode',
       type: IsarType.long,
     ),
-    r'tagTextID': PropertySchema(
+    r'tagTextUID': PropertySchema(
       id: 2,
-      name: r'tagTextID',
-      type: IsarType.long,
+      name: r'tagTextUID',
+      type: IsarType.string,
+    ),
+    r'uid': PropertySchema(
+      id: 3,
+      name: r'uid',
+      type: IsarType.string,
     )
   },
   estimateSize: _containerTagEstimateSize,
@@ -38,7 +43,21 @@ const ContainerTagSchema = CollectionSchema(
   deserialize: _containerTagDeserialize,
   deserializeProp: _containerTagDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'uid': IndexSchema(
+      id: 8193695471701937315,
+      name: r'uid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _containerTagGetId,
@@ -54,6 +73,8 @@ int _containerTagEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.containerUID.length * 3;
+  bytesCount += 3 + object.tagTextUID.length * 3;
+  bytesCount += 3 + object.uid.length * 3;
   return bytesCount;
 }
 
@@ -65,7 +86,8 @@ void _containerTagSerialize(
 ) {
   writer.writeString(offsets[0], object.containerUID);
   writer.writeLong(offsets[1], object.hashCode);
-  writer.writeLong(offsets[2], object.tagTextID);
+  writer.writeString(offsets[2], object.tagTextUID);
+  writer.writeString(offsets[3], object.uid);
 }
 
 ContainerTag _containerTagDeserialize(
@@ -77,7 +99,8 @@ ContainerTag _containerTagDeserialize(
   final object = ContainerTag();
   object.containerUID = reader.readString(offsets[0]);
   object.id = id;
-  object.tagTextID = reader.readLong(offsets[2]);
+  object.tagTextUID = reader.readString(offsets[2]);
+  object.uid = reader.readString(offsets[3]);
   return object;
 }
 
@@ -93,7 +116,9 @@ P _containerTagDeserializeProp<P>(
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -110,6 +135,61 @@ List<IsarLinkBase<dynamic>> _containerTagGetLinks(ContainerTag object) {
 void _containerTagAttach(
     IsarCollection<dynamic> col, Id id, ContainerTag object) {
   object.id = id;
+}
+
+extension ContainerTagByIndex on IsarCollection<ContainerTag> {
+  Future<ContainerTag?> getByUid(String uid) {
+    return getByIndex(r'uid', [uid]);
+  }
+
+  ContainerTag? getByUidSync(String uid) {
+    return getByIndexSync(r'uid', [uid]);
+  }
+
+  Future<bool> deleteByUid(String uid) {
+    return deleteByIndex(r'uid', [uid]);
+  }
+
+  bool deleteByUidSync(String uid) {
+    return deleteByIndexSync(r'uid', [uid]);
+  }
+
+  Future<List<ContainerTag?>> getAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uid', values);
+  }
+
+  List<ContainerTag?> getAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uid', values);
+  }
+
+  Future<int> deleteAllByUid(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uid', values);
+  }
+
+  int deleteAllByUidSync(List<String> uidValues) {
+    final values = uidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uid', values);
+  }
+
+  Future<Id> putByUid(ContainerTag object) {
+    return putByIndex(r'uid', object);
+  }
+
+  Id putByUidSync(ContainerTag object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUid(List<ContainerTag> objects) {
+    return putAllByIndex(r'uid', objects);
+  }
+
+  List<Id> putAllByUidSync(List<ContainerTag> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uid', objects, saveLinks: saveLinks);
+  }
 }
 
 extension ContainerTagQueryWhereSort
@@ -187,6 +267,51 @@ extension ContainerTagQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterWhereClause> uidEqualTo(
+      String uid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uid',
+        value: [uid],
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterWhereClause> uidNotEqualTo(
+      String uid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [uid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uid',
+              lower: [],
+              upper: [uid],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -439,57 +564,269 @@ extension ContainerTagQueryFilter
   }
 
   QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
-      tagTextIDEqualTo(int value) {
+      tagTextUIDEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tagTextID',
+        property: r'tagTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
-      tagTextIDGreaterThan(
-    int value, {
+      tagTextUIDGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'tagTextID',
+        property: r'tagTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
-      tagTextIDLessThan(
-    int value, {
+      tagTextUIDLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'tagTextID',
+        property: r'tagTextUID',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
-      tagTextIDBetween(
-    int lower,
-    int upper, {
+      tagTextUIDBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'tagTextID',
+        property: r'tagTextUID',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      tagTextUIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      tagTextUIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      tagTextUIDContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'tagTextUID',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      tagTextUIDMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'tagTextUID',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      tagTextUIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tagTextUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      tagTextUIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'tagTextUID',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      uidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition> uidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterFilterCondition>
+      uidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uid',
+        value: '',
       ));
     });
   }
@@ -528,15 +865,28 @@ extension ContainerTagQuerySortBy
     });
   }
 
-  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> sortByTagTextID() {
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> sortByTagTextUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.asc);
+      return query.addSortBy(r'tagTextUID', Sort.asc);
     });
   }
 
-  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> sortByTagTextIDDesc() {
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy>
+      sortByTagTextUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.desc);
+      return query.addSortBy(r'tagTextUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> sortByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> sortByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -580,15 +930,28 @@ extension ContainerTagQuerySortThenBy
     });
   }
 
-  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> thenByTagTextID() {
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> thenByTagTextUID() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.asc);
+      return query.addSortBy(r'tagTextUID', Sort.asc);
     });
   }
 
-  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> thenByTagTextIDDesc() {
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy>
+      thenByTagTextUIDDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tagTextID', Sort.desc);
+      return query.addSortBy(r'tagTextUID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> thenByUid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QAfterSortBy> thenByUidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uid', Sort.desc);
     });
   }
 }
@@ -608,9 +971,17 @@ extension ContainerTagQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ContainerTag, ContainerTag, QDistinct> distinctByTagTextID() {
+  QueryBuilder<ContainerTag, ContainerTag, QDistinct> distinctByTagTextUID(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'tagTextID');
+      return query.addDistinctBy(r'tagTextUID', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ContainerTag, ContainerTag, QDistinct> distinctByUid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uid', caseSensitive: caseSensitive);
     });
   }
 }
@@ -635,9 +1006,15 @@ extension ContainerTagQueryProperty
     });
   }
 
-  QueryBuilder<ContainerTag, int, QQueryOperations> tagTextIDProperty() {
+  QueryBuilder<ContainerTag, String, QQueryOperations> tagTextUIDProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'tagTextID');
+      return query.addPropertyName(r'tagTextUID');
+    });
+  }
+
+  QueryBuilder<ContainerTag, String, QQueryOperations> uidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uid');
     });
   }
 }

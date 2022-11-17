@@ -20,42 +20,41 @@ part 'ml_text_element.g.dart';
 class MLTextElement {
   Id id = Isar.autoIncrement;
 
-  ///PhotoID.
-  @Name("photoID")
-  late int photoID;
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
 
-  ///lineID.
-  @Name("lineID")
-  late int lineID;
+  @Name("photoUID")
+  late String photoUID;
 
-  ///LineIndex.
+  @Name("lineUID")
+  late String lineUID;
+
   @Name("lineIndex")
   late int lineIndex;
 
-  ///DetectedElementTextID.
-  @Name("detectedElementTextID")
-  late int detectedElementTextID;
+  @Name("mlDetectedElementTextUID")
+  late String mlDetectedElementTextUID;
 
-  ///CornerPoints.
   @Name("cornerPoints")
   late CornerPoints cornerPoints;
 
-  ///UserFeedback.
   @Name("userFeedback")
   late bool? userFeedback;
 
   @override
   String toString() {
-    return 'ID: $id, LineID: $lineID, LineIndex: $lineIndex, DetectedElementTextID: $detectedElementTextID, CornerPoints: $cornerPoints';
+    return 'ID: $id, LineID: $lineUID, LineIndex: $lineIndex, DetectedElementTextID: $mlDetectedElementTextUID, CornerPoints: $cornerPoints';
   }
 
   ///To json.
   Map toJson() => {
         'id': id,
-        'photoID': photoID,
-        'lineID': lineID,
+        'uid': uid,
+        'photoUID': photoUID,
+        'lineUID': lineUID,
         'lineIndex': lineIndex,
-        'detectedElementTextID': detectedElementTextID,
+        'mlDetectedElementTextUID': mlDetectedElementTextUID,
         'userFeedback': userFeedback,
         'cornerPoints': cornerPoints.data,
       };
@@ -66,10 +65,11 @@ class MLTextElement {
 
     return MLTextElement()
       ..id = json['id']
-      ..photoID = json['photoID']
-      ..lineID = json['lineID']
+      ..uid = json['uid']
+      ..photoUID = json['photoUID']
+      ..lineUID = json['lineUID']
       ..lineIndex = json['lineIndex']
-      ..detectedElementTextID = json['detectedElementTextID']
+      ..mlDetectedElementTextUID = json['mlDetectedElementTextUID']
       ..userFeedback = json['userFeedback']
       ..cornerPoints = CornerPoints.fromMessage(cp);
   }

@@ -2,7 +2,8 @@ part of tswiri_database;
 
 ///Updates/Creates [CatalogedCoordinate]'s.
 updateCoordinates({
-  required int gridUID,
+  required Isar isar,
+  required String gridUID,
   required List<CatalogedCoordinate> coordinates,
 }) {
   _isar!.writeTxnSync(() {

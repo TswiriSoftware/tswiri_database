@@ -10,29 +10,30 @@ part 'ml_detected_label_text.g.dart';
 @Collection()
 @Name("MLDetectedLabelText")
 class MLDetectedLabelText {
-  ///MLDetectedLabelTextID.
   Id id = Isar.autoIncrement;
 
-  ///MLDetectedLabelText.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   @Name("detectedLabelText")
   @Index(unique: true)
   late String detectedLabelText;
 
-  ///Blacklisted.
   @Name("hidden")
   late bool hidden;
 
-  ///To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'detectedLabelText': detectedLabelText,
         'hidden': hidden,
       };
 
-  ///From json.
   MLDetectedLabelText fromJson(Map<String, dynamic> json) {
     return MLDetectedLabelText()
       ..id = json['id']
+      ..uid = json['uid']
       ..detectedLabelText = json['detectedLabelText']
       ..hidden = json['hidden'] as bool;
   }

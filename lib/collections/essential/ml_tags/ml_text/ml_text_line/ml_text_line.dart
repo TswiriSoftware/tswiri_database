@@ -14,34 +14,34 @@ part 'ml_text_line.g.dart';
 @Collection()
 @Name("MLTextLine")
 class MLTextLine {
-  ///LineID.
   Id id = Isar.autoIncrement;
 
-  ///BlockID.
-  @Name("blockID")
-  late int blockID;
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
 
-  ///blockIndex.
+  @Name("blockUID")
+  late String blockUID;
+
   @Name("blockIndex")
   late int blockIndex;
 
-  ///RecognizedLanguages.
   @Name("recognizedLanguages")
   late List<String> recognizedLanguages;
 
-  ///CornerPoints.
   @Name("cornerPoints")
   late CornerPoints cornerPoints;
 
   @override
   String toString() {
-    return 'ID: $id, BlockID: $blockID, BlockIndex: $blockIndex, Languages: $recognizedLanguages, CornerPoints: $cornerPoints';
+    return 'ID: $id, BlockID: $blockUID, BlockIndex: $blockIndex, Languages: $recognizedLanguages, CornerPoints: $cornerPoints';
   }
 
   ///To json.
   Map toJson() => {
         'id': id,
-        'blockID': blockID,
+        'uid': uid,
+        'blockUID': blockUID,
         'blockIndex': blockIndex,
         'recognizedLanguages': recognizedLanguages,
         'cornerPoints': cornerPoints.data,
@@ -52,7 +52,8 @@ class MLTextLine {
     List<int> cp = (json['cornerPoints'] as List<dynamic>).cast<int>();
     return MLTextLine()
       ..id = json['id']
-      ..blockID = json['blockID']
+      ..uid = json['uid']
+      ..blockUID = json['blockUID']
       ..blockIndex = json['blockIndex']
       ..recognizedLanguages =
           (json['recognizedLanguages'] as List<dynamic>).cast<String>()

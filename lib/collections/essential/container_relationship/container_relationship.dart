@@ -10,8 +10,12 @@ part 'container_relationship.g.dart';
 @Collection()
 @Name("ContainerRelationship")
 class ContainerRelationship {
-  ///ID
   Id id = Isar.autoIncrement;
+
+  ///uid of `this`.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
 
   ///ContainerUID
   @Name("containerUID")
@@ -38,6 +42,7 @@ class ContainerRelationship {
   //To json.
   Map toJson() => {
         'id': id,
+        'uid': uid,
         'containerUID': containerUID,
         'parentUID': parentUID,
       };
@@ -46,6 +51,7 @@ class ContainerRelationship {
   ContainerRelationship fromJson(Map<String, dynamic> json) {
     return ContainerRelationship()
       ..id = json['id']
+      ..uid = json['uid']
       ..containerUID = json['containerUID']
       ..parentUID = json['parentUID'];
   }

@@ -18,14 +18,19 @@ class MLObjectLabel {
   ///ObjectLabelID.
   Id id = Isar.autoIncrement;
 
+  ///uid of `this`.
+  @Name('uid')
+  @Index(unique: true)
+  late String uid;
+
   ///ObjectID.
-  @Name("objectID")
-  late int objectID;
+  @Name("objectUID")
+  late String objectUID;
 
   ///detectedLabelTextID.
   @Name("detectedLabelTextID")
   @Index()
-  late int detectedLabelTextID;
+  late String detectedLabelTextUID;
 
   ///Tag Confidence.
   @Name("confidence")
@@ -37,15 +42,15 @@ class MLObjectLabel {
 
   @override
   String toString() {
-    return '\nObjectID: $objectID, DetectedLabelTextID: $detectedLabelTextID, Confidence: $confidence, UserFeedback: $userFeedback';
+    return '\nObjectID: $objectUID, DetectedLabelTextID: $detectedLabelTextUID, Confidence: $confidence, UserFeedback: $userFeedback';
   }
 
   @override
   bool operator ==(Object other) {
     return other is MLObjectLabel &&
         id == other.id &&
-        objectID == other.objectID &&
-        detectedLabelTextID == other.detectedLabelTextID &&
+        objectUID == other.objectUID &&
+        detectedLabelTextUID == other.detectedLabelTextUID &&
         confidence == other.confidence &&
         userFeedback == other.userFeedback;
   }
@@ -53,8 +58,9 @@ class MLObjectLabel {
   ///To json.
   Map toJson() => {
         'id': id,
-        'photoID': objectID,
-        'textID': detectedLabelTextID,
+        'uid': uid,
+        'objectUID': objectUID,
+        'detectedLabelTextUID': detectedLabelTextUID,
         'confidence': confidence,
         'blackListed': userFeedback,
       };
@@ -63,8 +69,9 @@ class MLObjectLabel {
   MLObjectLabel fromJson(Map<String, dynamic> json) {
     return MLObjectLabel()
       ..id = json['id']
-      ..objectID = json['photoID']
-      ..detectedLabelTextID = json['textID']
+      ..uid = json['uid']
+      ..objectUID = json['objectUID']
+      ..detectedLabelTextUID = json['detectedLabelTextUID']
       ..confidence = json['confidence']
       ..userFeedback = json['blackListed'];
   }
