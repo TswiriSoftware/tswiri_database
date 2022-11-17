@@ -2,6 +2,7 @@ part of tswiri_database;
 
 ///Creates a new [CatalogedContainer].
 CatalogedContainer createCatalogedContainer({
+  required Isar isar,
   required CatalogedContainer catalogedContainer,
   required ContainerRelationship? containerRelationship,
   required Marker? marker,
