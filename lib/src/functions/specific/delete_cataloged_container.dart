@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:tswiri_database/src/collections/export.dart';
 
 ///Deletes a container and all its references.
-List<Photo> deleteContainer({
+deleteContainer({
   required Isar isar,
   required CatalogedContainer catalogedContainer,
+  required Directory photoDirectory,
+  required Directory thumbnailDirectory,
 }) {
   List<Photo> photos = isar.photos
       .filter()
@@ -96,7 +100,11 @@ List<Photo> deleteContainer({
 
       //9. Delete Photo.
       isar.photos.deleteSync(photo.id);
+
+      File('${thumbnailDirectory.path}/${photo.thumbnailName}.${photo.thumbnailExtention}')
+          .deleteSync();
+      File('${photoDirectory.path}/${photo.photoName}.${photo.photoExtention}')
+          .deleteSync();
     }
   });
-  return photos;
 }

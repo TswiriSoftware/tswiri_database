@@ -6,19 +6,26 @@ CatalogedContainer createCatalogedContainer({
   required CatalogedContainer catalogedContainer,
   required ContainerRelationship? containerRelationship,
   required Marker? marker,
+  required int databaseID,
 }) {
-  int? id;
+  CatalogedContainer? container;
+
   isar.writeTxnSync(() {
-    id = isar.catalogedContainers.putSync(catalogedContainer);
+    int id = isar.catalogedContainers.putSync(catalogedContainer);
+    container = isar.catalogedContainers.getSync(id)!;
 
     if (containerRelationship != null) {
-      isar.containerRelationships.putSync(containerRelationship);
+      isar.containerRelationships.putSync(
+        containerRelationship..containerUID = container!.uid,
+      );
     }
 
     if (marker != null) {
-      isar.markers.putSync(marker);
+      isar.markers.putSync(
+        marker..containerUID = container!.uid,
+      );
     }
   });
 
-  return isar.catalogedContainers.getSync(id!)!;
+  return container!;
 }

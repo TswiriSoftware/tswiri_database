@@ -13,4 +13,9 @@ abstract class TswiriDatabaseObject {
 
   ///Used to close the database.
   Future close() async {}
+
+  ///The photos Directory
+  Directory get photoDirectory;
+
+  Directory get isarDirectory;
 }
