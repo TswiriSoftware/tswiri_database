@@ -8,8 +8,11 @@ import 'package:image/image.dart' as img;
 ///returns a bool
 bool checkIfCameraFeedIsBlack(InputImage inputImage) {
   //Convert the image to a bitmap 100x100
-  img.Image bitmap =
-      img.Image.fromBytes(100, 100, inputImage.bytes!, format: img.Format.rgba);
+  img.Image bitmap = img.Image.fromBytes(
+    width: 100,
+    height: 100,
+    bytes: inputImage.bytes!.buffer,
+  );
 
   //Counters to keep track of the pixel colour values.
   int redBucket = 0;
@@ -21,11 +24,12 @@ bool checkIfCameraFeedIsBlack(InputImage inputImage) {
   //Run through the image.
   for (int y = 0; y < bitmap.height; y++) {
     for (int x = 0; x < bitmap.width; x++) {
-      int c = bitmap.getPixel(x, y);
+      final c = bitmap.getPixel(x, y);
       pixelCount++;
-      redBucket += img.getRed(c);
-      greenBucket += img.getGreen(c);
-      blueBucket += img.getBlue(c);
+
+      redBucket += c.r.toInt();
+      greenBucket += c.g.toInt();
+      blueBucket += c.b.toInt();
     }
   }
 
